@@ -1,58 +1,189 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <header>
+      <button v-if="!token" @click="showRegister = true; showLogin = false">Регистрация</button>
+      <button v-if="!token" @click="showLogin = true; showRegister = false">Логин</button>
+      <button v-if="token" @click="showDashboard = true">Личный кабинет</button>
+    </header>
+
+    <!-- Модальное окно регистрации -->
+    <div v-if="showRegister" class="modal">
+      <h2>Регистрация</h2>
+      <input v-model="registerPhone" placeholder="Телефон" />
+      <input v-model="registerPassword" type="password" placeholder="Пароль" />
+      <button @click="register">Зарегистрироваться</button>
+      <button @click="closeAll">Отмена</button>
+    </div>
+
+    <!-- Модальное окно ввода кода -->
+    <div v-if="showCodeInput" class="modal">
+      <h2>Введите 4-значный код из WhatsApp</h2>
+      <input v-model="verificationCode" maxlength="4" placeholder="Код" />
+      <button @click="verifyCode">Подтвердить</button>
+      <button @click="closeAll">Отмена</button>
+    </div>
+
+    <!-- Модальное окно логина -->
+    <div v-if="showLogin" class="modal">
+      <h2>Логин</h2>
+      <input v-model="loginPhone" placeholder="Телефон" />
+      <input v-model="loginPassword" type="password" placeholder="Пароль" />
+      <button @click="login">Войти</button>
+      <button @click="closeAll">Отмена</button>
+    </div>
+
+    <!-- Модальное окно личного кабинета -->
+    <div v-if="showDashboard" class="modal">
+      <h2>Личный кабинет</h2>
+      <p>Добро пожаловать, пользователь!</p>
+      <button @click="logout">Выйти</button>
+      <button @click="closeAll">Закрыть</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      token: localStorage.getItem('token') || null,
+      showRegister: false,
+      showCodeInput: false,
+      showLogin: false,
+      showDashboard: false,
+
+      registerPhone: '',
+      registerPassword: '',
+      verificationCode: '',
+
+      loginPhone: '',
+      loginPassword: '',
+    }
+  },
+  methods: {
+    closeAll() {
+      this.showRegister = false;
+      this.showCodeInput = false;
+      this.showLogin = false;
+      this.showDashboard = false;
+    },
+    register() {
+      if (!this.registerPhone || !this.registerPassword) {
+        alert('Заполните все поля');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('phone', this.registerPhone);
+      formData.append('password', this.registerPassword);
+
+      fetch('https://letsdancescores.tech/api/register.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Регистрация успешна! Код: ' + data.code);
+          this.showRegister = false;
+          this.showCodeInput = true;
+        } else {
+          alert('Ошибка: ' + data.message);
+        }
+      })
+      .catch(() => alert('Ошибка сети'));
+    },
+    verifyCode() {
+      if (!this.verificationCode || this.verificationCode.length !== 4) {
+        alert('Введите 4-значный код');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('phone', this.registerPhone);
+      formData.append('code', this.verificationCode);
+
+      fetch('https://letsdancescores.tech/api/verify.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success' && data.token) {
+          this.token = data.token;
+          localStorage.setItem('token', data.token);
+          alert('Код подтвержден! Вы вошли в систему.');
+          this.showCodeInput = false;
+          this.showDashboard = true;
+        } else {
+          alert('Ошибка: ' + data.message);
+        }
+      })
+      .catch(() => alert('Ошибка сети'));
+    },
+    login() {
+      if (!this.loginPhone || !this.loginPassword) {
+        alert('Заполните все поля');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('phone', this.loginPhone);
+      formData.append('password', this.loginPassword);
+
+      fetch('https://letsdancescores.tech/api/login.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success' && data.token) {
+          this.token = data.token;
+          localStorage.setItem('token', data.token);
+          alert('Вы успешно вошли!');
+          this.showLogin = false;
+          this.showDashboard = true;
+        } else {
+          alert('Ошибка: ' + data.message);
+        }
+      })
+      .catch(() => alert('Ошибка сети'));
+    },
+    logout() {
+      this.token = null;
+      localStorage.removeItem('token');
+      this.closeAll();
+      alert('Вы вышли из системы');
+    }
+  },
+  mounted() {
+    if (this.token) {
+      fetch('https://letsdancescores.tech/api/check_token.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: this.token })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          this.logout();
+        }
+      })
+      .catch(() => {
+        alert('Ошибка проверки токена');
+        this.logout();
+      });
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+<style>
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 20px;
+  border: 1px solid #aaa;
+  box-shadow: 0 0 10px #333;
 }
 </style>
