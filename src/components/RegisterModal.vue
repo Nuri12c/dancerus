@@ -63,9 +63,47 @@ export default {
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
-  padding: 20px;
-  border: 1px solid #aaa;
-  box-shadow: 0 0 10px #333;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #61daff;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  background: #61daff;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #40c4e6;
 }
 </style>

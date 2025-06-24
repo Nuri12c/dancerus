@@ -1,4 +1,5 @@
 
+
 <template>
   <div>
     <HeaderApp
@@ -7,8 +8,10 @@
       @open-login="showLogin = true"
       @open-dashboard="showDashboard = true"
       @switch-to-site="switchToSite"
+      @logout="logout"
     />
     <GuestContent v-if="!showDashboard" />
+    <DashboardModal v-if="showDashboard" :amocrm-data="amocrmData" />
     <RegisterModal
       v-if="showRegister"
       v-model:phone="registerPhone"
@@ -25,11 +28,6 @@
       v-if="showLogin"
       @close="closeAll"
       @logged-in="handleLoggedIn"
-    />
-    <DashboardModal
-      v-if="showDashboard"
-      @close="closeAll"
-      @logout="logout"
     />
   </div>
 </template>
@@ -59,6 +57,7 @@ export default {
       showLogin: false,
       showDashboard: false,
       registerPhone: '',
+      amocrmData: null,
     };
   },
   methods: {
@@ -73,44 +72,70 @@ export default {
       this.showRegister = false;
       this.showCodeInput = true;
     },
-    handleVerified(token) {
+    async handleVerified(token) {
       this.token = token;
       localStorage.setItem('token', token);
+      await this.fetchAmoCrmData();
       this.showCodeInput = false;
       this.showDashboard = true;
     },
-    handleLoggedIn(token) {
+    async handleLoggedIn(token) {
       this.token = token;
       localStorage.setItem('token', token);
+      await this.fetchAmoCrmData();
       this.showLogin = false;
       this.showDashboard = true;
+    },
+    async fetchAmoCrmData() {
+      try {
+        const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+          this.amocrmData = data.amocrm_response;
+        } else {
+          alert('Ошибка AmoCRM: ' + data.message);
+          this.amocrmData = null;
+        }
+      } catch {
+        alert('Ошибка сети при запросе AmoCRM');
+        this.amocrmData = null;
+      }
     },
     logout() {
       this.token = null;
       localStorage.removeItem('token');
+      this.amocrmData = null;
       this.closeAll();
       alert('Вы вышли из системы');
     },
     switchToSite() {
       this.showDashboard = false;
     },
-    checkToken() {
+    async checkToken() {
       if (this.token) {
-        fetch('https://letsdancescores.tech/api/check_token.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: this.token }),
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (!data.success) {
-              this.logout();
-            }
-          })
-          .catch(() => {
-            alert('Ошибка проверки токена');
-            this.logout();
+        try {
+          const response = await fetch('https://letsdancescores.tech/api/check_token.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: this.token }),
           });
+          const data = await response.json();
+          if (!data.success) {
+            this.logout();
+          } else {
+            // Загружаем данные AmoCRM, если токен валиден
+            await this.fetchAmoCrmData();
+          }
+        } catch {
+          alert('Ошибка проверки токена');
+          this.logout();
+        }
       }
     },
   },
