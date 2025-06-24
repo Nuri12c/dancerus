@@ -45,7 +45,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .modal {
   position: fixed;
@@ -53,6 +52,9 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -66,7 +68,7 @@ h2 {
 }
 
 input {
-  width: 100%;
+  width: max-content;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -82,6 +84,7 @@ input:focus {
 
 button {
   margin: 5px;
+  width: 100%;
   padding: 10px 20px;
   background: #61daff;
   border: none;
