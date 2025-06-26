@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <HeaderApp
@@ -20,14 +18,16 @@
     />
     <CodeInputModal
       v-if="showCodeInput"
+      :phone="registerPhone"
+      :isRestore="isRestore"
       @close="closeAll"
       @verified="handleVerified"
-      :phone="registerPhone"
     />
     <LoginModal
       v-if="showLogin"
       @close="closeAll"
       @logged-in="handleLoggedIn"
+      @restore-initiated="handleRestore"
     />
   </div>
 </template>
@@ -57,6 +57,7 @@ export default {
       showLogin: false,
       showDashboard: false,
       registerPhone: '',
+      isRestore: false, // Добавляем флаг для восстановления пароля
       amocrmData: null,
     };
   },
@@ -66,11 +67,19 @@ export default {
       this.showCodeInput = false;
       this.showLogin = false;
       this.showDashboard = false;
+      this.isRestore = false; // Сбрасываем флаг
     },
     handleRegistered({ phone }) {
       this.registerPhone = phone;
       this.showRegister = false;
       this.showCodeInput = true;
+      this.isRestore = false; // Регистрация, не восстановление
+    },
+    handleRestore({ phone }) {
+      this.registerPhone = phone;
+      this.showLogin = false;
+      this.showCodeInput = true;
+      this.isRestore = true; // Восстановление пароля
     },
     async handleVerified(token) {
       this.token = token;
@@ -78,6 +87,7 @@ export default {
       await this.fetchAmoCrmData();
       this.showCodeInput = false;
       this.showDashboard = true;
+      this.isRestore = false; // Сбрасываем после верификации
     },
     async handleLoggedIn(token) {
       this.token = token;
@@ -129,7 +139,6 @@ export default {
           if (!data.success) {
             this.logout();
           } else {
-            // Загружаем данные AmoCRM, если токен валиден
             await this.fetchAmoCrmData();
           }
         } catch {
