@@ -1,3 +1,4 @@
+
 <template>
   <div class="dashboard">
     <h2>Личный кабинет</h2>
@@ -5,26 +6,20 @@
 
     <div v-if="amocrmData && amocrmData.leads && amocrmData.leads.length">
       <h3>Ваши сделки в AmoCRM:</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Название</th>
-            <th>Ответственный</th>
-            <th>Сумма</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="lead in amocrmData.leads" :key="lead.id">
-            <td>{{ lead.id }}</td>
-            <td>{{ lead.name || 'Без названия' }}</td>
-            <td>{{ lead.responsible_user_id || 'Не указан' }}</td>
-            <td>{{ lead.price || 0 }} руб.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div v-for="lead in amocrmData.leads" :key="lead.id" class="lead">
+        <h4>Сделка: {{ lead.name || 'Без названия' }} (ID: {{ lead.id }})</h4>
+        <ul>
+          <li><strong>ID:</strong> {{ lead.id }}</li>
+          <li><strong>Название:</strong> {{ lead.name || 'Без названия' }}</li>
+          <li><strong>Ответственный:</strong> {{ lead.responsible_user_id || 'Не указан' }}</li>
+          <li><strong>Сумма:</strong> {{ lead.price || 0 }} руб.</li>
+          <li v-for="field in filteredFields(lead.custom_fields_values)" :key="field.field_id">
+            <strong>{{ field.field_name }}:</strong>
+            {{ formatFieldValue(field) }}
+          </li>
+        </ul>
+      </div>
     </div>
-
     <p v-else>Нет связанных сделок или запрос не выполнен.</p>
   </div>
 </template>
@@ -33,6 +28,39 @@
 export default {
   props: {
     amocrmData: Object,
+  },
+  data() {
+    return {
+      // Укажи ID полей, которые хочешь отображать
+      allowedFieldIds: [
+        414972, // Рекламный канал
+        583897, // Из какого Вы города?
+        581111, // Коллектив
+        590703, // КП
+        590011, // МК 1 адрес
+        590283, // МК 1 направление
+      ],
+    };
+  },
+  methods: {
+    filteredFields(fields) {
+      // Проверка на null или undefined
+      if (!fields || !Array.isArray(fields)) {
+        return [];
+      }
+      return fields.filter(field => this.allowedFieldIds.includes(field.field_id));
+    },
+    formatFieldValue(field) {
+      const value = field.values[0]?.value;
+      if (!value) return 'Не указано';
+      if (field.field_type === 'date' || field.field_type === 'date_time') {
+        return new Date(value * 1000).toLocaleString('ru-RU');
+      }
+      if (field.field_type === 'checkbox') {
+        return value ? 'Да' : 'Нет';
+      }
+      return value;
+    },
   },
   mounted() {
     console.log('Данные из AmoCRM:', this.amocrmData);
@@ -61,28 +89,29 @@ export default {
   color: #555;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+.lead {
+  margin-bottom: 20px;
+  padding: 15px;
   background: #f9f9f9;
   border-radius: 8px;
-  overflow: hidden;
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.lead h4 {
+  margin-bottom: 10px;
+  color: #333;
 }
 
-th {
-  background-color: #61daff;
-  color: #fff;
+.lead ul {
+  list-style: none;
+  padding: 0;
 }
 
-tr:hover {
-  background-color: #eef9ff;
+.lead li {
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.lead li strong {
+  color: #61daff;
 }
 </style>
-
