@@ -19,6 +19,7 @@
     <CodeInputModal
       v-if="showCodeInput"
       :phone="registerPhone"
+      :password="tempPassword"
       :isRestore="isRestore"
       @close="closeAll"
       @verified="handleVerified"
@@ -57,7 +58,8 @@ export default {
       showLogin: false,
       showDashboard: false,
       registerPhone: '',
-      isRestore: false, // Добавляем флаг для восстановления пароля
+      tempPassword: '',
+      isRestore: false,
       amocrmData: null,
     };
   },
@@ -67,19 +69,22 @@ export default {
       this.showCodeInput = false;
       this.showLogin = false;
       this.showDashboard = false;
-      this.isRestore = false; // Сбрасываем флаг
+      this.isRestore = false;
+      this.tempPassword = '';
     },
-    handleRegistered({ phone }) {
+    handleRegistered({ phone, password }) {
       this.registerPhone = phone;
+      this.tempPassword = password;
       this.showRegister = false;
       this.showCodeInput = true;
-      this.isRestore = false; // Регистрация, не восстановление
+      this.isRestore = false;
     },
     handleRestore({ phone }) {
       this.registerPhone = phone;
+      this.tempPassword = '';
       this.showLogin = false;
       this.showCodeInput = true;
-      this.isRestore = true; // Восстановление пароля
+      this.isRestore = true;
     },
     async handleVerified(token) {
       this.token = token;
@@ -87,7 +92,8 @@ export default {
       await this.fetchAmoCrmData();
       this.showCodeInput = false;
       this.showDashboard = true;
-      this.isRestore = false; // Сбрасываем после верификации
+      this.isRestore = false;
+      this.tempPassword = '';
     },
     async handleLoggedIn(token) {
       this.token = token;

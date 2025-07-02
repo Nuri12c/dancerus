@@ -25,8 +25,8 @@ export default {
     return {
       localPhone: this.phone || '+7 ',
       password: '',
-      notification: '', // Текст для уведомления
-      notifyTimer: null, // Таймер очистки
+      notification: '',
+      notifyTimer: null,
     };
   },
   watch: {
@@ -78,8 +78,8 @@ export default {
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success') {
-            this.showToast('Регистрация успешна!');
-            this.$emit('registered', { phone: formattedPhone });
+            this.showToast('Код отправлен в WhatsApp!');
+            this.$emit('registered', { phone: formattedPhone, password: this.password });
           } else {
             this.showToast(data.message || 'Ошибка регистрации');
           }
@@ -91,10 +91,6 @@ export default {
   },
 };
 </script>
-
-
-
-
 <style scoped>
 .modal {
   position: fixed;
