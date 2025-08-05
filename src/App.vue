@@ -103,26 +103,27 @@ export default {
       this.showDashboard = true;
     },
     async fetchAmoCrmData() {
-      try {
-        const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${this.token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        if (data.status === 'success') {
-          this.amocrmData = data.amocrm_response;
-        } else {
-          alert('Ошибка AmoCRM: ' + data.message);
-          this.amocrmData = null;
-        }
-      } catch {
-        alert('Ошибка сети при запросе AmoCRM');
-        this.amocrmData = null;
-      }
-    },
+  try {
+    const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: this.token, fetch: 'contact' }), // Добавляем параметр fetch
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+      this.amocrmData = data.amocrm_response; // Ожидаем данные контакта
+    } else {
+      alert('Ошибка AmoCRM: ' + data.message);
+      this.amocrmData = null;
+    }
+  } catch {
+    alert('Ошибка сети при запросе AmoCRM');
+    this.amocrmData = null;
+  }
+},
     logout() {
       this.token = null;
       localStorage.removeItem('token');
