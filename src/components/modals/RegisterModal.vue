@@ -1,25 +1,36 @@
 <template>
-  <div class="modal">
-    <h2>Регистрация</h2>
+  <div class="register-modal">
+    <h2 class="register-modal__title">Регистрация</h2>
     <input
+      class="register-modal__input"
       v-model="localPhone"
       placeholder="+7 900 000 00 00"
       @input="formatPhone"
       maxlength="16"
     />
-    <input v-model="password" type="password" placeholder="Пароль" />
-    <button @click="register">Зарегистрироваться</button>
-    <button @click="$emit('close')">Отмена</button>
-
-    <!-- Плашка уведомления -->
-    <div v-if="notification" class="toast">{{ notification }}</div>
+    <input
+      class="register-modal__input"
+      v-model="password"
+      type="password"
+      placeholder="Пароль"
+    />
+    <button class="register-modal__button" @click="register">Зарегистрироваться</button>
+    <button class="register-modal__button" @click="$emit('close')">Отмена</button>
+    <div v-if="notification" class="register-modal__toast">{{ notification }}</div>
   </div>
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth.js';
+
+
 export default {
   props: {
     phone: String,
+  },
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
   },
   data() {
     return {

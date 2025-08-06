@@ -23,9 +23,12 @@ export default {
 
 <style scoped>
 .header {
-  background: linear-gradient(90deg, #61daff, #42b8e0);
+  width: 100%;
+  background-color: #ffffff00;
+  margin-top: 0;
   padding: 12px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
 }
 
 .container {

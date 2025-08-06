@@ -1,25 +1,38 @@
 <template>
-  <div class="modal">
-    <h2>Введите 4-значный код из WhatsApp</h2>
-    <input v-model="code" maxlength="4" placeholder="Код" />
+  <div class="code-input-modal">
+    <h2 class="code-input-modal__title">Введите 4-значный код из WhatsApp</h2>
+    <input
+      class="code-input-modal__input"
+      v-model="code"
+      maxlength="4"
+      placeholder="Код"
+    />
     <input
       v-if="isRestore"
+      class="code-input-modal__input"
       v-model="newPassword"
       type="password"
       placeholder="Новый пароль"
     />
-    <button @click="verifyCode">Подтвердить</button>
-    <button @click="resendCode">Отправить ещё раз</button>
-    <button @click="$emit('close')">Отмена</button>
-    <div v-if="notification" class="toast">{{ notification }}</div>
+    <button class="code-input-modal__button" @click="verifyCode">Подтвердить</button>
+    <button class="code-input-modal__button" @click="resendCode">Отправить ещё раз</button>
+    <button class="code-input-modal__button" @click="$emit('close')">Отмена</button>
+    <div v-if="notification" class="code-input-modal__toast">{{ notification }}</div>
   </div>
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth.js';
+
+
 export default {
   props: {
     phone: String,
-    isRestore: { type: Boolean, default: false }, // Флаг для восстановления пароля
+    isRestore: { type: Boolean, default: false },
+  },
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
   },
   data() {
     return {
@@ -61,6 +74,7 @@ export default {
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success' && data.token) {
+            this.authStore.setToken(data.token);
             this.showToast(this.isRestore ? 'Пароль успешно изменён!' : 'Код подтверждён! Вы вошли в систему.');
             this.$emit('verified', data.token);
           } else {
@@ -90,7 +104,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .modal {
   position: fixed;

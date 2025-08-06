@@ -1,10 +1,13 @@
 
 <template>
-  <div class="content">
+  <div class="container container_hero">
+ <div class="content">
     <h2>Добро пожаловать на сайт!</h2>
     <p>Это контент для незалогиненных пользователей или режима "Сайт".</p>
     <!-- Добавьте свой контент здесь -->
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -13,7 +16,6 @@ export default {};
 <style scoped>
 .content {
   max-width: 800px;
-  margin: 40px auto;
   padding: 30px;
   background: #f9f9f9;
   border-radius: 10px;

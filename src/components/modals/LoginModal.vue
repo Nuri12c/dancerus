@@ -1,25 +1,34 @@
-
 <template>
-  <div class="modal">
-    <h2>Логин</h2>
+  <div class="login-modal">
+    <h2 class="login-modal__title">Логин</h2>
     <input
+      class="login-modal__input"
       v-model="phone"
       placeholder="+7 900 000 00 00"
       @input="formatPhone"
       maxlength="16"
     />
-    <input v-model="password" type="password" placeholder="Пароль" />
-    <button @click="login">Войти</button>
-    <button v-if="showRestoreButton" @click="restorePassword">Восстановить пароль</button>
-    <button @click="close">Отмена</button>
-
-    <!-- Плашка уведомления -->
-    <div v-if="notification" class="toast">{{ notification }}</div>
+    <input
+      class="login-modal__input"
+      v-model="password"
+      type="password"
+      placeholder="Пароль"
+    />
+    <button class="login-modal__button" @click="login">Войти</button>
+    <button v-if="showRestoreButton" class="login-modal__button" @click="restorePassword">Восстановить пароль</button>
+    <button class="login-modal__button" @click="close">Отмена</button>
+    <div v-if="notification" class="login-modal__toast">{{ notification }}</div>
   </div>
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth.js';
+
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
+  },
   data() {
     return {
       phone: '+7 ',
@@ -34,31 +43,28 @@ export default {
       this.notification = message;
       clearTimeout(this.notifyTimer);
       this.notifyTimer = setTimeout(() => {
-        this.notification = ''; // Сбрасываем только уведомление
+        this.notification = '';
       }, 3000);
     },
     formatPhone() {
       let digits = this.phone.replace(/\D/g, '');
-
       if (digits.startsWith('8')) {
         digits = '7' + digits.slice(1);
       } else if (digits.startsWith('77')) {
         digits = '7' + digits.slice(2);
       }
-
       let formatted = '+7 ';
       if (digits.length > 1) formatted += digits.slice(1, 4);
       if (digits.length >= 4) formatted += ' ' + digits.slice(4, 7);
       if (digits.length >= 7) formatted += ' ' + digits.slice(7, 9);
       if (digits.length >= 9) formatted += ' ' + digits.slice(9, 11);
-
       this.phone = formatted.trim();
     },
     login() {
       const rawDigits = this.phone.replace(/\D/g, '');
       if (rawDigits.length !== 11 || !this.password) {
         this.showToast('Введите корректный номер и пароль');
-        this.showRestoreButton = false; // Сбрасываем при некорректных данных
+        this.showRestoreButton = false;
         return;
       }
       const formattedPhone = '+' + rawDigits;
@@ -74,8 +80,9 @@ export default {
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success' && data.token) {
+            this.authStore.setToken(data.token);
             this.showToast('Вы успешно вошли!');
-            this.showRestoreButton = false; // Сбрасываем при успешном входе
+            this.showRestoreButton = false;
             this.$emit('logged-in', data.token);
           } else {
             this.showToast(data.message || 'Ошибка входа');
@@ -107,11 +114,11 @@ export default {
         .then(data => {
           if (data.status === 'success') {
             this.showToast('Код отправлен в WhatsApp!');
-            this.showRestoreButton = false; // Сбрасываем после отправки
+            this.showRestoreButton = false;
             this.$emit('restore-initiated', { phone: formattedPhone });
           } else {
             this.showToast(data.message || 'Ошибка восстановления');
-            this.showRestoreButton = true; // Оставляем кнопку, если ошибка
+            this.showRestoreButton = true;
           }
         })
         .catch(() => {
@@ -120,14 +127,13 @@ export default {
         });
     },
     close() {
-      this.showRestoreButton = false; // Сбрасываем при закрытии
+      this.showRestoreButton = false;
       this.notification = '';
       this.$emit('close');
     },
   },
 };
 </script>
-
 
 
 <style scoped>

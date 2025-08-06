@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderApp
-      :token="token"
+      :token="authStore.token"
       @open-register="showRegister = true"
       @open-login="showLogin = true"
       @open-dashboard="showDashboard = true"
@@ -33,13 +33,15 @@
   </div>
 </template>
 
+
 <script>
-import HeaderApp from './components/HeaderApp.vue';
-import GuestContent from './components/GuestContent.vue';
-import RegisterModal from './components/RegisterModal.vue';
-import CodeInputModal from './components/CodeInputModal.vue';
-import LoginModal from './components/LoginModal.vue';
-import DashboardModal from './components/DashboardModal.vue';
+import { useAuthStore } from './stores/auth.js';
+import HeaderApp from "./components/HeaderApp/HeaderApp.vue";
+import GuestContent from "./components/guest-content/GuestContent.vue";
+import RegisterModal from "./components/modals/RegisterModal.vue";
+import CodeInputModal from "./components/modals/CodeInputModal.vue";
+import LoginModal from "./components/modals/LoginModal.vue";
+import DashboardModal from "./components/modals/DashboardModal.vue";
 
 export default {
   components: {
@@ -52,7 +54,6 @@ export default {
   },
   data() {
     return {
-      token: localStorage.getItem('token') || null,
       showRegister: false,
       showCodeInput: false,
       showLogin: false,
@@ -62,6 +63,10 @@ export default {
       isRestore: false,
       amocrmData: null,
     };
+  },
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
   },
   methods: {
     closeAll() {
@@ -87,8 +92,7 @@ export default {
       this.isRestore = true;
     },
     async handleVerified(token) {
-      this.token = token;
-      localStorage.setItem('token', token);
+      this.authStore.setToken(token);
       await this.fetchAmoCrmData();
       this.showCodeInput = false;
       this.showDashboard = true;
@@ -96,37 +100,34 @@ export default {
       this.tempPassword = '';
     },
     async handleLoggedIn(token) {
-      this.token = token;
-      localStorage.setItem('token', token);
+      this.authStore.setToken(token);
       await this.fetchAmoCrmData();
       this.showLogin = false;
       this.showDashboard = true;
     },
     async fetchAmoCrmData() {
-  try {
-    const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: this.token, fetch: 'contact' }), // Добавляем параметр fetch
-    });
-    const data = await response.json();
-    if (data.status === 'success') {
-      this.amocrmData = data.amocrm_response; // Ожидаем данные контакта
-    } else {
-      alert('Ошибка AmoCRM: ' + data.message);
-      this.amocrmData = null;
-    }
-  } catch {
-    alert('Ошибка сети при запросе AmoCRM');
-    this.amocrmData = null;
-  }
-},
+      try {
+        const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.authStore.token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+          this.amocrmData = data.amocrm_response;
+        } else {
+          alert('Ошибка AmoCRM: ' + data.message);
+          this.amocrmData = null;
+        }
+      } catch {
+        alert('Ошибка сети при запросе AmoCRM');
+        this.amocrmData = null;
+      }
+    },
     logout() {
-      this.token = null;
-      localStorage.removeItem('token');
+      this.authStore.clearToken();
       this.amocrmData = null;
       this.closeAll();
       alert('Вы вышли из системы');
@@ -135,18 +136,19 @@ export default {
       this.showDashboard = false;
     },
     async checkToken() {
-      if (this.token) {
+      if (this.authStore.token) {
         try {
           const response = await fetch('https://letsdancescores.tech/api/check_token.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: this.token }),
+            body: JSON.stringify({ token: this.authStore.token }),
           });
           const data = await response.json();
           if (!data.success) {
             this.logout();
           } else {
             await this.fetchAmoCrmData();
+            this.showDashboard = true;
           }
         } catch {
           alert('Ошибка проверки токена');
