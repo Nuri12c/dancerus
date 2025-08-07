@@ -4,6 +4,7 @@
       :token="authStore.token"
       @open-register="showRegister = true"
       @open-login="showLogin = true"
+      @open-auth-modal="showAuthModal = true"
       @open-dashboard="showDashboard = true"
       @switch-to-site="switchToSite"
       @logout="logout"
@@ -30,18 +31,24 @@
       @logged-in="handleLoggedIn"
       @restore-initiated="handleRestore"
     />
+    <AuthModal
+      v-if="showAuthModal"
+      @close="closeAll"
+      @open-login="showLogin = true; showAuthModal = false"
+      @open-register="showRegister = true; showAuthModal = false"
+    />
   </div>
 </template>
 
-
 <script>
 import { useAuthStore } from './stores/auth.js';
-import HeaderApp from "./components/HeaderApp/HeaderApp.vue";
-import GuestContent from "./components/guest-content/GuestContent.vue";
-import RegisterModal from "./components/modals/RegisterModal.vue";
-import CodeInputModal from "./components/modals/CodeInputModal.vue";
-import LoginModal from "./components/modals/LoginModal.vue";
-import DashboardModal from "./components/modals/DashboardModal.vue";
+import HeaderApp from './components/HeaderApp/HeaderApp.vue';
+import GuestContent from './components/guest-content/GuestContent.vue';
+import RegisterModal from './components/modals/RegisterModal.vue';
+import CodeInputModal from './components/modals/CodeInputModal.vue';
+import LoginModal from './components/modals/LoginModal.vue';
+import DashboardModal from './components/registered-content/DashboardModal.vue';
+import AuthModal from './components/modals/AuthModal.vue';
 
 export default {
   components: {
@@ -51,12 +58,14 @@ export default {
     CodeInputModal,
     LoginModal,
     DashboardModal,
+    AuthModal,
   },
   data() {
     return {
       showRegister: false,
       showCodeInput: false,
       showLogin: false,
+      showAuthModal: false, // Новое состояние
       showDashboard: false,
       registerPhone: '',
       tempPassword: '',
@@ -73,6 +82,7 @@ export default {
       this.showRegister = false;
       this.showCodeInput = false;
       this.showLogin = false;
+      this.showAuthModal = false;
       this.showDashboard = false;
       this.isRestore = false;
       this.tempPassword = '';
@@ -103,6 +113,7 @@ export default {
       this.authStore.setToken(token);
       await this.fetchAmoCrmData();
       this.showLogin = false;
+      this.showAuthModal = false;
       this.showDashboard = true;
     },
     async fetchAmoCrmData() {

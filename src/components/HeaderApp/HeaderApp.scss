@@ -1,0 +1,29 @@
+@import '@/styles/mixins.scss';
+
+.header {
+  margin-top: 40px;
+  width: 100vw;
+  background-color: #ffffff00;
+  justify-content: space-between;
+  position: fixed;
+  display: flex;
+  align-items: center; /* Вертикальное центрирование */
+  color: $every;
+  padding-left: 47px;
+  height: 78px;
+}
+
+.logo {
+  display: flex;
+  align-items: center; /* Выравнивание логотипа и текста по вертикали */
+  gap: 10px; /* Отступ между иконкой и текстом */
+}
+
+.icon {
+  width: 77px; /* Укажите ширину логотипа */
+  height: 77px; /* Укажите высоту логотипа */
+  background-image: url('@/assets/Logo.png'); /* Путь к вашему логотипу */
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+

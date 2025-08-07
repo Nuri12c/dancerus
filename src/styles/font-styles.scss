@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'Oswald'; /* Исправлено название */
+  src: url('../assets/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 800; /* Диапазон весов для переменного шрифта */
+  font-style: normal;
+  font-display: swap; /* Рекомендуется для оптимизации загрузки */
+}
+
+@font-face {
+  font-family: 'Inter'; /* Исправлено название */
+  src: url('../assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 200 800; /* Диапазон весов для переменного шрифта */
+  font-style: normal;
+  font-display: swap; /* Рекомендуется для оптимизации загрузки */
+}
+
+h1 {
+  font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
+  font-weight: 500; /* Укажите нужный вес */
+  font-size: 80px;
+  text-transform: uppercase;
+}
+h3 {
+  font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
+  font-weight: 400; /* Укажите нужный вес */
+  font-size: 36px;
+  text-transform: uppercase;
+}
+p {
+  font-family: 'Inter', sans-serif; /* Добавлен запасной шрифт */
+  font-weight: 200; /* Укажите нужный вес */
+  font-size: 24px;
+}
