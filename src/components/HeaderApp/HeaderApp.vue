@@ -36,52 +36,5 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  margin-top: 40px;
-  width: 100%;
-  background-color: #ffffff00;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 47px;
-  padding-right: 47px;
-  height: 78px;
-}
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.icon {
-  width: 40px;
-  height: 40px;
-  background-image: url('@/assets/Logo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.logo__text {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  margin: 0;
-  font-size: 18px;
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.buttons button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-}
 </style>

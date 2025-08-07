@@ -65,7 +65,7 @@ export default {
       showRegister: false,
       showCodeInput: false,
       showLogin: false,
-      showAuthModal: false, // Новое состояние
+      showAuthModal: false,
       showDashboard: false,
       registerPhone: '',
       tempPassword: '',

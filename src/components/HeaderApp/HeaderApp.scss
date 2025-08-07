@@ -2,14 +2,15 @@
 
 .header {
   margin-top: 40px;
-  width: 100vw;
+  width: 100%;
   background-color: #ffffff00;
   justify-content: space-between;
   position: fixed;
   display: flex;
   align-items: center; /* Вертикальное центрирование */
   color: $every;
-  padding-left: 47px;
+  padding: 0 47px; /* Объединяем padding-left и padding-right */
+  box-sizing: border-box; /* Учитываем padding в ширине */
   height: 78px;
 }
 
