@@ -16,7 +16,8 @@
 }
 
 .header.fixed {
-  top: 0; /* закреплённое положение */
+  top: 0px; /* закреплённое положение */
+  height: 90px;
   background-color: #26262676;
   backdrop-filter: blur(10px);
   border-radius: 0 0 10px 10px;

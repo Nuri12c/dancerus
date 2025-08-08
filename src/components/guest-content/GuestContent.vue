@@ -1,19 +1,22 @@
 
 <template>
   <body>
-    <section-hero/>
+    <sectionHero/>
     <sectionContest/>
+    <sectionRevievs/>
   </body>
 </template>
 
 <script>
-import sectionHero from "./hero/sectionHero.vue";
-import sectionContest from "./contests/sectionContest.vue";
+import sectionHero from "./section-hero/sectionHero.vue";
+import sectionContest from "./section-contests/sectionContest.vue";
+import sectionRevievs from "./section-reviews/sectionReviews.vue";
 
 export default {
   components: {
     sectionHero,
-    sectionContest
+    sectionContest,
+    sectionRevievs
   },
 };
 </script>
