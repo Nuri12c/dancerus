@@ -1,30 +1,43 @@
-@import '@/styles/mixins.scss';
-
 .header {
-  margin-top: 40px;
+  position: fixed;
+  top: 40px; /* стартовое положение */
+  left: 0;
   width: 100%;
   background-color: #ffffff00;
   justify-content: space-between;
-  position: fixed;
   display: flex;
-  align-items: center; /* Вертикальное центрирование */
+  align-items: center;
   color: $every;
-  padding: 0 47px; /* Объединяем padding-left и padding-right */
-  box-sizing: border-box; /* Учитываем padding в ширине */
+  padding: 0 47px;
+  box-sizing: border-box;
   height: 78px;
+  transition: top 0.3s ease; /* плавное движение */
+  z-index: 999;
+}
+
+.header.fixed {
+  top: 0; /* закреплённое положение */
+  background-color: #26262676;
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 10px 10px;
 }
 
 .logo {
   display: flex;
-  align-items: center; /* Выравнивание логотипа и текста по вертикали */
-  gap: 10px; /* Отступ между иконкой и текстом */
+  align-items: center;
+  gap: 10px;
 }
 
 .icon {
-  width: 77px; /* Укажите ширину логотипа */
-  height: 77px; /* Укажите высоту логотипа */
-  background-image: url('@/assets/Logo.png'); /* Путь к вашему логотипу */
+  width: 77px;
+  height: 77px;
+  background-image: url('@/assets/Logo.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
 
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

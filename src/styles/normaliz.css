@@ -15,7 +15,12 @@ html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
-
+b {
+  font-weight: 500;
+}
+button {
+  cursor: pointer;
+}
 /* Sections
    ========================================================================== */
 

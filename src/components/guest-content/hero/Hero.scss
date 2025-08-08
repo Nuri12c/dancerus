@@ -1,0 +1,39 @@
+@import '@/styles/mixins.scss';
+
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  background: url('@/assets/images/HeroBG.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__container {
+  flex: 1;
+  padding: 118px 47px 103px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero__heading {
+  color: $every;
+}
+
+.hero__content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.hero__text {
+  width: 60%;
+}
+
+p {
+  color: $every;
+}

@@ -1,16 +1,19 @@
 
 <template>
   <body>
-    <qs-hero />
+    <section-hero/>
+    <sectionContest/>
   </body>
 </template>
 
 <script>
-import QsHero from "./hero/qcHero.vue";
+import sectionHero from "./hero/sectionHero.vue";
+import sectionContest from "./contests/sectionContest.vue";
 
 export default {
   components: {
-    QsHero,
+    sectionHero,
+    sectionContest
   },
 };
 </script>
