@@ -1,20 +1,22 @@
 .reviews {
-  padding: 20px 162px;
+  padding: 1.85% 8.44%;
+
 
   background-color: $every;
 }
 
 .reviews__title {
-  margin-bottom: 64px;
-  text-align: center;
+  margin-bottom: calc(20px + 1.56vw);
 }
 
 .reviews__card {
   background: url('@/assets/images/Card.png');
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 47px 50px;
-  max-height: 415px;
+  padding: calc(14px + 1.45vw) calc(26px + 1.04vw);
+ max-height: 21.6vw; /* 415px / 1920px * 100% ≈ 21.6vw */
+
+
   display: flex;
   flex-direction: column;
   border-radius: 24px;
@@ -23,47 +25,50 @@
   width: 80%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: calc(11px + 1.14vw);
+  margin-left: 3.39%; /* 65 / 1920 * 100 */
+
 }
 .reviews__heading {
-  font-size: 24px;
+  font-size: calc(8px + 0.84vw);
   font-weight: 600;
   color: $grey;
-  margin-bottom: 14px;
+  margin-bottom: calc(5px + 0.56vw);
+  line-height: 0;
 }
 .reviews__text {
-  font-size: 18px;
+  font-size: 0.94vw;
   color: $grey;
   font-weight: 400;
-  margin-bottom: 25px;
+  margin-bottom: calc(7px + 0.67vw);
   line-height: 150%;
 }
 .reviews__autor {
   display: flex;
 }
 .reviews__author-img {
-  width: 60px;
-  height: 60px;
+  width: 3.13vw;
+height: 3.13vw;
   display: block;
-  margin-right: 12px;
+ margin-right: calc(4px + 0.63vw);
 }
 
 
 .autor__card-text {
-  font-size: 14px;
+ font-size: calc(8px + 0.50vw);
   font-weight: bold;
   color: $grey;
 }
 
 .autor__card-city {
-  font-size: 14px;
+  font-size: calc(7px + 0.47vw);
   color: $grey;
 }
 
 
 
 .reviews__controls {
-  margin-top: 15px;
+  margin-top: calc(5px + 0.78vw);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,13 +77,13 @@
 
 .reviews__counter {
   font-family: 'Inter', sans-serif;
-  font-size: 20px;
+ font-size: calc(8px + 0.42vw);
   color: $grey;
 }
 
 .reviews__buttons {
   display: flex;
-  gap: 8px;
+  gap: calc(2px + 0.42vw);
 
 }
 

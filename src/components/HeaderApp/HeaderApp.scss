@@ -1,6 +1,6 @@
 .header {
   position: fixed;
-  top: 40px; /* стартовое положение */
+  top: 1.6vw; /* 40px при 1920px */
   left: 0;
   width: 100%;
   background-color: #ffffff00;
@@ -8,16 +8,15 @@
   display: flex;
   align-items: center;
   color: $every;
-  padding: 0 47px;
+  padding: 2.45vw; /* 47px при 1920px */
   box-sizing: border-box;
-  height: 78px;
+  height: 4.06vw; /* 78px при 1920px */
   transition: top 0.3s ease; /* плавное движение */
-  z-index: 999;
 }
 
 .header.fixed {
   top: 0px; /* закреплённое положение */
-  height: 90px;
+ height: 4.69vw;  /* 90px при 1920px */
   background-color: #26262676;
   backdrop-filter: blur(10px);
   border-radius: 0 0 10px 10px;
@@ -26,12 +25,12 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.52vw;
 }
 
 .icon {
-  width: 77px;
-  height: 77px;
+  width: 4.01vw;
+  height: 4.01vw;
   background-image: url('@/assets/Logo.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -39,6 +38,16 @@
 
 .buttons {
   display: flex;
+  width: 55.91vw;
   align-items: center;
-  gap: 10px;
+  gap: 2.29vw; /* 44px / 1920px ≈ 2.292% - 0.521% = 1.771vw */
+
+}
+.watsapp-button {
+  background: url('@/assets/images/Vector.svg');
+  width:  2.92vw; /* 56px при 1920px */
+  height:  2.92vw; /* 56px при 1920px */
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
 }

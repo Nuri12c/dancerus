@@ -1,4 +1,3 @@
-
 <template>
   <section class="reviews">
     <h2 class="reviews__title">ОТЗЫВЫ</h2>
@@ -6,7 +5,7 @@
     <swiper
       :modules="[Navigation]"
       :slides-per-view="3"
-      :space-between="42"
+      :space-between="spaceBetween"
       :allow-touch-move="true"
       :breakpoints="{
         320: { slidesPerView: 1 },
@@ -54,21 +53,18 @@
         <button
           class="reviews__button reviews__button--prev"
           @click="slidePrev"
-        >
-
-        </button>
+        ></button>
         <button
           class="reviews__button reviews__button--next rotate"
           @click="slideNext"
-        >
-
-        </button>
+        ></button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -141,9 +137,25 @@ export default {
         city: "Москва, Россия",
         img: require("@/assets/images/Profile.png"),
       }
+
     ];
 
-    return { reviews, Navigation };
+    // spaceBetween адаптивный: например 2vw
+    const spaceBetween = ref(Math.round(window.innerWidth * 0.02));
+
+    const updateSpaceBetween = () => {
+      spaceBetween.value = Math.round(window.innerWidth * 0.02);
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", updateSpaceBetween);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", updateSpaceBetween);
+    });
+
+    return { reviews, Navigation, spaceBetween };
   },
   data() {
     return {
@@ -176,4 +188,5 @@ export default {
 </script>
 
 <style scoped>
+/* сюда добавь свои стили */
 </style>

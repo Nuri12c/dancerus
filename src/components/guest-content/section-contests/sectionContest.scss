@@ -1,36 +1,38 @@
 .contest {
-  padding: 64px 161px;
+  padding: 5.93% 15.10%;
   color: $grey;
   background-color: $every;
 }
 
 .contest__title {
-  text-align: center;
   margin-bottom: 64px;
 }
 
 .contest__cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 70px;
+  gap: 32px;
   list-style: none;
   padding: 0;
 }
 
 .contest__card {
   flex: 1 1 calc(25% - 14px);
-  border-radius: 8px;
+
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+
 }
 
 .contest__img-element {
   margin-top: 0;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   margin-bottom: 24px;
+  height: 250px;
+  border-radius: 16px;
 }
 
 .contest__content {
@@ -48,11 +50,11 @@
 
 .contest__heading {
   font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
-  font-size: 32px;
+  font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 0;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .contest__date {
@@ -67,6 +69,7 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+
 }
 
 .contest__button-element {
@@ -74,9 +77,9 @@
   color: #252525;
   opacity: 0.4;
   background-color: #ffffff00;
-  font-size: 24px;
+  font-size: 20px;
   border: none;
-
+  padding: 0;
 }
 
 .contest__button-icon {

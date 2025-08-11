@@ -6,41 +6,40 @@ $grey: #262626;
 
 // buttons
 .button-1 {
-  padding: 18px 24px;
-  height: min-content;
+  padding: calc(10px + 0.417vw) calc(10px + 0.729vw); /* 18px и 24px при 1920px */
+  height: 4.06vw;
   background-color: #ffffff00;
-  border: 2px solid white;
+  border: 0.10vw solid white; /* 2px при 1920px */
   color: white;
-  border-radius: 10px;
-  font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
-  font-weight: 200; /* Укажите нужный вес */
-  font-size: 32px;
+  border-radius: 0.52vw; /* 10px при 1920px */
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+ font-size: 1.67vw; /* 32px при 1920px */
   text-transform: uppercase;
 }
 
 .button-2 {
-  padding: 18px 24px;
-  height: min-content;
+  padding: 0.94vw 1.25vw; /* 18px и 24px при 1920px */
+  height: 4.06vw;
   background-color: #ffffff00;
-  border: 2px solid white;
+  border:  0.10vw solid white; /* 2px при 1920px */
   color: white;
-  border-radius: 5px;
-  font-family: 'Inter', sans-serif; /* Добавлен запасной шрифт */
-  font-weight: 200; /* Укажите нужный вес */
-  font-size: 24px;
+  border-radius: 0.26vw; /* 5px при 1920px */
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+  font-size: 1.25vw; /* 24px при 1920px */
+  white-space: nowrap;
 }
+
 .button-3 {
   height: min-content;
   background-color: #ffffff00;
   border: none;
   color: white;
-  font-family: 'Inter', sans-serif; /* Добавлен запасной шрифт */
-  font-weight: 400; /* Укажите нужный вес */
-  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.25vw; /* 24px при 1920px */
 }
-.watsapp-button {
-  background: url('@/assets/images/Vector.svg');
-  width: 56px;
-  height: 56px;
-  border: none;
-}
+
+
+
