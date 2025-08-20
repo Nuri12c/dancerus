@@ -1,15 +1,94 @@
-<template class="why">
-  <div class="why__container">
-    <h2 class="why__title">ПОЧЕМУ НАС ВЫБИРАЮТ?</h2>
-    <div class="why__cards">
-      <div class="why__card"><slot name="card-1"></slot></div>
-      <div class="why__card"><slot name="card-2"></slot></div>
-      <div class="why__card"><slot name="card-3"></slot></div>
-      <div class="why__card"><slot name="card-4"></slot></div>
-      <div class="why__card"><slot name="card-5"></slot></div>
-      <div class="why__card"><slot name="card-6"></slot></div>
+<template>
+  <section class="why">
+    <div class="why__container">
+      <h2 class="why__title">ПОЧЕМУ НАС ВЫБИРАЮТ?</h2>
+      <div class="why__cards">
+        <div class="why__card">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">1</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">ОРГАНИЗАЦИЯ</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__card why__card--violet">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">2</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">МНОГОЭТАПНОСТЬ</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__card">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">3</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">ВЫЕЗДНЫЕ КОНКУРСЫ</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__card why__card--violet">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">4</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">ЖЮРИ</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__card">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">5</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">ЭЛЕКТРОННЫЙ ФОРМАТ ОЦЕНОК</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__card why__card--violet">
+          <div class="why__card-content">
+            <div class="why__card-header">
+              <div class="why__card-number">6</div>
+            </div>
+            <div class="why__card-description">
+              <button class="button-2 why__card-button">РАЗВИТИЕ КОЛЛЕКТИВОВ</button>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+              <li class="why__card-text">Информация</li>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -17,34 +96,4 @@ export default {};
 </script>
 
 <style scoped>
-.why__container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.why__title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.why__cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.why__card {
-  background: #f5f5f5;
-  border-radius: 8px;
-  padding: 20px;
-  min-height: 150px;
-}
-
-@media (max-width: 768px) {
-  .why__cards {
-    grid-template-columns: 1fr;
-  }
-}
 </style>

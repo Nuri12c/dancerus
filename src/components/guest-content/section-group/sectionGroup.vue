@@ -1,20 +1,44 @@
-<template class="group">
-  <div class="group__container">
+<template >
+  <section class="group">
     <h2 class="group__title">Сообщество “Танцуй, Россия”</h2>
     <div class="group__cards">
-      <div class="group__card group__card--left">
+      <div class="group__card group__card-left">
         <slot name="card-left"></slot>
       </div>
       <div class="group__cards-right">
         <div class="group__card group__card--right-top">
-          <slot name="card-right-top"></slot>
+          <slot name="card-right-top">
+            <h3 class="group__card-heading">ФОКУС ГРУППА</h3>
+            <p class="group__card-p">
+              Выгодное в соотношении качества/цены, главное, что поддержка
+              коллектива идет на каждом этапе конкурса, все понятно доносят,
+              условия проживания комфортные, команада “Танцуй, Россия” очень
+              отзычивая.
+            </p>
+            <div class="contest__button">
+            <button class="contest__button-element">Узнать подробнее</button>
+            <span class="contest__button-icon"></span>
+          </div>
+          </slot>
         </div>
         <div class="group__card group__card--right-bottom">
-          <slot name="card-right-bottom"></slot>
+          <slot name="card-right-bottom">
+             <h3 class="group__card-heading">ЧАТ РУКОВОДИТЕЛЕЙ</h3>
+            <p class="group__card-p">
+              Выгодное в соотношении качества/цены, главное, что поддержка
+              коллектива идет на каждом этапе конкурса, все понятно доносят,
+              условия проживания комфортные, команада “Танцуй, Россия” очень
+              отзычивая.
+            </p>
+            <div class="contest__button">
+            <button class="contest__button-element">Узнать подробнее</button>
+            <span class="contest__button-icon"></span>
+          </div>
+          </slot>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -22,40 +46,4 @@ export default {};
 </script>
 
 <style scoped>
-.group__container {
-   padding: 20px 162px;
-}
-.group__cards {
-  display: flex;
-  gap: 20px;
-}
-
-.group__card {
-  background: #f5f5f5;
-  border-radius: 8px;
-  padding: 20px;
-  flex: 1;
-  min-height: 200px;
-}
-
-.group__cards-right {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 1;
-}
-
-@media (max-width: 768px) {
-  .group__cards {
-    flex-direction: column;
-  }
-
-  .group__card {
-    width: 100%;
-  }
-
-  .group__cards-right {
-    width: 100%;
-  }
-}
 </style>

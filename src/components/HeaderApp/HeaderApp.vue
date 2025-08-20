@@ -5,9 +5,15 @@
       <h3 class="logo__text">Танцуй, Россия</h3>
     </div>
 
-    <div class="buttons">
+    <button class="burger" :class="{ active: isMenuOpen }" @click="toggleMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="buttons" :class="{ open: isMenuOpen }">
       <button class="button-3">Главная</button>
-      <button class="button-3">Все конкурсы</button>
+      <button class="button-3" href="#contest">Все конкурсы</button>
       <button class="button-3">Подать заявку</button>
       <button class="button-3">Новости</button>
       <button class="watsapp-button"></button>
@@ -17,7 +23,6 @@
     </div>
   </header>
 </template>
-
 <script>
 export default {
   props: {
@@ -25,7 +30,8 @@ export default {
   },
   data() {
     return {
-      isFixed: false
+      isFixed: false,
+      isMenuOpen: false,
     };
   },
   methods: {
@@ -38,17 +44,21 @@ export default {
     },
     handleScroll() {
       this.isFixed = window.scrollY > 40;
-    }
+    },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+      document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+    },
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
-  }
+    document.body.style.overflow = '';
+  },
 };
 </script>
-
 <style scoped>
 
 </style>

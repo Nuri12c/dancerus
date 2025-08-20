@@ -1,0 +1,74 @@
+@import '@/styles/mixins.scss';
+.group {
+  background-color: $every;
+  padding: 1.041667vw 8.4375vw;
+}
+.group__title {
+  margin-bottom: 2.08vw;
+}
+
+
+.group__cards {
+  display: flex;
+  gap: 1.041667vw; /* 20px */
+
+}
+
+.group__card {
+  background: #f5f5f5;
+  border-radius: 0.416667vw; /* 8px */
+  flex: 1;
+  width: 40.94vw;
+
+   box-sizing: border-box;
+}
+
+.group__cards-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.041667vw; /* 20px */
+  flex: 1;
+
+
+}
+
+
+.group__card-left {
+  background: url('@/assets/images/228.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 29.48vw;
+  border-radius: 1.3vw; /* 8px */
+}
+
+.group__card--right-top,
+.group__card--right-bottom {
+  height: 14.74vw;
+  background: url('@/assets/images/Card-fon.svg'); /* Фиолетовый фон для правых карточек */
+     background-size: cover;
+ background-repeat: no-repeat;
+ padding-left: 2.60vw;
+ padding-right: 2.60vw;
+ cursor: pointer;
+transition: transform 0.3s ease; /* Плавный переход для зума */
+}
+
+
+
+.group__card--right-top:hover {
+  transform: scale(1.02); /* Увеличение на 5% */
+}
+
+.group__card--right-bottom:hover {
+  transform: scale(1.02); /* Увеличение на 5% */
+}
+
+.group__card-heading {
+  font-weight: 600;
+}
+.group__card-p {
+  font-size: 0.94vw;
+  line-height: 150%;
+  color: black;
+  font-weight: normal;
+}

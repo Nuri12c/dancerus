@@ -104,7 +104,7 @@
           </div>
           <div class="contest__button">
             <button class="contest__button-element">Узнать подробнее</button>
-            <span class="contest__button-icon">></span>
+            <span class="contest__button-icon"></span>
           </div>
         </div>
       </li>

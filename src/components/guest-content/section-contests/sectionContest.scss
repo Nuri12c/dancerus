@@ -5,24 +5,28 @@
 }
 
 .contest__title {
-  margin-bottom: 64px;
+  margin-bottom: 3.333333vw; /* 64px */
 }
 
 .contest__cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 1.666667vw; /* 32px */
   list-style: none;
   padding: 0;
 }
 
 .contest__card {
-  flex: 1 1 calc(25% - 14px);
-
+  flex: 1 1 calc(25% - 0.729167vw); /* 14px */
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  transition: transform 0.3s ease; /* Плавный переход для зума */
+}
 
+.contest__card:hover {
+  transform: scale(1.02); /* Увеличение на 5% */
 }
 
 .contest__img-element {
@@ -30,9 +34,9 @@
   width: 100%;
   object-fit: cover;
   display: block;
-  margin-bottom: 24px;
-  height: 250px;
-  border-radius: 16px;
+  margin-bottom: 1.25vw; /* 24px */
+  height: 13.020833vw; /* 250px */
+  border-radius: 0.833333vw; /* 16px */
 }
 
 .contest__content {
@@ -45,31 +49,30 @@
 .contest__text {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 0.520833vw; /* 10px */
 }
 
 .contest__heading {
-  font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
-  font-size: 24px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25vw; /* 24px */
   text-transform: uppercase;
   letter-spacing: 0;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 0.260417vw; /* 5px */
 }
 
 .contest__date {
   font-family: 'Inter', sans-serif;
- white-space: nowrap;
-  font-size: 16px;
-   font-weight: 400;
+  white-space: nowrap;
+  font-size: 0.833333vw; /* 16px */
+  font-weight: 400;
 }
 
 .contest__button {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.520833vw; /* 10px */
   cursor: pointer;
-
 }
 
 .contest__button-element {
@@ -77,14 +80,15 @@
   color: #252525;
   opacity: 0.4;
   background-color: #ffffff00;
-  font-size: 20px;
+  font-size: 1.041667vw; /* 20px */
   border: none;
   padding: 0;
 }
 
 .contest__button-icon {
   background: url('@/assets/images/strelka.svg');
-  width: 26px;
-  height: 26px;
+  background-size: contain;
+  width: 1.354167vw; /* 26px */
+  height: 1.354167vw; /* 26px */
   opacity: 0.4;
 }

@@ -39,3 +39,33 @@
 p {
   color: $every;
 }
+
+/* Адаптивные стили для мобильных устройств (ширина до 768px) */
+@media (max-width: 768px) {
+  .hero__container {
+  padding: 18.91% 4.98%;
+  justify-content: flex-start;
+
+}
+  .hero__heading {
+    font-size: 7.96vw; /* 32px при 402px */
+  }
+
+  .hero__text p {
+    font-size: 3.73vw; /* 15px при 402px */
+  }
+
+  .hero__text {
+    width: 100%; /* Занимает всю ширину на мобильных */
+    line-height: 1.5; /* Улучшает читаемость */
+  }
+
+  .hero__content {
+    flex-direction: column; /* Вертикальное расположение */
+    align-items: flex-start; /* Выравнивание по началу */
+  }
+
+  .button-1 {
+    margin-top: 1rem; /* Отступ сверху для кнопки */
+  }
+}
