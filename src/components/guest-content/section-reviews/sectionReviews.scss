@@ -100,3 +100,75 @@
 .rotate {
   transform: rotate(180deg); /* переворот */
 }
+
+@media (max-width: 768px) {
+  .reviews {
+    padding: 8.84vw 4.98vw; /* 35.52px и 20px при 402px */
+  }
+
+  .reviews__title {
+    margin-bottom: 12.44vw; /* 50px при 402px */
+    font-size: 7.96vw; /* 32px при 402px */
+  }
+
+  .reviews__card {
+    padding: 10.40vw 11.44vw; /* 41.8px и 46px при 402px */
+    max-height: none; /* Убираем ограничение высоты */
+    border-radius: 5.97vw; /* 24px при 402px */
+  }
+
+  .reviews__card-stars {
+    width: 90%; /* Чуть больше для мобильных */
+    margin-bottom: 8.18vw; /* 32.9px при 402px */
+    margin-left: 8vw; /* Уменьшено с 16.17vw для баланса */
+  }
+
+  .reviews__heading {
+    font-size: 5.99vw; /* 24.1px при 402px */
+    margin-bottom: 3.93vw; /* 15.8px при 402px */
+    line-height: 1.2; /* Улучшает читаемость */
+  }
+
+  .reviews__text {
+    font-size: 4.48vw; /* 18px при 402px */
+    margin-bottom: 4.95vw; /* 19.9px при 402px */
+    line-height: 1.5;
+  }
+
+  .reviews__autor {
+    display: flex;
+    align-items: center;
+  }
+
+  .reviews__author-img {
+    width: 14.93vw; /* 60px при 402px */
+    height: 14.93vw; /* 60px при 402px */
+    margin-right: 4.00vw; /* 16.1px при 402px */
+  }
+
+  .autor__card-text {
+    font-size: 4.38vw; /* 17.6px при 402px */
+  }
+
+  .autor__card-city {
+    font-size: 3.98vw; /* 16px при 402px */
+  }
+
+  .reviews__controls {
+    margin-top: 4.95vw; /* 19.9px при 402px */
+    padding-top: 4.98vw; /* 20px при 402px */
+  }
+
+  .reviews__counter {
+    font-size: 3.98vw; /* 16px при 402px */
+  }
+
+  .reviews__buttons {
+    gap: 2.49vw; /* 10px при 402px */
+  }
+
+  .reviews__button {
+    width: 9.95vw; /* 40px при 402px */
+    height: 9.95vw; /* 40px при 402px */
+  }
+}

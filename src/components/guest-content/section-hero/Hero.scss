@@ -43,10 +43,10 @@ p {
 /* Адаптивные стили для мобильных устройств (ширина до 768px) */
 @media (max-width: 768px) {
   .hero__container {
-  padding: 18.91% 4.98%;
-  justify-content: flex-start;
+    padding: 18.91% 4.98%;
+    justify-content: flex-start;
+  }
 
-}
   .hero__heading {
     font-size: 7.96vw; /* 32px при 402px */
   }
@@ -56,16 +56,12 @@ p {
   }
 
   .hero__text {
-    width: 100%; /* Занимает всю ширину на мобильных */
-    line-height: 1.5; /* Улучшает читаемость */
+    width: 100%;
+    line-height: 1.5;
   }
 
   .hero__content {
-    flex-direction: column; /* Вертикальное расположение */
-    align-items: flex-start; /* Выравнивание по началу */
-  }
-
-  .button-1 {
-    margin-top: 1rem; /* Отступ сверху для кнопки */
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

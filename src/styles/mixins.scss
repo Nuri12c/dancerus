@@ -1,8 +1,6 @@
-$every: #FCF5EB;
+$every: #fcf5eb;
 $grey: #262626;
-$violet: #8C66AD;
-
-
+$violet: #8c66ad;
 
 // buttons
 .button-1 {
@@ -12,9 +10,9 @@ $violet: #8C66AD;
   border: 0.15vw solid white; /* 2px при 1920px */
   color: white;
   border-radius: 0.52vw; /* 10px при 1920px */
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-weight: 200;
- font-size: 1.67vw; /* 32px при 1920px */
+  font-size: 1.67vw; /* 32px при 1920px */
   text-transform: uppercase;
 }
 
@@ -22,10 +20,10 @@ $violet: #8C66AD;
   padding: 0.94vw 1.25vw; /* 18px и 24px при 1920px */
   height: 4.06vw;
   background-color: #ffffff00;
-  border:  0.15vw solid white; /* 2px при 1920px */
+  border: 0.15vw solid white; /* 2px при 1920px */
   color: white;
   border-radius: 0.26vw; /* 5px при 1920px */
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 200;
   font-size: 1.25vw; /* 24px при 1920px */
   white-space: nowrap;
@@ -36,10 +34,42 @@ $violet: #8C66AD;
   background-color: #ffffff00;
   border: none;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 1.25vw; /* 24px при 1920px */
 }
 
-
-
+@media (max-width: 768px) {
+  .button-1 {
+    margin-top: 1rem !important;
+    padding: 2.985vw 5.97vw !important; /* 12px сверху/снизу, 24px слева/справа при 402px */
+    font-size: 3.98vw !important; /* 16px при 402px */
+    line-height: normal !important;
+    height: max-content;
+    border-radius: 10px;
+    border: 2px solid white;
+    box-sizing: border-box !important;
+  }
+  .button-3 {
+    font-size: 4.98vw;
+  }
+  .button-2 {
+    padding: 3.48vw 2.48vw; /* 18px при 402px */
+    height: 11.94vw; /* 48px при 402px */
+    width: 36.32vw; /* 146px при 402px */
+    background-color: #ffffff00;
+    border: 0.5vw solid white; /* 2px при 402px */
+    color: white;
+    border-radius: 1.24vw; /* 5px при 402px */
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+    font-size: 3.97vw; /* 24px при 402px */
+    white-space: nowrap;
+    order: -1; /* Личный кабинет в начало */
+  }
+  .watsapp-button {
+    order: 1; /* WhatsApp в конец */
+    width: 13.93vw; /* 56px при 402px */
+    height: 13.93vw; /* 56px при 402px */
+  }
+}

@@ -7,13 +7,15 @@
       :slides-per-view="3"
       :space-between="spaceBetween"
       :allow-touch-move="true"
+      :loop="true"
       :breakpoints="{
-        320: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
+        320: { slidesPerView: 1, slidesPerGroup: 1 },
+        768: { slidesPerView: 3, slidesPerGroup: 3 }
       }"
       @swiper="onSwiper"
       @slideChange="updateCounter"
+      @click="handleUserInteraction"
+      @touchStart="handleUserInteraction"
     >
       <swiper-slide v-for="(review, index) in reviews" :key="index">
         <div class="reviews__card">
@@ -44,9 +46,7 @@
     <!-- Панель управления -->
     <div class="reviews__controls">
       <!-- Счётчик слева -->
-      <span class="reviews__counter"
-        >{{ currentGroup }} из {{ totalGroups }}</span
-      >
+      <span class="reviews__counter">{{ counterText }}</span>
 
       <!-- Кнопки справа -->
       <div class="reviews__buttons">
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -137,56 +137,129 @@ export default {
         city: "Москва, Россия",
         img: require("@/assets/images/Profile.png"),
       }
-
     ];
 
-    // spaceBetween адаптивный: например 2vw
     const spaceBetween = ref(Math.round(window.innerWidth * 0.02));
+    const swiperInstance = ref(null);
+    const currentSlidesPerView = ref(3);
+    const isAutoplayRunning = ref(true);
 
     const updateSpaceBetween = () => {
       spaceBetween.value = Math.round(window.innerWidth * 0.02);
     };
 
+    let autoplayInterval = null;
+
     onMounted(() => {
       window.addEventListener("resize", updateSpaceBetween);
+      startAutoplay();
     });
 
     onBeforeUnmount(() => {
       window.removeEventListener("resize", updateSpaceBetween);
+      stopAutoplay();
     });
 
-    return { reviews, Navigation, spaceBetween };
-  },
-  data() {
-    return {
-      currentGroup: 1,
-      totalGroups: 3,
-      swiperInstance: null,
+    const startAutoplay = () => {
+      if (isAutoplayRunning.value && swiperInstance.value) {
+        stopAutoplay(); // Очищаем предыдущий интервал, если он существует
+        autoplayInterval = setInterval(() => {
+          if (isAutoplayRunning.value) {
+            const slidesPerView = swiperInstance.value.params.slidesPerView;
+            const realIndex = swiperInstance.value.realIndex;
+            console.log("Autoplay tick:", { realIndex, slidesPerView });
+            if (slidesPerView === 3) {
+              const newIndex = (realIndex + 3) % reviews.length;
+              swiperInstance.value.slideToLoop(newIndex);
+            } else {
+              swiperInstance.value.slideNext();
+            }
+            updateCounter();
+          }
+        }, 10000);
+      }
     };
-  },
-  methods: {
-    onSwiper(swiper) {
-      this.swiperInstance = swiper;
-    },
-    slideNext() {
-      if (this.swiperInstance) {
-        this.swiperInstance.slideTo(this.swiperInstance.activeIndex + 3);
+
+    const stopAutoplay = () => {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
       }
-    },
-    slidePrev() {
-      if (this.swiperInstance) {
-        this.swiperInstance.slideTo(this.swiperInstance.activeIndex - 3);
+    };
+
+    const onSwiper = (swiper) => {
+      swiperInstance.value = swiper;
+      currentSlidesPerView.value = swiper.params.slidesPerView;
+      console.log("Swiper initialized:", { slidesPerView: swiper.params.slidesPerView, realIndex: swiper.realIndex });
+      startAutoplay();
+    };
+
+    const updateCounter = () => {
+      if (swiperInstance.value) {
+        currentSlidesPerView.value = swiperInstance.value.params.slidesPerView;
+        console.log("updateCounter called:", {
+          realIndex: swiperInstance.value.realIndex,
+          slidesPerView: swiperInstance.value.params.slidesPerView,
+          currentSlidesPerView: currentSlidesPerView.value,
+          counterText: counterText.value
+        });
       }
-    },
-    updateCounter() {
-      if (this.swiperInstance) {
-        this.currentGroup = Math.floor(this.swiperInstance.activeIndex / 3) + 1;
+    };
+
+    const counterText = computed(() => {
+      if (!swiperInstance.value) {
+        console.log("counterText: No swiper instance, defaulting to '1 из 9'");
+        return "1 из 9";
       }
-    },
-  },
+      const realIndex = swiperInstance.value.realIndex;
+      const slidesPerView = swiperInstance.value.params.slidesPerView;
+      const current = Math.min(realIndex + slidesPerView, reviews.length);
+      console.log("counterText calculated:", { realIndex, slidesPerView, current, total: reviews.length });
+      return `${current} из ${reviews.length}`;
+    });
+
+    const slideNext = () => {
+      if (swiperInstance.value) {
+        const slidesPerView = swiperInstance.value.params.slidesPerView;
+        const realIndex = swiperInstance.value.realIndex;
+        console.log("slideNext:", { realIndex, slidesPerView });
+        if (slidesPerView === 3) {
+          const newIndex = (realIndex + 3) % reviews.length;
+          swiperInstance.value.slideToLoop(newIndex);
+        } else {
+          swiperInstance.value.slideNext();
+        }
+        updateCounter();
+      }
+    };
+
+    const slidePrev = () => {
+      if (swiperInstance.value) {
+        const slidesPerView = swiperInstance.value.params.slidesPerView;
+        const realIndex = swiperInstance.value.realIndex;
+        console.log("slidePrev:", { realIndex, slidesPerView });
+        if (slidesPerView === 3) {
+          const newIndex = (realIndex - 3 + reviews.length) % reviews.length;
+          swiperInstance.value.slideToLoop(newIndex);
+        } else {
+          swiperInstance.value.slidePrev();
+        }
+        updateCounter();
+      }
+    };
+
+    const handleUserInteraction = () => {
+      if (isAutoplayRunning.value) {
+        isAutoplayRunning.value = false;
+        stopAutoplay();
+        console.log("Autoplay stopped due to user interaction");
+      }
+    };
+
+    return { reviews, Navigation, spaceBetween, onSwiper, slideNext, slidePrev, updateCounter, counterText, handleUserInteraction };
+  }
 };
 </script>
-
 <style scoped>
 /* сюда добавь свои стили */
 </style>

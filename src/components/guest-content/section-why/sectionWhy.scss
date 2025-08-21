@@ -78,3 +78,42 @@
 .why__card-button {
   margin-bottom: 0.83vw;
 }
+@media (max-width: 768px) {
+  .why {
+    padding: 9.95vw 4.98vw; /* 40px и 20px при 402px */
+  }
+
+  .why__title {
+    margin-bottom: 3.98vw; /* 16px при 402px */
+    font-size: 7.96vw; /* 32px при 402px */
+  }
+
+  .why__cards {
+    grid-template-columns: 1fr; /* Карточки друг под другом */
+    gap: 3.98vw; /* 16px при 402px */
+  }
+
+  .why__card {
+    padding: 4.98vw; /* 20px при 402px */
+    height: auto; /* Адаптивная высота */
+  }
+
+  .why__card-number {
+    font-size: 50vw; /* Уменьшенный размер для номера, ~200px при 402px */
+    line-height: normal;
+  }
+
+  .why__card-description {
+    padding: 0 4.98vw 4.98vw 4.98vw; /* 20px при 402px */
+  }
+
+  .why__card-text {
+    font-size: 5.97vw; /* 24px при 402px */
+    line-height: 1.5;
+  }
+
+  .why__card-button {
+    margin-bottom: 3.98vw; /* 16px при 402px */
+    font-size: 4.98vw; /* 20px при 402px */
+  }
+}
