@@ -3,87 +3,32 @@
     <div class="why__container">
       <h2 class="why__title">ПОЧЕМУ НАС ВЫБИРАЮТ?</h2>
       <div class="why__cards">
-        <div class="why__card">
+        <div
+          class="why__card"
+          v-for="(card, index) in cards"
+          :key="index"
+          :style="{ backgroundImage: `url(${card.bgImage})` }"
+        >
           <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">1</div>
-            </div>
             <div class="why__card-description">
-              <button class="button-2 why__card-button">ОРГАНИЗАЦИЯ</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
+              <h3 class="why__card-heading">{{ card.heading }}</h3>
+              <p class="why__card-text bold">{{ card.title }}</p>
+              <p class="why__card-text">{{ card.text }}</p>
+              <ul class="why__card-list">
+                <li
+                  class="why__card-text"
+                  v-for="(item, i) in card.list"
+                  :key="i"
+                >
+                  <span class="why__card-text bold">{{ item.title }}</span
+                  ><br />
+                  {{ item.text }}
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-
-        <div class="why__card why__card--violet">
-          <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">2</div>
-            </div>
-            <div class="why__card-description">
-              <button class="button-2 why__card-button">МНОГОЭТАПНОСТЬ</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-            </div>
-          </div>
-        </div>
-
-        <div class="why__card">
-          <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">3</div>
-            </div>
-            <div class="why__card-description">
-              <button class="button-2 why__card-button">ВЫЕЗДНЫЕ КОНКУРСЫ</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-            </div>
-          </div>
-        </div>
-
-        <div class="why__card why__card--violet">
-          <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">4</div>
-            </div>
-            <div class="why__card-description">
-              <button class="button-2 why__card-button">ЖЮРИ</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-            </div>
-          </div>
-        </div>
-
-        <div class="why__card">
-          <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">5</div>
-            </div>
-            <div class="why__card-description">
-              <button class="button-2 why__card-button">ЭЛЕКТРОННЫЙ ФОРМАТ ОЦЕНОК</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-            </div>
-          </div>
-        </div>
-
-        <div class="why__card why__card--violet">
-          <div class="why__card-content">
-            <div class="why__card-header">
-              <div class="why__card-number">6</div>
-            </div>
-            <div class="why__card-description">
-              <button class="button-2 why__card-button">РАЗВИТИЕ КОЛЛЕКТИВОВ</button>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-              <li class="why__card-text">Информация</li>
-            </div>
+          <div class="why__card-overlay">
+            <div class="why__card-number">{{ index + 1 }}</div>
           </div>
         </div>
       </div>
@@ -92,7 +37,113 @@
 </template>
 
 <script>
-export default {};
+import { onMounted, onBeforeUnmount } from "vue";
+
+export default {
+  setup() {
+    const cards = [
+      {
+        heading: "ОРГАНИЗАЦИЯ",
+        title:
+          "Танцуй, Россия — №1 в организации хореографических конкурсов в стране!",
+        text: "Всё, что нужно для вашего комфортного участия, мы уже собрали в один готовый пакет:",
+        list: [
+          {
+            title: "Отели",
+            text: "Все детали заселения и проживания заранее продуманы и согласованы.",
+          },
+          {
+            title: "Питание",
+            text: "Завтраки и ужины уже включены в пакет.",
+          },
+          {
+            title: "Трансферы",
+            text: "Четкая и удобная логистика: переезды на конкурс, в отель и обратно проходят точно по графику, без опозданий и лишней спешки.",
+          },
+          {
+            title: "Встречающий",
+            text: "С самого начала вас встречает представитель конкурса, который сопровождает и помогает с ориентацией в новом городе.",
+          },
+          {
+            title: "Личные тайминги",
+            text: "Каждому коллективу предоставляется персональное расписание — никаких накладок, спешки и лишнего ожидания.",
+          },
+          {
+            title: "Мастер-классы, тимбилдинги, экскурсии",
+            text: "Мы наполняем поездку событиями, которые делают её незабываемой.",
+          },
+        ],
+        bgImage: require("@/assets/images/why__bg.png"),
+      },
+      {
+        heading: "МНОГОЭТАПНОСТЬ",
+        title:
+          "Международные хореографические конкурсы от «Танцуй Россия» — это многоэтапный путь к успеху",
+        text: "Мы приглашаем вас на уникальные конкурсы, которые проходят в три тщательно продуманных этапа: отборочный этап, полуфинал и финал. Такой многоэтапный формат превращает конкурсы в полноценный путь развития: дети видят свои достижения, учатся ставить цели и стремиться к большему, а руководители получают ценный опыт, обмениваются практиками и постоянно повышают свою профессиональную компетенцию.",
+        list: [],
+        bgImage: require("@/assets/images/why__bg.png"),
+      },
+      {
+        heading: "ВЫЕЗДНЫЕ КОНКУРСЫ",
+        title: "Выездные конкурсы — опыт, вдохновение, рост",
+        text: "Каждый выездной конкурс «Танцуй Россия» — это не просто поездка, а ценный этап в развитии детей. Участники становятся увереннее, взрослее, дисциплинированнее и получают дополнительную мотивацию продолжать заниматься танцем. Выезд — это возможность наблюдать за другими коллективами, перенимать опыт, вдохновляться новыми идеями и видеть разные стили и техники. Такой опыт формирует у детей широкую творческую насмотренность и помогает им расти как артистам и как команде. Каждый выезд — это шаг к развитию мастерства, укреплению командного духа и формированию настоящих профессиональных привычек.",
+        bgImage: require("@/assets/images/why__bg.png"),
+      },
+      {
+        heading: "ЖЮРИ",
+        title: "Профессиональная обратная связь — ключ к росту",
+        text: "Участие в международных конкурсах «Танцуй Россия» — это не только сцена и аплодисменты. Это возможность получить ценную обратную связь от лучших хореографов, людей с реальным опытом работы в индустрии. В составе жюри — только заслуженные мастера своего дела, чьё мнение ценят и уважают в хореографическом мире. Среди них: Егор Дружинин, Ашот Назаретян, Алексей Кузьменко, Елена Барткайтис, Герман Ромазанов и другие выдающиеся хореографы страны. Их оценка и рекомендации помогают коллективам не просто участвовать, а развиваться и совершенствоваться.",
+        list: [],
+        bgImage: require("@/assets/images/why__bg.png"),
+      },
+      {
+        heading: "ЭЛЕКТРОННЫЙ ФОРМАТ ОЦЕНОК",
+        title:
+          "Электронная система оценок — честность и прозрачность на первом месте",
+        text: "На конкурсах «Танцуй Россия» используется современная электронная система судейства: жюри не видят названия коллективов, а оценки мгновенно отображаются на экране сразу после выступления. Только честная и объективная обратная связь от профессионалов — быстро, открыто и по достоинству. Если вы устали от несправедливости и «все первые места», приезжайте туда, где ценят труд, мастерство и стремление к росту по-настоящему.",
+        list: [],
+        bgImage: require("@/assets/images/why__bg.png"),
+      },
+      {
+        heading: "РАЗВИТИЕ КОЛЛЕКТИВОВ",
+        title: "Учимся у лучших и растём вместе",
+        text: "Участие в конкурсах «Танцуй Россия» — это не только сцена и оценки, но и уникальная возможность для каждого коллектива развиваться под руководством лучших профессиональных хореографов страны. Здесь вы честно узнаете свой уровень, увидите, как работают сильнейшие, и получите экспертную обратную связь. В рамках конкурса участникам предлагаются практические мастер-классы. Для руководителей проводятся теоретические мастер-классы, а также круглые столы, на которых жюри индивидуально разбирает номера каждого коллектива, делясь профессиональными рекомендациями и стратегиями улучшения. Актёрские мастер-классы помогают раскрывать артистизм, эмоции и сценическое присутствие.",
+        list: [],
+        bgImage: require("@/assets/images/why__bg.png"), // замени на нужное фото
+      },
+    ];
+
+    const observeCards = () => {
+      if (window.innerWidth <= 768) {
+        const cards = document.querySelectorAll(".why__card");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+
+        cards.forEach((card) => observer.observe(card));
+      }
+    };
+
+    onMounted(() => {
+      observeCards();
+      window.addEventListener("resize", observeCards);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", observeCards);
+    });
+
+    return { cards };
+  },
+};
 </script>
 
 <style scoped>

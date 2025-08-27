@@ -1,17 +1,17 @@
-@import '@/styles/mixins.scss';
+@import "@/styles/mixins.scss";
+
 .group {
   background-color: $every;
   padding: 1.041667vw 8.4375vw;
 }
+
 .group__title {
   margin-bottom: 2.08vw;
 }
 
-
 .group__cards {
   display: flex;
   gap: 1.041667vw; /* 20px */
-
 }
 
 .group__card {
@@ -19,8 +19,7 @@
   border-radius: 0.416667vw; /* 8px */
   flex: 1;
   width: 40.94vw;
-
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .group__cards-right {
@@ -28,13 +27,10 @@
   flex-direction: column;
   gap: 1.041667vw; /* 20px */
   flex: 1;
-
-
 }
 
-
 .group__card-left {
-  background: url('@/assets/images/228.png');
+  background: url("@/assets/images/228.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 29.48vw;
@@ -44,21 +40,16 @@
 .group__card--right-top,
 .group__card--right-bottom {
   height: 14.74vw;
-  background: url('@/assets/images/Card-fon.svg'); /* Фиолетовый фон для правых карточек */
-     background-size: cover;
- background-repeat: no-repeat;
- padding-left: 2.60vw;
- padding-right: 2.60vw;
- cursor: pointer;
-transition: transform 0.3s ease; /* Плавный переход для зума */
+  background: url("@/assets/images/Card-fon.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-left: 2.6vw;
+  padding-right: 2.6vw;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Плавный переход для зума */
 }
 
-
-
-.group__card--right-top:hover {
-  transform: scale(1.02); /* Увеличение на 5% */
-}
-
+.group__card--right-top:hover,
 .group__card--right-bottom:hover {
   transform: scale(1.02); /* Увеличение на 5% */
 }
@@ -66,9 +57,45 @@ transition: transform 0.3s ease; /* Плавный переход для зум�
 .group__card-heading {
   font-weight: 600;
 }
+
 .group__card-p {
   font-size: 0.94vw;
   line-height: 150%;
   color: black;
   font-weight: normal;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 768px) {
+  .group {
+    background-color: $every;
+    padding: 4.98vw;
+  }
+
+  .group__cards {
+    flex-direction: column;
+  }
+
+  .group__card,
+  .group__cards-right {
+    width: 100%;
+    gap: 2.99vw;
+  }
+  .group__card-left {
+    min-height: 64.43vw; /* Минимальная высота для читаемости */
+    border-radius: 4.98vw;
+    margin-bottom: 2.99vw;
+  }
+  .group__card--right-top,
+  .group__card--right-bottom {
+    height: auto;
+    min-height: 42.29vw; /* Минимальная высота для читаемости */
+    border-radius: 4.98vw;
+  }
+
+  .group__card-p {
+    font-size: 14px; /* Фиксированный размер для мобильных */
+  }
+
+
 }

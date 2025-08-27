@@ -1,4 +1,4 @@
-<template >
+<template>
   <section class="group">
     <h2 class="group__title">Сообщество “Танцуй, Россия”</h2>
     <div class="group__cards">
@@ -16,14 +16,14 @@
               отзычивая.
             </p>
             <div class="contest__button">
-            <button class="contest__button-element">Узнать подробнее</button>
-            <span class="contest__button-icon"></span>
-          </div>
+              <button class="contest__button-element">Узнать подробнее</button>
+              <span class="contest__button-icon"></span>
+            </div>
           </slot>
         </div>
         <div class="group__card group__card--right-bottom">
           <slot name="card-right-bottom">
-             <h3 class="group__card-heading">ЧАТ РУКОВОДИТЕЛЕЙ</h3>
+            <h3 class="group__card-heading">ЧАТ РУКОВОДИТЕЛЕЙ</h3>
             <p class="group__card-p">
               Выгодное в соотношении качества/цены, главное, что поддержка
               коллектива идет на каждом этапе конкурса, все понятно доносят,
@@ -31,9 +31,9 @@
               отзычивая.
             </p>
             <div class="contest__button">
-            <button class="contest__button-element">Узнать подробнее</button>
-            <span class="contest__button-icon"></span>
-          </div>
+              <button class="contest__button-element">Узнать подробнее</button>
+              <span class="contest__button-icon"></span>
+            </div>
           </slot>
         </div>
       </div>
@@ -46,4 +46,5 @@ export default {};
 </script>
 
 <style scoped>
+
 </style>

@@ -2,62 +2,69 @@
   <section class="reviews">
     <h2 class="reviews__title">ОТЗЫВЫ</h2>
 
-    <swiper
-      :modules="[Navigation]"
-      :slides-per-view="3"
-      :space-between="spaceBetween"
-      :allow-touch-move="true"
-      :loop="true"
-      :breakpoints="{
-        320: { slidesPerView: 1, slidesPerGroup: 1 },
-        768: { slidesPerView: 3, slidesPerGroup: 3 }
-      }"
-      @swiper="onSwiper"
-      @slideChange="updateCounter"
-      @click="handleUserInteraction"
-      @touchStart="handleUserInteraction"
-    >
-      <swiper-slide v-for="(review, index) in reviews" :key="index">
-        <div class="reviews__card">
-          <div class="reviews__card-stars">
-            <img src="@/assets/images/Shape.svg" alt="" />
-            <img src="@/assets/images/Shape.svg" alt="" />
-            <img src="@/assets/images/Shape.svg" alt="" />
-            <img src="@/assets/images/Shape.svg" alt="" />
-            <img src="@/assets/images/Shape.svg" alt="" />
-          </div>
-          <p class="reviews__heading">{{ review.heading }}</p>
-          <p class="reviews__text">{{ review.text }}</p>
-          <div class="reviews__autor">
-            <img
-              class="reviews__author-img"
-              :src="review.img"
-              :alt="review.author"
-            />
-            <div class="autor__card">
-              <p class="autor__card-text">{{ review.author }}</p>
-              <p class="autor__card-city">{{ review.city }}</p>
+    <div class="reviews__slider-wrapper">
+      <swiper
+        :modules="[Navigation]"
+        :slides-per-view="3"
+        :space-between="spaceBetween"
+        :allow-touch-move="true"
+        :loop="true"
+        :breakpoints="{
+          320: { slidesPerView: 1, slidesPerGroup: 1 },
+          768: { slidesPerView: 3, slidesPerGroup: 3 },
+        }"
+        :navigation="{
+          nextEl: '.reviews__button--next',
+          prevEl: '.reviews__button--prev',
+        }"
+        @swiper="onSwiper"
+        @slideChange="updateCounter"
+        @click="handleUserInteraction"
+        @touchStart="handleUserInteraction"
+      >
+        <swiper-slide v-for="(review, index) in reviews" :key="index">
+          <div class="reviews__card">
+            <div class="reviews__card-stars">
+              <img class="star" src="@/assets/images/Shape.svg" alt="" />
+              <img class="star" src="@/assets/images/Shape.svg" alt="" />
+              <img class="star" src="@/assets/images/Shape.svg" alt="" />
+              <img class="star" src="@/assets/images/Shape.svg" alt="" />
+              <img class="star" src="@/assets/images/Shape.svg" alt="" />
+            </div>
+            <p class="reviews__heading">{{ review.heading }}</p>
+            <p class="reviews__text">{{ review.text }}</p>
+            <div class="reviews__autor">
+              <img
+                class="reviews__author-img"
+                :src="review.img"
+                :alt="review.author"
+              />
+              <div class="autor__card">
+                <p class="autor__card-text">{{ review.author }}</p>
+                <p class="autor__card-city">{{ review.city }}</p>
+              </div>
             </div>
           </div>
+        </swiper-slide>
+      </swiper>
+
+      <!-- Кнопки навигации вне слайдера -->
+      <button class="reviews__button reviews__button--prev"></button>
+      <button class="reviews__button reviews__button--next rotate"></button>
+
+      <!-- Панель управления для десктопа -->
+      <div class="reviews__controls">
+        <span class="reviews__counter">{{ counterText }}</span>
+        <div class="reviews__buttons">
+          <button
+            class="reviews__button reviews__button--prev"
+            @click="slidePrev"
+          ></button>
+          <button
+            class="reviews__button reviews__button--next rotate"
+            @click="slideNext"
+          ></button>
         </div>
-      </swiper-slide>
-    </swiper>
-
-    <!-- Панель управления -->
-    <div class="reviews__controls">
-      <!-- Счётчик слева -->
-      <span class="reviews__counter">{{ counterText }}</span>
-
-      <!-- Кнопки справа -->
-      <div class="reviews__buttons">
-        <button
-          class="reviews__button reviews__button--prev"
-          @click="slidePrev"
-        ></button>
-        <button
-          class="reviews__button reviews__button--next rotate"
-          @click="slideNext"
-        ></button>
       </div>
     </div>
   </section>
@@ -136,7 +143,7 @@ export default {
         author: "Андрей Курносов",
         city: "Москва, Россия",
         img: require("@/assets/images/Profile.png"),
-      }
+      },
     ];
 
     const spaceBetween = ref(Math.round(window.innerWidth * 0.02));
@@ -190,7 +197,10 @@ export default {
     const onSwiper = (swiper) => {
       swiperInstance.value = swiper;
       currentSlidesPerView.value = swiper.params.slidesPerView;
-      console.log("Swiper initialized:", { slidesPerView: swiper.params.slidesPerView, realIndex: swiper.realIndex });
+      console.log("Swiper initialized:", {
+        slidesPerView: swiper.params.slidesPerView,
+        realIndex: swiper.realIndex,
+      });
       startAutoplay();
     };
 
@@ -201,7 +211,7 @@ export default {
           realIndex: swiperInstance.value.realIndex,
           slidesPerView: swiperInstance.value.params.slidesPerView,
           currentSlidesPerView: currentSlidesPerView.value,
-          counterText: counterText.value
+          counterText: counterText.value,
         });
       }
     };
@@ -214,7 +224,12 @@ export default {
       const realIndex = swiperInstance.value.realIndex;
       const slidesPerView = swiperInstance.value.params.slidesPerView;
       const current = Math.min(realIndex + slidesPerView, reviews.length);
-      console.log("counterText calculated:", { realIndex, slidesPerView, current, total: reviews.length });
+      console.log("counterText calculated:", {
+        realIndex,
+        slidesPerView,
+        current,
+        total: reviews.length,
+      });
       return `${current} из ${reviews.length}`;
     });
 
@@ -256,8 +271,18 @@ export default {
       }
     };
 
-    return { reviews, Navigation, spaceBetween, onSwiper, slideNext, slidePrev, updateCounter, counterText, handleUserInteraction };
-  }
+    return {
+      reviews,
+      Navigation,
+      spaceBetween,
+      onSwiper,
+      slideNext,
+      slidePrev,
+      updateCounter,
+      counterText,
+      handleUserInteraction,
+    };
+  },
 };
 </script>
 <style scoped>

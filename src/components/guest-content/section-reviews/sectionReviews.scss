@@ -5,7 +5,7 @@
 }
 
 .reviews__title {
-  margin-bottom: 2.604167vw; /* 20px + 1.56vw → 20px = 1.041667vw, 1.041667 + 1.56 = 2.604167vw */
+  margin-bottom: 2.604167vw; /* 20px */
 }
 
 .reviews__card {
@@ -89,86 +89,114 @@
 .reviews__button {
   background: url('@/assets/images/Button.svg');
   border: none;
-  width: 2.083333vw; /* 40px */
-  height: 2.083333vw; /* 40px */
+  width: 2.083333vw;
+  height: 2.083333vw;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
-
+  display: none; /* Скрываем кнопки вне .reviews__controls по умолчанию */
 }
 
+.reviews__buttons .reviews__button {
+  display: block; /* Отображаем кнопки только внутри .reviews__controls на десктопе */
+}
 .rotate {
   transform: rotate(180deg); /* переворот */
 }
 
 @media (max-width: 768px) {
   .reviews {
-    padding: 8.84vw 4.98vw; /* 35.52px и 20px при 402px */
+    padding: 8.84vw 4.73vw;
   }
 
   .reviews__title {
-    margin-bottom: 12.44vw; /* 50px при 402px */
-    font-size: 7.96vw; /* 32px при 402px */
+    margin-bottom: 7.96vw;
+    font-size: 5.97vw;
+  }
+
+  .reviews__slider-wrapper {
+    position: relative;
+    padding: 0 10vw; /* Добавляем отступы для кнопок */
   }
 
   .reviews__card {
-    padding: 10.40vw 11.44vw; /* 41.8px и 46px при 402px */
-    max-height: none; /* Убираем ограничение высоты */
-    border-radius: 5.97vw; /* 24px при 402px */
+    margin: 0 auto; /* Центрируем карточку */
+    padding: 4.98vw; /* Уменьшаем внутренние отступы */
+    max-height: none;
+    height: 62.19vw;
+   width: 64.19vw;
+    border-radius: 2.99vw;
+    box-sizing: border-box;
   }
 
   .reviews__card-stars {
-    width: 90%; /* Чуть больше для мобильных */
-    margin-bottom: 8.18vw; /* 32.9px при 402px */
-    margin-left: 8vw; /* Уменьшено с 16.17vw для баланса */
+    width: 100%;
+    margin: 0 0 2.99vw;
+    justify-content: space-around;
   }
-
+  .star {
+    width: 7.96vw;
+    height: 7.96vw;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 0.5vw;
+  }
   .reviews__heading {
-    font-size: 5.99vw; /* 24.1px при 402px */
-    margin-bottom: 3.93vw; /* 15.8px при 402px */
-    line-height: 1.2; /* Улучшает читаемость */
+    font-size: 3.23vw;
+    margin: 0 0 0.5vw;
+    line-height: 1.2;
   }
 
   .reviews__text {
-    font-size: 4.48vw; /* 18px при 402px */
-    margin-bottom: 4.95vw; /* 19.9px при 402px */
+    font-size: 2.49vw;
+    margin: 0;
     line-height: 1.5;
   }
 
   .reviews__autor {
     display: flex;
     align-items: center;
+
   }
 
   .reviews__author-img {
-    width: 14.93vw; /* 60px при 402px */
-    height: 14.93vw; /* 60px при 402px */
-    margin-right: 4.00vw; /* 16.1px при 402px */
+    width: 9.96vw;
+    height: 9.96vw;
+    margin-right: 1.99vw;
   }
 
   .autor__card-text {
-    font-size: 4.38vw; /* 17.6px при 402px */
+    font-size: 2.74vw;
+    color: $grey;
   }
 
   .autor__card-city {
-    font-size: 3.98vw; /* 16px при 402px */
+    font-size: 2.74vw;
   }
 
   .reviews__controls {
-    margin-top: 4.95vw; /* 19.9px при 402px */
-    padding-top: 4.98vw; /* 20px при 402px */
-  }
-
-  .reviews__counter {
-    font-size: 3.98vw; /* 16px при 402px */
-  }
-
-  .reviews__buttons {
-    gap: 2.49vw; /* 10px при 402px */
+    display: none; /* Скрываем панель управления на мобильных */
   }
 
   .reviews__button {
-    width: 9.95vw; /* 40px при 402px */
-    height: 9.95vw; /* 40px при 402px */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 9.95vw;
+    height: 9.95vw;
+    z-index: 10;
+    display: block; /* Отображаем кнопки в .reviews__slider-wrapper на мобильных */
+  }
+
+  .reviews__button--prev {
+    left: 2vw; /* Размещаем левую кнопку ближе к краю */
+  }
+
+  .reviews__button--next {
+    right: 2vw; /* Размещаем правую кнопку ближе к краю */
+  }
+
+  .rotate {
+    transform: translateY(-50%) rotate(180deg); /* Учитываем поворот для кнопки next */
   }
 }

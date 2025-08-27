@@ -92,3 +92,44 @@
   height: 1.354167vw; /* 26px */
   opacity: 0.4;
 }
+@media (max-width: 768px) {
+  .contest__card {
+    flex: 1 1 100%; /* Карточки занимают всю ширину */
+    margin-bottom: 3vw;
+  }
+  .contest__title {
+    font-size: 5.97vw; /* 24px при ширине экрана 402px */
+    margin-bottom: 7.96vw;
+  }
+  .contest__heading {
+    font-size: 4.975vw; /* 24px при ширине экрана 402px */
+  }
+  .contest__img-element {
+    width: 90.05vw; /* 362px при ширине экрана 402px */
+    height: 39.30vw; /* 158px при ширине экрана 402px */
+    border-radius: 3.98vw;
+  }
+  .contest {
+  padding: 4.975vw; /* 20px при ширине экрана 402px */
+}
+.contest__text {
+  display: flex;
+  flex-direction: column;
+}
+.contest__date {
+  font-size: 3.483vw;
+}
+.contest__button-element {
+
+  background-color: #ffffff00;
+  font-size: 4.975vw; /* 20px */
+
+}
+.contest__button-icon {
+  background-repeat: no-repeat;
+  margin-left: 2px;
+  width: 5.97vw; /* 26px */
+  height: 5.97vw; /* 26px */
+
+}
+}
