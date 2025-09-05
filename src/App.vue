@@ -1,6 +1,8 @@
+
 <template>
   <div>
     <HeaderApp
+     :show-dashboard="showDashboard"
       :token="authStore.token"
       @open-register="showRegister = true"
       @open-login="showLogin = true"
@@ -34,21 +36,27 @@
     <AuthModal
       v-if="showAuthModal"
       @close="closeAll"
-      @open-login="showLogin = true; showAuthModal = false"
-      @open-register="showRegister = true; showAuthModal = false"
+      @open-login="
+        showLogin = true;
+        showAuthModal = false;
+      "
+      @open-register="
+        showRegister = true;
+        showAuthModal = false;
+      "
     />
   </div>
 </template>
 
 <script>
-import { useAuthStore } from './stores/auth.js';
-import HeaderApp from './components/HeaderApp/HeaderApp.vue';
-import GuestContent from './components/guest-content/GuestContent.vue';
-import RegisterModal from './components/modals/RegisterModal.vue';
-import CodeInputModal from './components/modals/CodeInputModal.vue';
-import LoginModal from './components/modals/LoginModal.vue';
-import DashboardModal from './components/registered-content/DashboardModal.vue';
-import AuthModal from './components/modals/AuthModal.vue';
+import { useAuthStore } from "./stores/auth.js";
+import HeaderApp from "./components/HeaderApp/HeaderApp.vue";
+import GuestContent from "./components/guest-content/GuestContent.vue";
+import RegisterModal from "./components/modals/RegisterModal.vue";
+import CodeInputModal from "./components/modals/CodeInputModal.vue";
+import LoginModal from "./components/modals/LoginModal.vue";
+import DashboardModal from "./components/registered-content/DashboardModal.vue";
+import AuthModal from "./components/modals/AuthModal.vue";
 
 export default {
   components: {
@@ -67,8 +75,8 @@ export default {
       showLogin: false,
       showAuthModal: false,
       showDashboard: false,
-      registerPhone: '',
-      tempPassword: '',
+      registerPhone: "",
+      tempPassword: "",
       isRestore: false,
       amocrmData: null,
     };
@@ -85,7 +93,7 @@ export default {
       this.showAuthModal = false;
       this.showDashboard = false;
       this.isRestore = false;
-      this.tempPassword = '';
+      this.tempPassword = "";
     },
     handleRegistered({ phone, password }) {
       this.registerPhone = phone;
@@ -96,7 +104,7 @@ export default {
     },
     handleRestore({ phone }) {
       this.registerPhone = phone;
-      this.tempPassword = '';
+      this.tempPassword = "";
       this.showLogin = false;
       this.showCodeInput = true;
       this.isRestore = true;
@@ -107,7 +115,7 @@ export default {
       this.showCodeInput = false;
       this.showDashboard = true;
       this.isRestore = false;
-      this.tempPassword = '';
+      this.tempPassword = "";
     },
     async handleLoggedIn(token) {
       this.authStore.setToken(token);
@@ -117,23 +125,27 @@ export default {
       this.showDashboard = true;
     },
     async fetchAmoCrmData() {
-      try {
-        const response = await fetch('https://letsdancescores.tech/api/check_and_fetch_amocrm.php', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${this.authStore.token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+
+       try {
+        const response = await fetch(
+          "https://letsdancescores.tech/api/check_and_fetch_amocrm.php",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${this.authStore.token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const data = await response.json();
-        if (data.status === 'success') {
+        if (data.status === "success") {
           this.amocrmData = data.amocrm_response;
         } else {
-          alert('Ошибка AmoCRM: ' + data.message);
+          alert("Ошибка AmoCRM: " + data.message);
           this.amocrmData = null;
         }
       } catch {
-        alert('Ошибка сети при запросе AmoCRM');
+        alert("Ошибка сети при запросе AmoCRM");
         this.amocrmData = null;
       }
     },
@@ -141,7 +153,7 @@ export default {
       this.authStore.clearToken();
       this.amocrmData = null;
       this.closeAll();
-      alert('Вы вышли из системы');
+      alert("Вы вышли из системы");
     },
     switchToSite() {
       this.showDashboard = false;
@@ -149,11 +161,14 @@ export default {
     async checkToken() {
       if (this.authStore.token) {
         try {
-          const response = await fetch('https://letsdancescores.tech/api/check_token.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: this.authStore.token }),
-          });
+          const response = await fetch(
+            "https://letsdancescores.tech/api/check_token.php",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ token: this.authStore.token }),
+            }
+          );
           const data = await response.json();
           if (!data.success) {
             this.logout();
@@ -162,7 +177,7 @@ export default {
             this.showDashboard = true;
           }
         } catch {
-          alert('Ошибка проверки токена');
+          alert("Ошибка проверки токена");
           this.logout();
         }
       }
@@ -172,4 +187,4 @@ export default {
     this.checkToken();
   },
 };
-</script>
+</script> 

@@ -105,5 +105,56 @@ export default {
 };
 </script>
 <style scoped>
+.code-input-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Центрирование содержимого */
+  z-index: 1000; /* Убедитесь, что модалка поверх других элементов */
+}
 
+.code-input-modal__title {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.code-input-modal__input {
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.code-input-modal__button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.code-input-modal__button:hover {
+  background-color: #0056b3;
+}
+
+.code-input-modal__toast {
+  position: fixed;
+  bottom: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
 </style>

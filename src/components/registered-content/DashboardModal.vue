@@ -1,30 +1,30 @@
 <template>
-  <div class="dashboard">
-    <h2>Личный кабинет</h2>
-    <p>Добро пожаловать, пользователь!</p>
+  <section class="dashboard">
+      <h2>Личный кабинет</h2>
+      <p>Добро пожаловать, пользователь!</p>
 
-    <div v-if="amocrmData">
-      <h3>Ваши данные в AmoCRM:</h3>
-      <div class="contact">
-        <h4>
-          Контакт: {{ amocrmData.name || "Без имени" }} (ID:
-          {{ amocrmData.id }})
-        </h4>
-        <ul>
-          <li><strong>ID:</strong> {{ amocrmData.id }}</li>
-          <li><strong>Имя:</strong> {{ amocrmData.name || "Не указано" }}</li>
-          <li
-            v-for="field in filteredFields(amocrmData.custom_fields_values)"
-            :key="field.field_id"
-          >
-            <strong>{{ field.field_name }}:</strong>
-            {{ formatFieldValue(field) }}
-          </li>
-        </ul>
+      <div v-if="amocrmData">
+        <h3>Ваши данные в AmoCRM:</h3>
+        <div class="contact">
+          <h4>
+            Контакт: {{ amocrmData.name || "Без имени" }} (ID:
+            {{ amocrmData.id }})
+          </h4>
+          <ul>
+            <li><strong>ID:</strong> {{ amocrmData.id }}</li>
+            <li><strong>Имя:</strong> {{ amocrmData.name || "Не указано" }}</li>
+            <li
+              v-for="field in filteredFields(amocrmData.custom_fields_values)"
+              :key="field.field_id"
+            >
+              <strong>{{ field.field_name }}:</strong>
+              {{ formatFieldValue(field) }}
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <p v-else>Нет данных контакта или запрос не выполнен.</p>
-  </div>
+      <p v-else>Нет данных контакта или запрос не выполнен.</p>
+  </section>
 </template>
 <script>
 import { useAuthStore } from "@/stores/auth";
@@ -68,13 +68,12 @@ export default {
     },
   },
   mounted() {
-  console.log('mounted: amocrmData=', this.amocrmData);
-  console.log('mounted: token from authStore=', this.authStore.token);
-},
+    console.log("mounted: amocrmData=", this.amocrmData);
+    console.log("mounted: token from authStore=", this.authStore.token);
+  },
 };
 </script>
 
 <style scoped>
-
 </style>
 
