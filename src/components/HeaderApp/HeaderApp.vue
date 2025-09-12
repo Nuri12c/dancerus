@@ -5,27 +5,28 @@
       <h3 class="logo__text">Танцуй, Россия</h3>
     </div>
 
-    <button class="burger" :class="{ active: isMenuOpen }" @click="toggleMenu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <template v-if="!token || !showDashboard">
+      <button class="burger" :class="{ active: isMenuOpen }" @click="toggleMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <div class="buttons" :class="{ open: isMenuOpen, 'dashboard-active': showDashboard }">
-      <template v-if="!showDashboard">
+      <div class="buttons" :class="{ open: isMenuOpen }">
         <button class="button-3">Главная</button>
         <button class="button-3" href="#contest">Все конкурсы</button>
         <button class="button-3">Подать заявку</button>
         <button class="button-3">Новости</button>
-      </template>
-      <button class="watsapp-button"></button>
-      <button class="button-3" v-if="token && showDashboard" @click="$emit('switch-to-site')">
-        Вернуться на сайт
-      </button>
-      <button class="button-2" @click="handleCabinetClick">
-        {{ token && !showDashboard ? "Личный кабинет" : token && showDashboard ? "Выйти" : "Личный кабинет" }}
-      </button>
-    </div>
+        <button class="watsapp-button"></button>
+        <button class="button-2" @click="handleCabinetClick">
+          Личный кабинет
+        </button>
+      </div>
+    </template>
+
+    <button v-if="token && showDashboard" class="button" @click="$emit('logout')">
+      Выйти
+    </button>
   </header>
 </template>
 
@@ -44,11 +45,7 @@ export default {
   methods: {
     handleCabinetClick() {
       if (this.token) {
-        if (this.showDashboard) {
-          this.$emit("logout"); // Выйти, если в личном кабинете
-        } else {
-          this.$emit("open-dashboard"); // Открыть личный кабинет, если на сайте
-        }
+        this.$emit("open-dashboard"); // Открыть личный кабинет, если на сайте
       } else {
         this.$emit("open-auth-modal"); // Открыть модалку авторизации, если токена нет
       }
@@ -72,5 +69,7 @@ export default {
 </script>
 
 <style scoped>
-/* Ваши стили */
+
+
+
 </style>

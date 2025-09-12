@@ -1,4 +1,3 @@
-
 @import '@/styles/mixins.scss';
 
 .header {
@@ -45,12 +44,7 @@
   width: 55.91vw;
   align-items: center;
   gap: 2vw; /* 44px / 1920px ≈ 2.292% - 0.521% = 1.771vw */
-  white-space: nowrap;
-  justify-content: flex-end; /* Прижимаем кнопки к правому краю */
-}
 
-.buttons.dashboard-active {
-  width: auto; /* Убираем фиксированную ширину в личном кабинете */
 }
 
 .watsapp-button {
@@ -94,12 +88,15 @@
   transform: rotate(-45deg) translate(3vw, -3vw);
 }
 
+
+
 /* Адаптивные стили для мобильных устройств (ширина до 768px) */
 @media (max-width: 768px) {
   .header {
     top: 5.95vw; /* 40px при 402px */
     padding: 3.22vw 5.22vw 5.22vw 5.22vw; /* 47px при 402px */
     height: 2.22vw; /* 78px при 402px */
+    flex-wrap: nowrap; /* Предотвращаем перенос элементов */
   }
 
   .header.fixed {
@@ -118,7 +115,7 @@
   .buttons {
     display: none; /* Скрываем кнопки по умолчанию */
     flex-direction: column;
-    align-items: flex-start;
+   
     gap: 4.98vw; /* 20px при 402px */
     position: fixed;
     top: 0;
@@ -149,12 +146,8 @@
     z-index: 1;
   }
 
-  .buttons.dashboard-active {
-    align-items: flex-end; /* Прижимаем кнопки к правому краю в личном кабинете */
-    padding: 24.88vw 4.98vw;
-  }
-
   .burger {
     display: flex; /* Показываем бургер на мобильных */
   }
+
 }

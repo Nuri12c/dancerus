@@ -1,9 +1,15 @@
 <template>
   <div class="modal-overlay" @click.self="$emit('close')">
     <div class="modal-window">
-      <h3 class="modal-title">{{ card.heading }}</h3>
-      <p class="modal-date">{{ card.date }}</p>
-      <img :src="card.img" :alt="card.heading" class="modal-img" />
+      <div class="modal-content">
+        <img :src="card.img" :alt="card.heading" class="modal-img" />
+        <div class="modal-text-container">
+          <h3 class="modal-title">{{ card.heading }}</h3>
+          <p class="modal-date">{{ card.date }}</p>
+          <p class="modal-text">{{ card.text }}</p>
+          <button class="modal-action-button">Подать заявку</button>
+        </div>
+      </div>
       <button class="modal-close" @click="$emit('close')">✖</button>
     </div>
   </div>
@@ -14,13 +20,14 @@ export default {
   props: {
     card: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/styles/mixins.scss';
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -32,17 +39,38 @@ export default {
 }
 
 .modal-window {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;       /* чуть меньше */
-  max-width: 400px;      /* уменьшаем максимально допустимую ширину */
-  width: 80%;            /* ширина по умолчанию */
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 1.67vw;
+  padding: 1.5rem;
+  width: 84.32vw;
   position: relative;
   animation: fadeIn 0.3s ease;
-  max-height: 70vh;       /* не больше 80% высоты экрана */
-  overflow-y: auto;       /* появится скролл, если контента больше */
+  height: 70vh;
+  overflow-y: auto;
+  border: 2px solid white;
+  overflow: hidden;
 }
 
+.modal-content {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.modal-img {
+  width: 35.16vw;
+  height: 34.64vw;
+  border-radius: 1.5rem;
+  object-fit: cover;
+}
+
+.modal-text-container {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+}
 
 .modal-title {
   font-size: 1.5rem;
@@ -52,12 +80,26 @@ export default {
 .modal-date {
   font-size: 1rem;
   margin-bottom: 1rem;
-  color: #666;
 }
 
-.modal-img {
-  width: 100%;
+.modal-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal-action-button {
+  padding: 0.5rem 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: fit-content;
+}
+
+.modal-action-button:hover {
+  background: #0056b3;
 }
 
 .modal-close {
@@ -71,7 +113,13 @@ export default {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

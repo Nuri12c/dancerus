@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <HeaderApp
@@ -187,4 +186,4 @@ export default {
     this.checkToken();
   },
 };
-</script> 
+</script>
