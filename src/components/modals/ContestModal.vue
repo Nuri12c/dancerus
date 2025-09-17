@@ -2,7 +2,14 @@
   <div class="modal-overlay" @click.self="$emit('close')">
     <div class="modal-window">
       <div class="modal-content">
-        <img :src="card.img" :alt="card.heading" class="modal-img" />
+        <img
+          v-if="currentImage"
+          :src="currentImage"
+          :alt="card.heading"
+          class="modal-img"
+          loading="lazy"
+          @error="handleImageError"
+        />
         <div class="modal-text-container">
           <h3 class="modal-title">{{ card.heading }}</h3>
           <p class="modal-date">{{ card.date }}</p>
@@ -23,10 +30,45 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      currentIndex: 0,
+      intervalId: null,
+    };
+  },
+  computed: {
+    currentImage() {
+      return this.card.imagePaths[this.currentIndex] || require('@/assets/images/liveStream.png');
+    },
+  },
+  methods: {
+    handleImageError(event) {
+      console.error('Image failed to load:', event.target.src);
+      event.target.src = require('@/assets/images/liveStream.png');
+    },
+  },
+  mounted() {
+    if (this.card.imagePaths && this.card.imagePaths.length > 1) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.card.imagePaths.length;
+      }, 5000);
+    }
+  },
+  beforeUnmount() {
+    if (this.intervalId) clearInterval(this.intervalId);
+  },
 };
 </script>
 
 <style scoped lang="scss">
+.modal-img {
+  width: 35.16vw;
+  height: 34.64vw;
+  border-radius: 1.5rem;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
 @import '@/styles/mixins.scss';
 .modal-overlay {
   position: fixed;
@@ -55,13 +97,6 @@ export default {
 .modal-content {
   display: flex;
   gap: 1.5rem;
-}
-
-.modal-img {
-  width: 35.16vw;
-  height: 34.64vw;
-  border-radius: 1.5rem;
-  object-fit: cover;
 }
 
 .modal-text-container {
