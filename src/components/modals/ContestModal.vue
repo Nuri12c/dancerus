@@ -157,4 +157,42 @@ export default {
     transform: translateY(0);
   }
 }
+@media (max-width: 768px) {
+  .modal-window {
+    padding-top: 10%; /* Увеличенный отступ сверху */
+    width: 90vw; /* Чуть уже для мобильных */
+    height: auto; /* Высота подстраивается под контент */
+  }
+
+  .modal-content {
+    flex-direction: column; /* Изображение сверху, текст снизу */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .modal-img {
+    width: 80vw; /* Увеличим ширину изображения */
+    height: auto; /* Сохраняем пропорции */
+    max-height: 50vh; /* Ограничиваем высоту */
+  }
+
+  .modal-text-container {
+    width: 80vw; /* Текст занимает всю ширину */
+    align-items: center;
+    text-align: center; /* Центрируем текст */
+  }
+
+  .modal-title {
+    font-size: 5vw; /* Масштабируем шрифт */
+  }
+
+  .modal-date,
+  .modal-text {
+    font-size: 4vw;
+  }
+
+  .modal-action-button {
+    font-size: 4vw;
+  }
+}
 </style>

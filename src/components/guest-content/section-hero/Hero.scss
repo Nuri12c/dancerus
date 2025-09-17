@@ -1,20 +1,43 @@
+
 @import '@/styles/mixins.scss';
 
 .hero {
   width: 100%;
   min-height: 100vh;
-  background: url('@/assets/images/HeroBG.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: left bottom;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.4); /* Затемнение 40% */
+  background-blend-mode: darken;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: v-bind(nextBg) center/cover no-repeat; /* Следующий фон */
+  background-color: rgba(0, 0, 0, 0.4); /* Затемнение для следующего фона */
+  background-blend-mode: darken;
+  opacity: 0;
+  transition: opacity 0.5s linear; /* Плавная смена прозрачности */
+  z-index: 1;
+}
+
+.hero.fading::before {
+  opacity: 1; /* Показываем следующий фон */
 }
 
 .hero__container {
+  position: relative;
+  z-index: 2; /* Контент выше фона */
   flex: 1;
   padding: 6.5% 2.5% 6%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,8 +55,8 @@
 }
 
 .hero__text {
- width: 60%;
- line-height: 1.92vw; /* 36.9px при 1920px */
+  width: 60%;
+  line-height: 1.92vw; /* 36.9px при 1920px */
 }
 
 p {
