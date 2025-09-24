@@ -32,11 +32,12 @@ export default {
 
 <style scoped>
 .sidebar {
-  width: 250px;
-  background-color: #1a1a1a;
-  padding: 20px;
+  width: 22.55vw;
+  background-color: #8C66AD;
+  padding: 9.9vw 0 0 0;
   height: 100%;
   border-right: 1px solid #333;
+
 }
 
 .nav-tabs {

@@ -2,7 +2,7 @@
 
 .header {
   position: fixed;
-  top: 1.6vw; /* 40px при 1920px */
+  top: 1.6vw;
   left: 0;
   width: 100%;
   background-color: #ffffff00;
@@ -10,17 +10,17 @@
   display: flex;
   align-items: center;
   color: $every;
-  padding: 2.45vw; /* 47px при 1920px */
+  padding: 2.45vw;
   box-sizing: border-box;
-  height: 4.06vw; /* 78px при 1920px */
-  transition: top 0.3s ease; /* плавное движение */
+  height: 4.06vw;
+  transition: top 0.3s ease;
   z-index: 1000;
 }
 
 .header.fixed {
-  top: 0px; /* закреплённое положение */
-  height: 4.69vw; /* 90px при 1920px */
-  background-color: #26262676;
+  top: 0;
+  height: 4.69vw;
+  background-color: #262626cc;
   backdrop-filter: blur(10px);
   border-radius: 0 0 10px 10px;
 }
@@ -43,14 +43,13 @@
   display: flex;
   width: 55.91vw;
   align-items: center;
-  gap: 2vw; /* 44px / 1920px ≈ 2.292% - 0.521% = 1.771vw */
-
+  gap: 2vw;
 }
 
 .watsapp-button {
   background: url("@/assets/images/Vector.svg");
-  width: 2.92vw; /* 56px при 1920px */
-  height: 2.92vw; /* 56px при 1920px */
+  width: 2.92vw;
+  height: 2.92vw;
   background-size: contain;
   border: none;
   background-repeat: no-repeat;
@@ -60,19 +59,20 @@
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 7.46vw; /* 30px при 402px */
-  height: 5.97vw; /* 24px при 402px */
+  width: 7.46vw;
+  height: 5.97vw;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 1001;
+  z-index: 1002; /* Выше меню */
 }
 
 .burger span {
   width: 100%;
-  height: 1.49vw; /* 6px при 402px */
+  height: 1.49vw;
   background-color: $every;
+  border-radius: 2px; /* Мягкие края */
   transition: all 0.3s ease;
 }
 
@@ -88,45 +88,30 @@
   transform: rotate(-45deg) translate(3vw, -3vw);
 }
 
-
-
-/* Адаптивные стили для мобильных устройств (ширина до 768px) */
 @media (max-width: 768px) {
   .header {
-    top: 5.95vw; /* 40px при 402px */
-    padding: 3.22vw 5.22vw 5.22vw 5.22vw; /* 47px при 402px */
-    height: 2.22vw; /* 78px при 402px */
-    flex-wrap: nowrap; /* Предотвращаем перенос элементов */
+    top: 5.95vw;
+    padding: 3.22vw 5.22vw;
+    height: 2.22vw;
+    flex-wrap: nowrap;
   }
 
   .header.fixed {
-    height: 6.39vw; /* 90px при 402px */
-    padding: 6.22vw 5.22vw 6.22vw; /* 47px при 402px */
+    height: 6.39vw;
+    padding: 6.22vw 5.22vw;
   }
 
   .icon {
-    width: 6.97vw; /* 28px при 402px */
-    height: 6.97vw; /* 28px при 402px */
+    width: 6.97vw;
+    height: 6.97vw;
   }
+
   .logo__text {
-    font-size: 4.98vw; /* 20px при 402px */
+    font-size: 4.98vw;
   }
 
   .buttons {
-    display: none; /* Скрываем кнопки по умолчанию */
-    flex-direction: column;
-   
-    gap: 4.98vw; /* 20px при 402px */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh; /* Полная высота экрана */
-    background-color: #26262676; /* Полупрозрачный фон, как у fixed header */
-    backdrop-filter: blur(10px); /* Эффект размытия */
-    padding: 24.88vw 4.98vw; /* 100px сверху, 20px по бокам при 402px */
-    box-sizing: border-box;
-    z-index: 1;
+    display: none;
   }
 
   .buttons.open {
@@ -138,16 +123,15 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background-color: #26262676;
-    backdrop-filter: blur(10px);
+    height: 100vh; /* Полный экран */
+    background-color: #262626f5; /* Полупрозрачный фон */
+    backdrop-filter: blur(10px); /* Размытие всегда */
     padding: 24.88vw 4.98vw;
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 1001; /* Ниже бургера */
   }
 
   .burger {
-    display: flex; /* Показываем бургер на мобильных */
+    display: flex;
   }
-
 }
