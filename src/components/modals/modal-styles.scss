@@ -1,0 +1,133 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.modal-window {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 1.67vw;
+  padding: 4.67vw;
+  width: min-content;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+  height: auto;
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 2px solid white;
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.modal-text-container {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+}
+.modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.modal-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
+}
+
+.modal-action-button {
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #007bff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.modal-action-button:hover {
+  background: #0056b3;
+}
+
+.modal-toast {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-window {
+    padding-top: 10%;
+    width: 90vw;
+    height: auto;
+    max-height: 80vh;
+  }
+
+  .modal-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .modal-text-container {
+    width: 80vw;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-title {
+    font-size: 5vw;
+  }
+
+  .modal-input {
+    font-size: 4vw;
+    max-width: 80vw;
+  }
+
+  .modal-toast {
+    font-size: 4vw;
+  }
+}

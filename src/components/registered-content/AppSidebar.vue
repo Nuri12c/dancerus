@@ -7,8 +7,8 @@
         :class="{ active: activeTab === tab.id }"
         @click="$emit('update:activeTab', tab.id)"
       >
-        <i :class="'fas ' + tab.icon"></i>
-        <span class="tab-name">{{ tab.name }}</span>
+        <img class="tab-icon" :src="tab.icon" alt="">
+        <p class="tab-name">{{ tab.name }}</p>
       </li>
     </ul>
   </div>
@@ -35,9 +35,8 @@ export default {
   width: 22.55vw;
   background-color: #8C66AD;
   padding: 9.9vw 0 0 0;
-  height: 100%;
+  height: 100vh;
   border-right: 1px solid #333;
-
 }
 
 .nav-tabs {
@@ -49,11 +48,10 @@ export default {
 .nav-tabs li {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
   cursor: pointer;
-  font-size: 16px;
   transition: background-color 0.3s;
   color: wheat;
+  padding-left: 20px;
 }
 
 .nav-tabs li i {
@@ -70,6 +68,13 @@ export default {
   border-left: 4px solid wheat;
   font-weight: bold;
 }
+.tab-name {
+   font-weight: 400; /* Укажите нужный вес */
+}
+.tab-icon {
+  width: 2.08vw;
+  margin-right: 0.52vw;
+}
 
 @media (max-width: 768px) {
   .sidebar {
@@ -82,6 +87,7 @@ export default {
     border-top: 1px solid #333;
     background-color: #1a1a1a;
     z-index: 1000;
+     padding: 0;
   }
 
   .nav-tabs {

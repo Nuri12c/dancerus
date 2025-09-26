@@ -1,29 +1,34 @@
 <template>
-  <div class="code-input-modal">
-    <h2 class="code-input-modal__title">Введите 4-значный код из WhatsApp</h2>
-    <input
-      class="code-input-modal__input"
-      v-model="code"
-      maxlength="4"
-      placeholder="Код"
-    />
-    <input
-      v-if="isRestore"
-      class="code-input-modal__input"
-      v-model="newPassword"
-      type="password"
-      placeholder="Новый пароль"
-    />
-    <button class="code-input-modal__button" @click="verifyCode">Подтвердить</button>
-    <button class="code-input-modal__button" @click="resendCode">Отправить ещё раз</button>
-    <button class="code-input-modal__button" @click="$emit('close')">Отмена</button>
-    <div v-if="notification" class="code-input-modal__toast">{{ notification }}</div>
+  <div class="modal-overlay" @click.self="$emit('close')">
+    <div class="modal-window">
+      <div class="modal-content">
+        <div class="modal-text-container">
+          <h2 class="modal-title">Введите 4-значный код из WhatsApp</h2>
+          <input
+            class="modal-input"
+            v-model="code"
+            maxlength="4"
+            placeholder="Код"
+          />
+          <input
+            v-if="isRestore"
+            class="modal-input"
+            v-model="newPassword"
+            type="password"
+            placeholder="Новый пароль"
+          />
+          <button class="button-2" @click="verifyCode">Подтвердить</button>
+          <button class="button-2" @click="resendCode">Отправить ещё раз</button>
+          <div v-if="notification" class="modal-toast">{{ notification }}</div>
+        </div>
+      </div>
+      <button class="modal-close" @click="$emit('close')">✖</button>
+    </div>
   </div>
 </template>
 
 <script>
 import { useAuthStore } from '@/stores/auth.js';
-
 
 export default {
   props: {
@@ -104,57 +109,11 @@ export default {
   },
 };
 </script>
-<style scoped>
-.code-input-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* Центрирование содержимого */
-  z-index: 1000; /* Убедитесь, что модалка поверх других элементов */
-}
 
-.code-input-modal__title {
-  color: #fff;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
+<style scoped lang="scss">
+@import '@/styles/mixins.scss';
 
-.code-input-modal__input {
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 
-.code-input-modal__button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-.code-input-modal__button:hover {
-  background-color: #0056b3;
-}
 
-.code-input-modal__toast {
-  position: fixed;
-  bottom: 20px;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
 </style>

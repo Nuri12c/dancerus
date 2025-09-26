@@ -12,9 +12,8 @@
         />
         <div class="modal-text-container">
           <h3 class="modal-title">{{ card.heading }}</h3>
-          <p class="modal-date">{{ card.date }}</p>
-          <p class="modal-text">{{ card.text }}</p>
-          <button class="modal-action-button">Подать заявку</button>
+          <p class="modal-text" >{{ card.text }}</p>
+          <button class="modal-action-button button-1">Подать заявку</button>
         </div>
       </div>
       <button class="modal-close" @click="$emit('close')">✖</button>
@@ -61,25 +60,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.modal-img {
-  width: 35.16vw;
-  height: 34.64vw;
-  border-radius: 1.5rem;
-  object-fit: cover;
-  transition: opacity 0.5s ease-in-out;
-}
-
 @import '@/styles/mixins.scss';
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-
 .modal-window {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -88,15 +69,29 @@ export default {
   width: 84.32vw;
   position: relative;
   animation: fadeIn 0.3s ease;
-  height: 70vh;
+  height: auto; /* Изменено с 70vh на auto для подстройки под контент */
+  max-height: 70vh; /* Ограничение высоты с возможностью скролла */
   overflow-y: auto;
   border: 2px solid white;
-  overflow: hidden;
+  display: flex; /* Добавляем flex для вертикального расположения */
+  flex-direction: column; /* Вертикальное расположение */
+  gap: 1.5rem; /* Отступ между modal-content и modal-card */
 }
-
 .modal-content {
   display: flex;
+  flex-direction: row;
   gap: 1.5rem;
+  height: 100%;
+  width: 84.32vw;
+}
+
+.modal-img {
+  width: 30.16vw;
+  height: 29.64vw;
+  border-radius: 1.5rem;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+  flex-shrink: 0;
 }
 
 .modal-text-container {
@@ -105,94 +100,41 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
-}
-
-.modal-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.modal-date {
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 1rem;
 }
 
 .modal-text {
-  font-size: 1rem;
+  font-size: 0.83vw;
   margin-bottom: 1rem;
+  white-space: pre-line;
 }
 
-.modal-action-button {
-  padding: 0.5rem 1rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  width: fit-content;
-}
-
-.modal-action-button:hover {
-  background: #0056b3;
-}
-
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @media (max-width: 768px) {
-  .modal-window {
-    padding-top: 10%; /* Увеличенный отступ сверху */
-    width: 90vw; /* Чуть уже для мобильных */
-    height: auto; /* Высота подстраивается под контент */
-  }
-
   .modal-content {
-    flex-direction: column; /* Изображение сверху, текст снизу */
+    flex-direction: column;
     align-items: center;
     gap: 2rem;
   }
 
   .modal-img {
-    width: 80vw; /* Увеличим ширину изображения */
-    height: auto; /* Сохраняем пропорции */
-    max-height: 50vh; /* Ограничиваем высоту */
+    width: 80vw;
+    height: auto;
+    max-height: 50vh;
   }
 
   .modal-text-container {
-    width: 80vw; /* Текст занимает всю ширину */
+    width: 80vw;
     align-items: center;
-    text-align: center; /* Центрируем текст */
+    text-align: center;
+    overflow-y: auto;
+    max-height: 40vh;
   }
 
-  .modal-title {
-    font-size: 5vw; /* Масштабируем шрифт */
-  }
-
-  .modal-date,
   .modal-text {
     font-size: 4vw;
   }
-
-  .modal-action-button {
-    font-size: 4vw;
-  }
 }
+
 </style>

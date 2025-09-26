@@ -1,23 +1,29 @@
 <template>
-  <div class="login-modal">
-    <h2 class="login-modal__title">Логин</h2>
-    <input
-      class="login-modal__input"
-      v-model="phone"
-      placeholder="+7 900 000 00 00"
-      @input="formatPhone"
-      maxlength="16"
-    />
-    <input
-      class="login-modal__input"
-      v-model="password"
-      type="password"
-      placeholder="Пароль"
-    />
-    <button class="login-modal__button" @click="login">Войти</button>
-    <button v-if="showRestoreButton" class="login-modal__button" @click="restorePassword">Восстановить пароль</button>
-    <button class="login-modal__button" @click="close">Отмена</button>
-    <div v-if="notification" class="login-modal__toast">{{ notification }}</div>
+  <div class="modal-overlay" @click.self="$emit('close')">
+    <div class="modal-window">
+      <div class="modal-content">
+        <div class="modal-text-container">
+          <h2 class="modal-title">Логин</h2>
+          <input
+            class="modal-input"
+            v-model="phone"
+            placeholder="+7 900 000 00 00"
+            @input="formatPhone"
+            maxlength="16"
+          />
+          <input
+            class="modal-input"
+            v-model="password"
+            type="password"
+            placeholder="Пароль"
+          />
+          <button class="button-2" @click="login">Войти</button>
+          <button v-if="showRestoreButton" class="button-2" @click="restorePassword">Восстановить пароль</button>
+          <div v-if="notification" class="modal-toast">{{ notification }}</div>
+        </div>
+      </div>
+      <button class="modal-close" @click="$emit('close')">✖</button>
+    </div>
   </div>
 </template>
 
@@ -135,21 +141,7 @@ export default {
 };
 </script>
 
-
-<style scoped>
-.login-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* Центрирование содержимого */
-
-}
-
+<style scoped lang="scss">
+@import '@/styles/mixins.scss';
 
 </style>

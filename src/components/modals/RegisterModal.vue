@@ -1,28 +1,34 @@
 <template>
-  <div class="register-modal">
-    <h2 class="register-modal__title">Регистрация</h2>
-    <input
-      class="register-modal__input"
-      v-model="localPhone"
-      placeholder="+7 900 000 00 00"
-      @input="formatPhone"
-      maxlength="16"
-    />
-    <input
-      class="register-modal__input"
-      v-model="password"
-      type="password"
-      placeholder="Пароль"
-    />
-    <button class="register-modal__button" @click="register">Зарегистрироваться</button>
-    <button class="register-modal__button" @click="$emit('close')">Отмена</button>
-    <div v-if="notification" class="register-modal__toast">{{ notification }}</div>
+  <div class="modal-overlay" @click.self="$emit('close')">
+    <div class="modal-window">
+      <div class="modal-content">
+        <div class="modal-text-container">
+          <h2 class="modal-title">Регистрация</h2>
+          <input
+            class="modal-input"
+            v-model="localPhone"
+            placeholder="+7 900 000 00 00"
+            @input="formatPhone"
+            maxlength="16"
+          />
+          <input
+            class="modal-input"
+            v-model="password"
+            type="password"
+            placeholder="Пароль"
+          />
+          <button class="button-2" @click="register">Зарегистрироваться</button>
+          <button class="button-2" @click="$emit('close')">Отмена</button>
+          <div v-if="notification" class="modal-toast">{{ notification }}</div>
+        </div>
+      </div>
+      <button class="modal-close" @click="$emit('close')">✖</button>
+    </div>
   </div>
 </template>
 
 <script>
 import { useAuthStore } from '@/stores/auth.js';
-
 
 export default {
   props: {
@@ -102,19 +108,9 @@ export default {
   },
 };
 </script>
-<style scoped>
-.register-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* Центрирование содержимого */
 
-}
+<style scoped lang="scss">
+@import '@/styles/mixins.scss';
+
 
 </style>

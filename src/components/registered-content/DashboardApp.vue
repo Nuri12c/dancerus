@@ -5,6 +5,7 @@
       <ProfileTab v-if="activeTab === 'profile'" :amocrmData="amocrmData" />
       <CalendarTab v-if="activeTab === 'calendar'" />
       <ResidentcardTab v-if="activeTab === 'resident-card'" />
+      <PresidentcardTab v-if="activeTab === 'president-card'"/>
     </div>
   </div>
 </template>
@@ -12,9 +13,10 @@
 <script>
 import { ref } from "vue";
 import AppSidebar from "./AppSidebar.vue";
-import ProfileTab from "./ProfileTab.vue";
-import CalendarTab from "./CalendarTab.vue";
-import ResidentcardTab from "./ResidentcardTab.vue";
+import ProfileTab from "./Tabs/ProfileTab.vue";
+import CalendarTab from "./Tabs/CalendarTab.vue";
+import ResidentcardTab from "./Tabs/ResidentcardTab.vue";
+import PresidentcardTab from "./Tabs/PresidentcardTab.vue";
 import { useAuthStore } from "@/stores/auth";
 
 export default {
@@ -30,6 +32,7 @@ export default {
     ProfileTab,
     CalendarTab,
     ResidentcardTab,
+    PresidentcardTab
   },
   setup() {
     const authStore = useAuthStore();
@@ -39,9 +42,10 @@ export default {
   data() {
     return {
       tabs: [
-        { id: "profile", name: "Профиль", icon: "fa-user" },
-        { id: "calendar", name: "Календарь событий", icon: "fa-cog" },
-        { id: "resident-card", name: "Карта резидента", icon: "fa-bell" },
+        { id: "profile", name: "Профиль", icon: require('@/assets/images/sidebar-icons/profile.svg' )},
+        { id: "calendar", name: "Календарь событий", icon: require('@/assets/images/sidebar-icons/calendar.svg' )},
+        { id: "resident-card", name: "Карта резидента", icon: require('@/assets/images/sidebar-icons/resident.svg' )},
+        { id: "president-card", name: "Карта президента", icon: require('@/assets/images/sidebar-icons/president.svg' )},
       ],
     };
   },
@@ -60,6 +64,7 @@ export default {
   background-color: #FCF5EB;
   color: rgb(0, 0, 0);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .content {

@@ -2,7 +2,7 @@
   <div>
     <button @click="setTempToken">Установить тестовый токен</button>
     <HeaderApp
-    :show-dashboard="showDashboard"
+      :show-dashboard="showDashboard"
       :token="authStore.token"
       @open-register="showRegister = true"
       @open-login="showLogin = true"
@@ -36,8 +36,14 @@
     <AuthModal
       v-if="showAuthModal"
       @close="closeAll"
-      @open-login="showLogin = true; showAuthModal = false"
-      @open-register="showRegister = true; showAuthModal = false"
+      @open-login="
+        showLogin = true;
+        showAuthModal = false;
+      "
+      @open-register="
+        showRegister = true;
+        showAuthModal = false;
+      "
     />
   </div>
 </template>
@@ -49,7 +55,7 @@ import GuestContent from "./components/guest-content/GuestContent.vue";
 import RegisterModal from "./components/modals/RegisterModal.vue";
 import CodeInputModal from "./components/modals/CodeInputModal.vue";
 import LoginModal from "./components/modals/LoginModal.vue";
-import DashboardModal from "./components/registered-content/DashboardModal.vue";
+import DashboardModal from "./components/registered-content/DashboardApp.vue";
 import AuthModal from "./components/modals/AuthModal.vue";
 
 export default {
@@ -125,64 +131,64 @@ export default {
     async fetchAmoCrmData() {
       // Моковые данные для тестов
       this.amocrmData = {
-        id: 48757940,
-        name: "Нурислам Булатович Ганеев",
-        first_name: "Нурислам Булатович",
+        id: 49109253,
+        name: "Нурислам Ганеев",
+        first_name: "Нурислам",
         last_name: "Ганеев",
-        responsible_user_id: 6929671,
+        responsible_user_id: 10064470,
         group_id: 0,
-        created_by: 1644829,
+        created_by: 0,
         updated_by: 1644829,
-        created_at: 1739176150,
-        updated_at: 1756823007,
+        created_at: 1757601259,
+        updated_at: 1758724576,
         closest_task_at: null,
         is_deleted: false,
         is_unsorted: false,
         custom_fields_values: [
           {
-            field_id: 379831,
-            field_name: "Email",
-            field_code: "EMAIL",
-            field_type: "multitext",
-            values: [{ value: "nurislam.ganieiev@mail.ru", enum_id: 866751, enum_code: "WORK" }],
-          },
-          {
             field_id: 379829,
             field_name: "Телефон",
             field_code: "PHONE",
             field_type: "multitext",
-            values: [{ value: "+79027155011", enum_id: 866739, enum_code: "WORK" }],
+            values: [
+              { value: "+79027155011", enum_id: 866739, enum_code: "WORK" },
+            ],
           },
           {
-            field_id: 595287,
-            field_name: "ПВ Прямой эфир",
+            field_id: 583299,
+            field_name: "Имя",
             field_code: null,
-            field_type: "checkbox",
-            values: [{ value: true }],
+            field_type: "text",
+            values: [{ value: "Nurislam" }],
           },
           {
             field_id: 595289,
             field_name: "Результаты ПФ Прямой эфир",
             field_code: null,
             field_type: "text",
-            values: [{ value: "1122" }],
+            values: [{ value: "11" }],
           },
           {
-            field_id: 596967,
-            field_name: "Ваши Бонусы",
+            field_id: 597163,
+            field_name: "Участие История",
             field_code: null,
-            field_type: "text",
-            values: [{ value: "500" }],
+            field_type: "textarea",
+            values: [
+              {
+                value:
+                  '{"Отборочный этап Конкурент":{"Гуреева Галина Сергеевна ":{"city":"Москва","date":"09.12.23"}},"Полуфинал Зажигай":{"Гуреева Галина Сергеевна":{"city":"Москва","date":"06.04.24"}},"Финал Зажигай":{"Гуреева Галина Сергеевна":{"city":"Москва","date":"06.04.24"}},"Прямое Включение":{"GLITCHES":{"date":"19.09.25","place":"Лауреат 1","bonuses":"10000"},"Спортики":{"date":"19.09.25","place":"Дипломант 1","bonuses":""},"Пазлы":{"date":"19.09.25","place":"Лауреат 1","bonuses":"10000"}}}',
+              },
+            ],
           },
         ],
         account_id: 11782735,
         _links: {
           self: {
-            href: "https://academyfunny.amocrm.ru/api/v4/contacts/48757940?query=%2B79027155011&page=1&limit=250",
+            href: "https://academyfunny.amocrm.ru/api/v4/contacts/49109253?page=1&limit=250",
           },
         },
         _embedded: {
-          tags: [],
+          tags: [{ id: 522198, name: "vkads", color: null }],
           companies: [],
         },
       };
@@ -270,7 +276,7 @@ export default {
       @logout="logout"
     />
     <GuestContent v-if="!showDashboard" />
-    <DashboardModal v-if="showDashboard" :amocrm-data="amocrmData" />
+    <DashboardApp v-if="showDashboard" :amocrm-data="amocrmData" />
     <RegisterModal
       v-if="showRegister"
       v-model:phone="registerPhone"
@@ -313,7 +319,7 @@ import GuestContent from "./components/guest-content/GuestContent.vue";
 import RegisterModal from "./components/modals/RegisterModal.vue";
 import CodeInputModal from "./components/modals/CodeInputModal.vue";
 import LoginModal from "./components/modals/LoginModal.vue";
-import DashboardModal from "./components/registered-content/DashboardModal.vue";
+import DashboardApp from "./components/registered-content/DashboardApp.vue";
 import AuthModal from "./components/modals/AuthModal.vue";
 
 export default {
@@ -323,7 +329,7 @@ export default {
     RegisterModal,
     CodeInputModal,
     LoginModal,
-    DashboardModal,
+    DashboardApp,
     AuthModal,
   },
   data() {
