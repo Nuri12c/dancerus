@@ -49,33 +49,47 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s;
   color: wheat;
-  padding-left: 20px;
+  padding: 12px 20px;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-.nav-tabs li i {
-  margin-right: 10px;
-  font-size: 18px;
-}
-
-.nav-tabs li:hover {
-  background-color: #333;
-}
-
+.nav-tabs li:hover,
 .nav-tabs li.active {
-  background-color: #444;
-  border-left: 4px solid wheat;
-  font-weight: bold;
+  color: white;
 }
-.tab-name {
-   font-weight: 400; /* Укажите нужный вес */
+
+/* Подчёркивание при наведении и активности */
+.nav-tabs li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background-color: white;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
+
+.nav-tabs li:hover::after,
+.nav-tabs li.active::after {
+  transform: scaleX(1);
+}
+
 .tab-icon {
   width: 2.08vw;
   margin-right: 0.52vw;
+  flex-shrink: 0;
 }
 
+.tab-name {
+  font-weight: 400;
+}
+
+/* === Мобильная версия === */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -87,7 +101,7 @@ export default {
     border-top: 1px solid #333;
     background-color: #1a1a1a;
     z-index: 1000;
-     padding: 0;
+    padding: 0;
   }
 
   .nav-tabs {
@@ -97,25 +111,26 @@ export default {
 
   .nav-tabs li {
     flex: 1;
+    flex-direction: column;
     text-align: center;
     padding: 10px;
-    flex-direction: column;
-    align-items: center;
   }
 
-  .nav-tabs li i {
+  .nav-tabs li::after {
+    left: 10px;
+    right: 10px;
+    bottom: 4px;
+  }
+
+  .tab-icon {
+    width: 24px;
+    height: 24px;
     margin-right: 0;
-    margin-bottom: 5px;
-    font-size: 20px;
+    margin-bottom: 4px;
   }
 
-  .nav-tabs li .tab-name {
+  .tab-name {
     font-size: 12px;
-  }
-
-  .nav-tabs li.active {
-    border-left: none;
-    border-top: 4px solid wheat;
   }
 }
 </style>

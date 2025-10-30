@@ -88,7 +88,7 @@ export default {
       formData.append('phone', formattedPhone);
       formData.append('password', this.password);
 
-      fetch('https://letsdancescores.tech/api/register.php', {
+      fetch('https://dancerus.ru/api/register.php', {
         method: 'POST',
         body: formData,
       })

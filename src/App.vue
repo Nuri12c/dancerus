@@ -196,7 +196,7 @@ export default {
       // Реальный запрос закомментирован
       /*
       try {
-        const response = await fetch("https://letsdancescores.tech/api/check_and_fetch_amocrm.php", {
+        const response = await fetch("https://dancerus.ru/api/check_and_fetch_amocrm.php", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.authStore.token}`,
@@ -235,7 +235,7 @@ export default {
       /*
       if (this.authStore.token) {
         try {
-          const response = await fetch("https://letsdancescores.tech/api/check_token.php", {
+          const response = await fetch("https://dancerus.ru/api/check_token.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token: this.authStore.token }),
@@ -392,7 +392,7 @@ export default {
 
        try {
         const response = await fetch(
-          "https://letsdancescores.tech/api/check_and_fetch_amocrm.php",
+          "https://dancerus.ru/api/check_and_fetch_amocrm.php",
           {
             method: "POST",
             headers: {
@@ -426,7 +426,7 @@ export default {
       if (this.authStore.token) {
         try {
           const response = await fetch(
-            "https://letsdancescores.tech/api/check_token.php",
+            "https://dancerus.ru/api/check_token.php",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

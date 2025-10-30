@@ -1,49 +1,86 @@
 <template>
   <section class="tab-content">
-    <h2>Личный кабинет</h2>
-    <p>Добро пожаловать, пользователь!</p>
     <div v-if="amocrmData">
       <div class="contact">
-        <h3 class="user-info">
-          {{ amocrmData.name || "Без имени" }}
-        </h3>
-        <p class="first-participation">
-          <strong>Первое участия</strong> {{ firstParticipationDate || "Не указано" }}
-        </p>
+        <div class="profile-tab">
+          <div class="profile-icon"></div>
+          <div class="profile-info">
+            <h3 class="profile-info-name">
+              {{ amocrmData.name || "Без имени" }}
+            </h3>
+            <p class="profile-info-participation">
+              День рождения: {{ firstParticipationDate || "Не указано" }}
+            </p>
+          </div>
+        </div>
         <div class="bonuses-container">
-           <div class="bonuses-section">
-          <div class="bonus-header">Бонусы за финал</div>
-          <div class="bonuses-card white">
-            <h1>{{ bonusFieldValue || "0" }}</h1>
-          </div>
-        </div>
-        <div class="bonuses-section">
-          <div class="bonus-header">Бонусы за прямое включение</div>
-          <div class="bonuses-card white">
-            <h1>{{ directInclusionBonuses || "0" }} Р</h1>
-          </div>
-        </div>
-        </div>
-
-        <details class="history-details">
-          <summary>История участия</summary>
-          <div v-if="historyData">
-            <div v-for="(project, projectName) in historyData" :key="projectName">
-              <h5>{{ projectName }}</h5>
-              <ul>
-                <li v-for="(details, person) in project" :key="person">
-                  <strong>{{ person }}:</strong>
-                  <span v-if="projectName !== 'Прямое Включение'">
-                    {{ details.city || "Не указано" }},
-                  </span>
-                  {{ details.date || "Не указано" }}
-                  <span v-if="details.place">, {{ details.place }}</span>
-                  <span v-if="details.bonuses">, Бонусы: {{ details.bonuses }}</span>
-                </li>
-              </ul>
+          <div class="bonuses-section">
+            <h3 class="bonus-header">Денежный грант</h3>
+            <div class="bonuses-card white">
+              <h1>{{ bonusFieldValue || "0" }} ₽</h1>
             </div>
           </div>
-          <p v-else>История участия не найдена.</p>
+          <div class="bonuses-section">
+            <h3 class="bonus-header">Стипендия коллектива</h3>
+            <div class="bonuses-card white">
+              <h1>{{ directInclusionBonuses || "0" }} ₽</h1>
+            </div>
+          </div>
+        </div>
+        <details class="history-accordion" open>
+          <summary class="history-header">
+            <span>История участия</span>
+            <svg
+              class="chevron"
+              :class="{ rotated: isOpen }"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </summary>
+
+          <!-- Отдельный блок для контента -->
+          <div class="history-panel">
+            <div v-if="historyData">
+              <div
+                v-for="(project, projectName) in historyData"
+                :key="projectName"
+                class="project-item"
+              >
+                <h5 class="project-title">{{ projectName }}</h5>
+
+                <!-- Все номера в одной строке, через разделитель -->
+                <div class="numbers-line">
+                  <span
+                    v-for="(details, numberName) in project"
+                    :key="numberName"
+                    class="number-entry"
+                  >
+                    <strong>{{ numberName }}</strong
+                    >:
+                    <span v-if="projectName !== 'Прямое Включение'">
+                      {{ details.city || "Не указано" }},
+                    </span>
+                    {{ details.date || "Не указано" }}
+                    <span v-if="details.place">, {{ details.place }}</span>
+                    <span v-if="details.bonuses"
+                      >, Бонусы: {{ details.bonuses }}</span
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p v-else class="no-history">История участия не найдена.</p>
+          </div>
         </details>
       </div>
     </div>
@@ -61,6 +98,7 @@ export default {
   },
   data() {
     return {
+      isOpen: true, // по умолчанию открыто (можно false)
       allowedFieldIds: [
         379829, // Телефон
         583299, // Имя
@@ -92,11 +130,13 @@ export default {
     directInclusionBonuses() {
       let total = 0;
       if (this.historyData && this.historyData["Прямое Включение"]) {
-        Object.values(this.historyData["Прямое Включение"]).forEach((details) => {
-          if (details.bonuses && !isNaN(parseInt(details.bonuses))) {
-            total += parseInt(details.bonuses);
+        Object.values(this.historyData["Прямое Включение"]).forEach(
+          (details) => {
+            if (details.bonuses && !isNaN(parseInt(details.bonuses))) {
+              total += parseInt(details.bonuses);
+            }
           }
-        });
+        );
       }
       return total;
     },
@@ -121,7 +161,8 @@ export default {
       }
       return fields.filter(
         (field) =>
-          this.allowedFieldIds.includes(field.field_id) && field.field_id !== 597163
+          this.allowedFieldIds.includes(field.field_id) &&
+          field.field_id !== 597163
       );
     },
   },
@@ -143,8 +184,37 @@ export default {
 
 
 <style scoped>
+h1 {
+  font-size: 5vw;
+}
+h3 {
+  font-size: 1.67vw;
+}
+.profile-tab {
+  display: flex;
+}
+.profile-icon {
+  width: 13.75vw;
+  height: 13.75vw;
+  margin-bottom: 15px;
+  background-color: #f4a76f;
+  border-radius: 20px;
+  margin-right: 2.08vw;
+}
+.profile-info {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.profile-info-participation {
+  color: #333;
+  font-weight: normal;
+}
 .tab-content {
-  max-width: 800px;
+  widows: 100%;
   padding: 20px;
   overflow: hidden;
 }
@@ -154,13 +224,6 @@ h2 {
   color: #333;
   font-size: 24px;
   font-weight: 600;
-}
-
-.user-info {
-  font-size: 20px;
-  color: #333;
-  margin-bottom: 10px;
-  font-weight: 500;
 }
 
 .first-participation {
@@ -184,18 +247,8 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   text-align: center;
-}
-
-.bonuses-card h4 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.bonuses-card p,
-.bonuses-card ul {
-  font-size: 16px;
-  color: #444;
+  display: flex;
+  align-items: center;
 }
 
 .bonuses-card ul {
@@ -208,53 +261,129 @@ h2 {
   margin-bottom: 8px;
 }
 
-.total-bonuses {
-  font-size: 18px;
-  color: #333;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.history-details {
+/* === АККОРДЕОН: История участия === */
+.history-accordion {
   margin-top: 20px;
-  border-top: 1px solid #eee;
-  padding-top: 10px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 }
 
-.history-details summary {
+/* Заголовок — отдельная фиолетовая плашка */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
   font-size: 18px;
-  color: #333;
+  font-weight: 600;
+  color: white;
+  background: #8c66ad;
   cursor: pointer;
-  padding: 10px;
-  font-weight: 500;
+  user-select: none;
+  border-radius: 12px; /* Только верхние углы */
+  transition: background 0.2s ease;
+  list-style: none;
 }
 
-.history-details summary:hover {
-  background-color: #f0f0f0;
-  border-radius: 4px;
+.history-header:hover {
+  background: #7a5599;
 }
 
-.history-details h5 {
+.history-header::-webkit-details-marker {
+  display: none;
+}
+
+/* Контент — отдельный белый блок под плашкой */
+.history-panel {
+  background: white;
+  border-top: none;
+  border-radius: 0 0 12px 12px; /* Только нижние углы */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Когда открыт — показываем контент */
+.history-accordion[open] .history-panel {
+  max-height: 1200px;
+  padding: 16px;
+}
+
+/* Стрелка */
+.chevron {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* === Внутренние элементы === */
+.project-item {
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.project-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.project-title {
   font-size: 16px;
-  color: #333;
-  margin-top: 15px;
-  margin-bottom: 10px;
+  font-weight: 600;
+  color: #8c66ad;
+  margin: 0 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed #d0b8e0;
 }
 
-.history-details ul {
+.participation-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.history-details li {
-  margin-bottom: 8px;
+.participation-item {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.no-history {
+  color: #999;
+  font-style: italic;
+  margin: 8px 0;
+  text-align: center;
+}
+.numbers-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
   font-size: 14px;
   color: #444;
+  margin-top: 8px;
 }
 
-.contact p {
-  font-size: 14px;
-  color: #666;
+.number-entry {
+  white-space: nowrap;
+}
+
+.number-entry:not(:last-child)::after {
+  content: "  •  ";
+  color: #aaa;
+  margin: 0 8px;
+  font-weight: bold;
 }
 </style>

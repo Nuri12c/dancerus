@@ -72,7 +72,7 @@ export default {
         formData.append('new_password', this.newPassword);
       }
 
-      fetch('https://letsdancescores.tech/api/verify.php', {
+      fetch('https://dancerus.ru/api/verify.php', {
         method: 'POST',
         body: formData,
       })
@@ -92,7 +92,7 @@ export default {
       const formData = new FormData();
       formData.append('phone', this.phone);
 
-      fetch('https://letsdancescores.tech/api/restore_password.php', {
+      fetch('https://dancerus.ru/api/restore_password.php', {
         method: 'POST',
         body: formData,
       })
