@@ -110,9 +110,9 @@ export default {
   content: '';
   position: absolute;
   top: 0;
-  left: -10px;
+  left: -10vw;
   right: 0;
-  height: 70%; /* Высота рамки */
+  height: 30vw; /* Высота рамки */
   background-image: url('@/assets/images/prezident-frame1.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -127,9 +127,9 @@ export default {
   content: '';
   position: absolute;
   bottom: 0;          /* прижимаем к низу */
-  left: -10px;            /* прижимаем к левому краю */
-  width: 200px;       /* ширина рамки (подгони под свой SVG) */
-  height: 200px;      /* высота рамки */
+  left: -2vw;            /* прижимаем к левому краю */
+  width: 20vw;       /* ширина рамки (подгони под свой SVG) */
+  height: 10vw;      /* высота рамки */
   background-image: url('@/assets/images/prezident-frame2.svg');
   background-size: contain;          /* НЕ растягиваем – показываем в оригинальном размере */
   background-repeat: no-repeat;
@@ -170,5 +170,22 @@ export default {
   .content.president-mode::after {
     height: 50px;
   }
+  /* РАМКА СВЕРХУ (как фон под контентом) */
+.content.president-mode::before {
+
+  left: -10vw;
+  height: 60%; /* Высота рамки */
+
+}
+/* РАМКА СНИЗУ (как фон под контентом) */
+.content.president-mode::after {
+  content: '';
+  position: absolute;
+  bottom: 10vw;          /* прижимаем к низу */
+  left: -4vw;            /* прижимаем к левому краю */
+  width: 50vw;       /* ширина рамки (подгони под свой SVG) */
+  height: 20%;      /* высота рамки */
+}
+
 }
 </style>
