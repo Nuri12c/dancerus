@@ -9,9 +9,10 @@
 export default {};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .tab-content {
-  max-width: 800px;
+  max-width: 100%;
+  height: 1000px;
 }
 
 h2 {
