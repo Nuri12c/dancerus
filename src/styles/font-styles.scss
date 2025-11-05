@@ -13,6 +13,13 @@
   font-style: normal;
   font-display: swap; /* Рекомендуется для оптимизации загрузки */
 }
+@font-face {
+  font-family: 'Gothic'; /* Исправлено название */
+  src: url('../assets/fonts/DelaGothicOne.ttf') format('truetype');
+  font-weight: 200 800; /* Диапазон весов для переменного шрифта */
+  font-style: normal;
+  font-display: swap; /* Рекомендуется для оптимизации загрузки */
+}
 
 
 

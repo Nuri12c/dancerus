@@ -32,9 +32,11 @@ export default {
 
 <style scoped>
 .sidebar {
-  width: 22.55vw;
+  width: 22.55vw ;
+  min-width: 22.55vw;            /* ← ДОБАВЬ */
+  flex-shrink: 0;
   background-color: #8C66AD;
-  padding: 9.9vw 0 0 0;
+  padding-top: 9.90vw;
   height: 100vh;
   border-right: 1px solid #333;
 }
@@ -50,7 +52,7 @@ export default {
   align-items: center;
   cursor: pointer;
   color: wheat;
-  padding: 12px 20px;
+  padding:  0 0 0 3.33vw;
   position: relative;
   transition: color 0.3s ease;
 }
@@ -65,8 +67,8 @@ export default {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 20px;
-  right: 20px;
+  left: 3.13vw;
+  right: 3.13vw;
   height: 1px;
   background-color: white;
   transform: scaleX(0);
@@ -93,14 +95,14 @@ export default {
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
-    height: auto;
+    height: 15.417vw;
     position: fixed;
     bottom: 0;
     left: 0;
     border-right: none;
     border-top: 1px solid #333;
     background-color: #1a1a1a;
-    z-index: 1000;
+    z-index: 5;
     padding: 0;
   }
 
@@ -113,24 +115,26 @@ export default {
     flex: 1;
     flex-direction: column;
     text-align: center;
-    padding: 10px;
+    padding-top: 0.66vw;
   }
 
   .nav-tabs li::after {
-    left: 10px;
-    right: 10px;
-    bottom: 4px;
+    left: 5.302vw;
+    right: 2.302vw;
+    bottom: 0.521vw;
   }
 
   .tab-icon {
-    width: 24px;
-    height: 24px;
+    width: 8.125vw;
+    height: 8.125vw;
     margin-right: 0;
-    margin-bottom: 4px;
+    margin-bottom: 0;
   }
 
   .tab-name {
-    font-size: 12px;
+    font-size: 1.563vw;
+    line-height: 0;
+    padding-bottom: 0.8vw;
   }
 }
 </style>

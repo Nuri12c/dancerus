@@ -180,6 +180,14 @@ export default {
               },
             ],
           },
+          {
+  field_id: 999999,
+  field_name: "Карты лояльности",
+  field_type: "text",
+  values: [{
+    value: '{"cards":{"residentCard":{"value":"1"},"presidentCard":{"value":"2"}}}'
+  },]
+},
         ],
         account_id: 11782735,
         _links: {

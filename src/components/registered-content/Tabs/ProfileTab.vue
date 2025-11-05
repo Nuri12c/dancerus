@@ -215,7 +215,6 @@ h3 {
 }
 .tab-content {
   widows: 100%;
-  padding: 20px;
   overflow: hidden;
 }
 
@@ -385,5 +384,71 @@ h2 {
   color: #aaa;
   margin: 0 8px;
   font-weight: bold;
+}
+@media (max-width: 768px) {
+  /* 1. Шрифты — фиксированные, а не vw (чтобы не мельчили) */
+  h1 { font-size: 32px !important; }
+  h3 { font-size: 18px !important; }
+  .profile-info { font-size: 16px !important; }
+  .profile-info-name { font-size: 20px !important; line-height: 1.2; }
+  .profile-info-participation { font-size: 14px !important; }
+
+  /* 2. Профиль */
+  .profile-tab {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .profile-icon {
+    width: 80px !important;
+    height: 80px !important;
+    margin: 0 auto 12px !important;
+  }
+  .profile-info {
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  /* 3. Бонусы — вертикально */
+  .bonuses-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bonuses-card {
+    width: auto;
+    height: 26.042vw;
+  }
+  .bonuses-card h1 {
+    font-size: 28px !important;
+  }
+
+  /* 4. Аккордеон */
+  .history-header {
+    padding: 12px 14px;
+    font-size: 16px;
+  }
+  .chevron { width: 16px; height: 16px; }
+
+  /* 5. История участия */
+  .project-title { font-size: 15px; }
+  .numbers-line {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .number-entry {
+    white-space: normal;
+  }
+  .number-entry:not(:last-child)::after {
+    content: "" !important;
+  }
+
+  /* 6. Отступы и паддинги */
+  .tab-content { padding: 0; }
+  .history-panel { padding: 12px 14px !important; }
+  .history-accordion[open] .history-panel { max-height: 2000px; }
+
+  /* 7. Убираем лишние тени/бордеры на маленьком экране */
+  .bonuses-card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 }
 </style>

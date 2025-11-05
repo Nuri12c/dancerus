@@ -1,14 +1,25 @@
 <template>
   <div class="dashboard">
-    <AppSidebar :tabs="tabs" :activeTab="activeTab" @update:activeTab="activeTab = $event" />
+    <AppSidebar
+      :tabs="tabs"
+      :activeTab="activeTab"
+      @update:activeTab="activeTab = $event"
+    />
 
     <!-- Основной контент с динамическим фоном и рамками -->
     <div class="content" :class="contentClass">
       <!-- Внутренний контент (теперь БЕЗ отдельного .inner-content) -->
       <ProfileTab v-if="activeTab === 'profile'" :amocrmData="amocrmData" />
       <CalendarTab v-if="activeTab === 'calendar'" />
-      <ResidentcardTab v-if="activeTab === 'resident-card'" />
-      <PresidentcardTab v-if="activeTab === 'president-card'" />
+      <ResidentcardTab
+        v-if="activeTab === 'resident-card'"
+        :amocrmData="amocrmData"
+      />
+
+      <PresidentcardTab
+        v-if="activeTab === 'president-card'"
+        :amocrmData="amocrmData"
+      />
     </div>
   </div>
 </template>
@@ -42,25 +53,41 @@ export default {
   data() {
     return {
       tabs: [
-        { id: "profile", name: "Профиль", icon: require('@/assets/images/sidebar-icons/profile.svg') },
-        { id: "calendar", name: "Календарь событий", icon: require('@/assets/images/sidebar-icons/calendar.svg') },
-        { id: "resident-card", name: "Карта резидента", icon: require('@/assets/images/sidebar-icons/resident.svg') },
-        { id: "president-card", name: "Карта президента", icon: require('@/assets/images/sidebar-icons/president.svg') },
+        {
+          id: "profile",
+          name: "Профиль",
+          icon: require("@/assets/images/sidebar-icons/profile.svg"),
+        },
+        {
+          id: "calendar",
+          name: "Календарь событий",
+          icon: require("@/assets/images/sidebar-icons/calendar.svg"),
+        },
+        {
+          id: "resident-card",
+          name: "Карта резидента",
+          icon: require("@/assets/images/sidebar-icons/resident.svg"),
+        },
+        {
+          id: "president-card",
+          name: "Карта президента",
+          icon: require("@/assets/images/sidebar-icons/president.svg"),
+        },
       ],
     };
   },
   computed: {
     isPresidentTab() {
-      return this.activeTab === 'president-card';
+      return this.activeTab === "president-card";
     },
     isResidentTab() {
-      return this.activeTab === 'resident-card';
+      return this.activeTab === "resident-card";
     },
     contentClass() {
-      if (this.isPresidentTab) return 'president-mode';
-      if (this.isResidentTab) return 'resident-bg';
-      return '';
-    }
+      if (this.isPresidentTab) return "president-mode";
+      if (this.isResidentTab) return "resident-bg";
+      return "";
+    },
   },
   mounted() {
     console.log("mounted: amocrmData=", this.amocrmData);
@@ -74,7 +101,7 @@ export default {
   display: flex;
   width: 100%;
   height: 100vh;
-  background-color: #FCF5EB;
+  background-color: #fcf5eb;
   color: rgb(0, 0, 0);
   box-sizing: border-box;
   overflow: hidden;
@@ -84,14 +111,14 @@ export default {
   flex-grow: 1;
   padding: 70px 40px 40px 40px;
   overflow-y: auto;
-  background-color: #FCF5EB;
+  background-color: #fcf5eb;
   position: relative;
   transition: background-color 0.4s ease, background-image 0.5s ease-in-out;
 }
 
 /* === Карта резидента — фоновая картинка === */
 .content.resident-bg {
-  background-image: url('@/assets/images/resident-bg.png');
+  background-image: url("@/assets/images/resident-bg.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -107,13 +134,13 @@ export default {
 
 /* РАМКА СВЕРХУ (как фон под контентом) */
 .content.president-mode::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -10vw;
   right: 0;
   height: 30vw; /* Высота рамки */
-  background-image: url('@/assets/images/prezident-frame1.svg');
+  background-image: url("@/assets/images/prezident-frame1.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -124,16 +151,16 @@ export default {
 
 /* РАМКА СНИЗУ (как фон под контентом) */
 .content.president-mode::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: 0;          /* прижимаем к низу */
-  left: -2vw;            /* прижимаем к левому краю */
-  width: 20vw;       /* ширина рамки (подгони под свой SVG) */
-  height: 10vw;      /* высота рамки */
-  background-image: url('@/assets/images/prezident-frame2.svg');
-  background-size: contain;          /* НЕ растягиваем – показываем в оригинальном размере */
+  bottom: 0; /* прижимаем к низу */
+  left: -2vw; /* прижимаем к левому краю */
+  width: 20vw; /* ширина рамки (подгони под свой SVG) */
+  height: 10vw; /* высота рамки */
+  background-image: url("@/assets/images/prezident-frame2.svg");
+  background-size: contain; /* НЕ растягиваем – показываем в оригинальном размере */
   background-repeat: no-repeat;
-  background-position: left bottom;  /* левый‑нижний угол блока */
+  background-position: left bottom; /* левый‑нижний угол блока */
   z-index: 1;
   pointer-events: none;
   animation: slideUp 0.7s ease-out;
@@ -146,13 +173,25 @@ export default {
 }
 
 @keyframes slideDown {
-  from { transform: translateY(-100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* === Мобильная адаптация === */
@@ -171,21 +210,18 @@ export default {
     height: 50px;
   }
   /* РАМКА СВЕРХУ (как фон под контентом) */
-.content.president-mode::before {
-
-  left: -10vw;
-  height: 60%; /* Высота рамки */
-
-}
-/* РАМКА СНИЗУ (как фон под контентом) */
-.content.president-mode::after {
-  content: '';
-  position: absolute;
-  bottom: 10vw;          /* прижимаем к низу */
-  left: -4vw;            /* прижимаем к левому краю */
-  width: 50vw;       /* ширина рамки (подгони под свой SVG) */
-  height: 20%;      /* высота рамки */
-}
-
+  .content.president-mode::before {
+    left: -10vw;
+    height: 60%; /* Высота рамки */
+  }
+  /* РАМКА СНИЗУ (как фон под контентом) */
+  .content.president-mode::after {
+    content: "";
+    position: absolute;
+    bottom: 10vw; /* прижимаем к низу */
+    left: -4vw; /* прижимаем к левому краю */
+    width: 50vw; /* ширина рамки (подгони под свой SVG) */
+    height: 20%; /* высота рамки */
+  }
 }
 </style>

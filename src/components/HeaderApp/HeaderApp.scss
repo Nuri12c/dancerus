@@ -1,4 +1,4 @@
-@import '@/styles/mixins.scss';
+@import "@/styles/mixins.scss";
 
 .header {
   position: fixed;
@@ -48,8 +48,8 @@
 
 .watsapp-button {
   background: url("@/assets/images/Vector.svg");
-  width: 2.92vw;
-  height: 2.92vw;
+  width: 3.92vw;
+  height: 3.92vw;
   background-size: contain;
   border: none;
   background-repeat: no-repeat;
@@ -90,30 +90,38 @@
 /* -------------------------------------------------
    1. Кнопка «На сайт» (замена кнопки «Выйти»)
    ------------------------------------------------- */
-.back-to-site {
+.dashboard-header {
   display: flex;
-  align-items: center;
-  gap: 0.8vw;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0.6vw 1.5vw;
-  border-radius: 8px;
-  font-size: 1.3vw;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;        /* ← ЭТА СТРОКА ЦЕНТРИРУЕТ ВСЁ ПО ВЫСОТЕ */
+  height: 60px;
+  padding: 0 3vw;
 }
 
-.back-to-site:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
+.dashboard-container {
+  margin-left: auto;          /* ← прижимает к правому краю */
+  display: flex;
+  align-items: center;        /* ← центрирует кнопки внутри по высоте */
+  gap: 2.5vw;                 /* ← расстояние между WhatsApp и кнопкой */
+  height: 100%;               /* ← можно убрать, не нужно */
+}
+.back-to-site {
+  padding: 1.34vw 1.25vw; /* 18px и 24px при 1920px */
+  height: auto;
+  background-color: #ffffff00;
+  border: 0.15vw solid white; /* 2px при 1920px */
+  color: #262626;
+  border-radius: 0.26vw; /* 5px при 1920px */
+  font-family: "Oswald", sans-serif;
+  font-weight: 200;
+  font-size: 2.25vw; /* 24px при 1920px */
+  white-space: nowrap;
+  text-transform: uppercase;
+  margin-right: 3vw;
 }
 
-.back-to-site svg {
-  width: 1.6vw;
-  height: 1.6vw;
-}
+
 
 /* -------------------------------------------------
    2. Адаптив для кнопки «На сайт» (моб.)
@@ -133,8 +141,8 @@
   }
 
   .icon {
-    width: 6.97vw;
-    height: 6.97vw;
+    width: 10.97vw;
+    height: 10.97vw;
   }
 
   .logo__text {
@@ -166,13 +174,17 @@
     display: flex;
   }
   .back-to-site {
-    font-size: 4vw;
-    padding: 2.5vw 4vw;
-    gap: 2vw;
+    padding: 1.48vw 2.48vw; /* 18px при 402px */
+    color: #262626;
+      height: auto;
+    font-size: 3.97vw; /* 24px при 402px */
   }
-
-  .back-to-site svg {
-    width: 5vw;
-    height: 5vw;
-  }
+  .watsapp-button {
+  background: url("@/assets/images/Vector.svg");
+  width: 8.92vw;
+  height: 8.92vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
 }
