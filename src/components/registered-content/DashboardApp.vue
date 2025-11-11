@@ -100,7 +100,7 @@ export default {
 .dashboard {
   display: flex;
   width: 100%;
-  height: 100vh;
+ height: 100dvh; /* современный стандарт */
   background-color: #fcf5eb;
   color: rgb(0, 0, 0);
   box-sizing: border-box;
@@ -118,7 +118,7 @@ export default {
 
 /* === Карта резидента — фоновая картинка === */
 .content.resident-bg {
-  background-image: url("@/assets/images/resident-bg.png");
+  background-image: url("@/assets/images/cabinet/resident-bg.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -140,7 +140,7 @@ export default {
   left: -10vw;
   right: 0;
   height: 30vw; /* Высота рамки */
-  background-image: url("@/assets/images/prezident-frame1.svg");
+  background-image: url("@/assets/images/cabinet/prezident-frame1.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -157,7 +157,7 @@ export default {
   left: -2vw; /* прижимаем к левому краю */
   width: 20vw; /* ширина рамки (подгони под свой SVG) */
   height: 10vw; /* высота рамки */
-  background-image: url("@/assets/images/prezident-frame2.svg");
+  background-image: url("@/assets/images/cabinet/prezident-frame2.svg");
   background-size: contain; /* НЕ растягиваем – показываем в оригинальном размере */
   background-repeat: no-repeat;
   background-position: left bottom; /* левый‑нижний угол блока */
@@ -197,7 +197,11 @@ export default {
 /* === Мобильная адаптация === */
 @media (max-width: 768px) {
   .content {
-    padding-bottom: 80px;
+    padding-top: 20vw;
+    padding-left: 6.07vw;
+    padding-right: 6.07vw;
+    padding-bottom: 100px;
+    overflow-x: hidden;  /* Обрезает справа и слева */
   }
 
   .content.resident-bg {
@@ -218,10 +222,11 @@ export default {
   .content.president-mode::after {
     content: "";
     position: absolute;
-    bottom: 10vw; /* прижимаем к низу */
+    bottom: 2vw; /* прижимаем к низу */
     left: -4vw; /* прижимаем к левому краю */
-    width: 50vw; /* ширина рамки (подгони под свой SVG) */
-    height: 20%; /* высота рамки */
+    width: 120vw; /* ширина рамки (подгони под свой SVG) */
+    height: 60%; /* высота рамки */
+
   }
 }
 </style>

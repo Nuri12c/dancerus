@@ -1,8 +1,8 @@
-@import './mixins.scss';
-@import '../components/guest-content/section-hero/Hero.scss';
-@import '../components/HeaderApp/HeaderApp.scss';
-@import '../components/guest-content/section-contests/sectionContest.scss';
-@import '../components/guest-content/section-reviews/sectionReviews.scss';
-@import '../components/guest-content/section-group/sectionGroup.scss';
-@import '../components/guest-content/section-why/sectionWhy.scss';
-@import '../components/modals/modal-styles.scss'
+@use './mixins.scss';
+@use '../components/guest-content/section-hero/Hero.scss';
+@use '../components/HeaderApp/HeaderApp.scss';
+@use '../components/guest-content/section-contests/sectionContest.scss';
+@use '../components/guest-content/section-reviews/sectionReviews.scss';
+@use '../components/guest-content/section-group/sectionGroup.scss';
+@use '../components/guest-content/section-why/sectionWhy.scss';
+@use '../components/modals/modal-styles.scss'

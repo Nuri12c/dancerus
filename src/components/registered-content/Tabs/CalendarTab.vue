@@ -6,7 +6,8 @@
     <div class="calendar__row calendar__row--hero">
       <div
         class="event-card event-card--width-55 event-card--otbor"
-        :style="{ backgroundImage: `url(${otbor})` }"
+        :style="{ backgroundImage: `url(${otbor})`,
+          backgroundPosition: 'right center' }"
       >
         <h1 class="event-card__heading white">2025</h1>
         <ul class="event-card__dates">
@@ -64,7 +65,7 @@
         }"
       >
         <h1 class="event-card__heading white">2026</h1>
-        <p>Май </p>
+        <p class="event-card__mounth">Май </p>
         <button class="event-card__button">подать заявку</button>
       </div>
 
@@ -76,7 +77,7 @@
         }"
       >
         <h1 class="event-card__heading white">2026</h1>
-        <p>Апрель</p>
+        <p class="event-card__mounth">Апрель</p>
         <button class="event-card__button">подать заявку</button>
       </div>
     </div>
@@ -91,7 +92,7 @@
         }"
       >
         <h1 class="event-card__heading white">2026</h1>
-        <p>Осень</p>
+        <p class="event-card__mounth">Осень</p>
         <button class="event-card__button">подать заявку</button>
       </div>
     </div>
@@ -106,7 +107,7 @@
         }"
       >
         <h1 class="event-card__heading">2026</h1>
-        <p>Декабрь</p>
+        <p class="event-card__mounth">Декабрь</p>
         <button class="event-card__button">подать заявку</button>
       </div>
     </div>
@@ -190,7 +191,7 @@ export default {
     width: 45%;
   }
   &--width-100 {
-    width: 100%;
+    width: 90%;
   }
 
   &__heading {
@@ -247,19 +248,53 @@ export default {
     flex-direction: column;
     gap: 0.833vw;
   }
+  .calendar__title {
+    font-size: 6.80vw;
+    margin-bottom: 6.50vw;
+  }
 
   .event-card {
-    padding: 1.30vw;
-     height: 30.854vw;
+    padding: 2.30vw 2.30vw 2.30vw 3.30vw;
+    height: 30.854vw;
   }
   .event-card {
+    &__dates {
+    padding-left: 2.78vw;
+    font-size: 3.71vw;
+      margin: 0;
+  }
+  &__mounth {
+    font-size: 3.64vw;
+    line-height: 0;
+    margin: 0;
+  }
+  &__heading {
+    font-size: 6.78vw;
+  }
+  &__button {
+    font-size: 3.78vw;
+    padding: 1.2vw 1.2vw;
+    border-radius: 1.21vw;
+  }
     &--width-55,
     &--width-45,
     &--width-100 {
-      width: 100% !important;
+      width: auto !important;
+    }
+    &--otbor,
+    &--polufinal {
+      height: 52.18vw;
     }
 
+    &--fourfest {
+      height: 32.18vw;
+    }
+    &--konkurent,
+    &--final,
+    &--nasledie {
+      height: 22.43vw;
 
+    }
   }
 
   .calendar__row--hero,

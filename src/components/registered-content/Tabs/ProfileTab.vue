@@ -240,10 +240,10 @@ h2 {
 .bonuses-card {
   width: 18.75vw;
   height: 10.31vw;
-  background: url(@/assets/images/bonuses.jpg);
+  background: url(@/assets/images/cabinet/bonuses.png);
   background-size: cover;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 1vw;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   text-align: center;
   display: flex;
@@ -395,14 +395,12 @@ h2 {
 
   /* 2. Профиль */
   .profile-tab {
-    flex-direction: column;
     align-items: center;
     text-align: center;
   }
   .profile-icon {
-    width: 80px !important;
-    height: 80px !important;
-    margin: 0 auto 12px !important;
+    width: 35.92vw;
+    height: 35.92vw;
   }
   .profile-info {
     align-items: center;
@@ -417,15 +415,17 @@ h2 {
   .bonuses-card {
     width: auto;
     height: 26.042vw;
+    border-radius: 3.50vw;
   }
   .bonuses-card h1 {
-    font-size: 28px !important;
+    font-size: 16.30vw !important;
   }
 
   /* 4. Аккордеон */
   .history-header {
     padding: 12px 14px;
     font-size: 16px;
+    border-radius: 3.50vw;
   }
   .chevron { width: 16px; height: 16px; }
 

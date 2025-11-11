@@ -1,48 +1,106 @@
 <template>
-  <section class="tab-content">
+  <section class="president-card">
+    <h2 class="president-card__title">Карта президента</h2>
 
-    <h2 class="title">Карта резидента</h2>
-
-    <div class="btn-group">
-      <button class="btn">Вам сообщение! <span class="cursor"></span></button>
-      <button class="btn">Правила пользования картой<span class="cursor"></span></button>
+    <div class="president-card__actions">
+      <button class="president-card__action-btn">
+        Вам сообщение! <span class="president-card__cursor"></span>
+      </button>
+      <button class="president-card__action-btn">
+        Правила пользования картой <span class="president-card__cursor"></span>
+      </button>
     </div>
 
-    <h3 class="section-title">Этапы участия в программе:</h3>
+    <h3 class="president-card__section-title">Этапы участия в программе:</h3>
 
-    <div class="cards-flex">
-      <div
-        v-for="n in 6"
-        :key="n"
-        class="card"
-        :class="{ locked: n > presidentLevel }"
-      >
-        <p class="card-desc">
-          {{ n <= presidentLevel
-            ? ' Баллы, скидки, бонусы.'
-            : 'Заблокировано. Достигни следующего уровня!' }}
+    <div class="president-card__cards">
+      <div v-for="n in 8" :key="n" class="president-card__card-wrapper">
+        <div
+          class="president-card__card"
+          :class="{ 'president-card__card--locked': n > presidentLevel }"
+          :style="{
+            background: cardBackgrounds[n - 1],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }"
+        >
+          <!-- Тёмный оверлей для заблокированных -->
+          <div
+            v-if="n > presidentLevel"
+            class="president-card__locked-overlay"
+          ></div>
+
+          <!-- Замок по центру для заблокированных -->
+          <div
+            v-if="n > presidentLevel"
+            class="president-card__lock-wrapper"
+          >
+            <img
+              src="@/assets/images/cabinet/lock.svg"
+              alt="Заблокировано"
+              class="president-card__lock-icon"
+            />
+          </div>
+        </div>
+
+        <p class="president-card__card-label">
+          {{ cardLabels[n - 1] }}
         </p>
-        <button class="card-btn" :disabled="n > presidentLevel">
-          {{ n <= presidentLevel ? 'Подробнее' : '🔒' }}
-        </button>
       </div>
     </div>
-
   </section>
 </template>
 
 <script>
 export default {
-  name: "ResidentcardTab",
+  name: "PresidentcardTab",
   props: {
     amocrmData: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
+  },
+  data() {
+    return {
+      cardLabels: [
+        "Ежемесячная стипендия в размере 400 р. на каждого участника участвующего в проектах «Танцуй, Россия»",
+        "Видео-разбор номера от профессионального хореографа-постановщика",
+        "Интерактивный тимбилдинг для детей, родителей и руководителей",
+        "Личный онлайн мастер-класс для руководителя от одного из лучших хореографов РФ",
+        "Закрытая онлайн конференция мотивационного тренинга",
+        "Личные мастер класс по вашему направлению от одного из лучших хореографов РФ",
+        "Эксклюзивный доступ к закрытым репетициям топ-команд",
+        "Личная фотосессия с известным хореографом и публикация в соцсетях"
+      ],
+       cardBackgrounds: [
+         'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
+         'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+         'linear-gradient(135deg, #ffd89b 0%, #19547b 100%)',
+         'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+         'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+         'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+         'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+       ],
+
+   /*    // Вариант 2: Картинки (рекомендуется!)
+      cardBackgrounds: [
+        'url("@/assets/images/president-card/mk.PNG")',
+        'url("@/assets/images/president-2.jpg")',
+        'url("@/assets/images/president-3.jpg")',
+        'url("@/assets/images/president-4.jpg")',
+        'url("@/assets/images/president-5.jpg")',
+        'url("@/assets/images/president-6.jpg")',
+        'url("@/assets/images/president-7.jpg")',
+        'url("@/assets/images/president-8.jpg")',
+      ], */
+    };
   },
   computed: {
     presidentLevel() {
-      const field = this.amocrmData?.custom_fields_values?.find(f => f.field_id === 999999);
+      const field = this.amocrmData?.custom_fields_values?.find(
+        (f) => f.field_id === 598151
+      );
       if (!field) return 0;
       try {
         const data = JSON.parse(field.values[0].value);
@@ -50,101 +108,213 @@ export default {
       } catch {
         return 0;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-.tab-content {
-  margin: 0;
+/* === БЛОК: president-card === */
+.president-card {
   max-width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
-.card.locked {
-  opacity: 0.5;
-  filter: grayscale(100%);
-  pointer-events: none;
-}
-.card-btn:disabled {
-  background: #666;
-  cursor: not-allowed;
-}
-.cursor {
-  width: 2.24vw;
-  height: 2.24vw;
-  display: inline-block;
-  background: url('@/assets/images/cursor.svg');
-  background-size: contain;
-  transform: translateY(0.40vw);
-  margin-left: 0.5vw;
-}
-
 
 /* Заголовки */
-.title        { margin: 0 0 1rem; }
-.section-title{ margin: 0 0 1.5rem; }
+.president-card__title {
+  margin: 0 0 1.65vw;
+  font-family: "Gothic", sans-serif;
+  font-size: 3.48vw;
+  text-align: left;
+  color: #ffffff;
+}
 
-/* Кнопки */
-.btn-group {
+.president-card__section-title {
+  margin: 0 0 1vw;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+/* Кнопки действий */
+.president-card__actions {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
-.btn {
-  font-family: 'Inter', sans-serif;
+
+.president-card__action-btn {
   font-weight: 600;
   font-size: 1.67vw;
-  padding: 0.8rem 1.2rem;
-  border-radius: 0.63vw;
+  padding: 0 1.2rem 0.5rem;
   background: #f0f0f0;
   border: none;
-  cursor: pointer;
-}
-
-/* ==== КАРТОЧКИ: РОВНО 20.42vw ==== */
-.cards-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  padding: 0 2vw;
-}
-
-.card {
-  width: 20.42vw !important;
-  height: 11.20vw;
-  flex: 0 0 20.42vw;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
   border-radius: 0.63vw;
-  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  transition: background 0.2s;
+}
+
+.president-card__action-btn:hover {
+  background: #e0e0e0;
+}
+
+.president-card__cursor {
+  width: 2.24vw;
+  height: 2.24vw;
+  background: url("@/assets/images/cabinet/cursor.svg") no-repeat center/contain;
+  display: inline-block;
+  transform: translateY(0.4vw);
+}
+
+/* === КАРТОЧКИ (8 штук) === */
+.president-card__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 14.5vw);   /* 4 в ряд = 8 карточек */
+  gap: 0 2vw;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.president-card__card-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  background: white;
-  transition: transform 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-.card-desc {
-  flex-grow: 1;
-  font-size: 0.9rem;
+  align-items: center;
 }
 
-/* Адаптив: на мобиле — 100% */
+.president-card__card {
+  width: 100%;
+  height: 8vw;                                 /* Уменьшена высота под 8 карточек */
+  border: 1px solid #ddd;
+  border-radius: 0.7vw;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.president-card__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Заблокированная карточка */
+.president-card__card--locked {
+  pointer-events: none;
+}
+
+/* Тёмный оверлей */
+.president-card__locked-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.461);
+  border-radius: 0.7vw;
+  z-index: 1;
+}
+
+/* Замок по центру */
+.president-card__lock-wrapper {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.president-card__lock-icon {
+  width: 3.5vw;
+  height: 3.5vw;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Подпись под карточкой */
+.president-card__card-label {
+  margin-top: 0.5rem;
+  max-width: 14.5vw;
+  font-weight: 600;
+  font-size: 0.85vw;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* === АДАПТИВ (мобильная версия) === */
 @media (max-width: 768px) {
-  .card {
-    width: 90vw !important;
-    max-width: 90vw;
-    min-width: 90vw;
-    flex: 0 0 90vw;
+  .president-card {
+    padding: 14vw 4vw;
   }
-  .btn-group {
+
+  .president-card__title {
+    font-size: 6.8vw;
+    margin-bottom: 8.5vw;
+    text-align: center;
+  }
+
+  .president-card__actions {
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+  }
+
+  .president-card__action-btn {
+    font-size: 3.8vw;
+    padding: 1.2rem 1.5rem;
+    width: 76vw;
+    border-radius: 3vw;
+    justify-content: center;
+    gap: 1.5vw;
+  }
+
+  .president-card__cursor {
+    width: 5.5vw;
+    height: 5.5vw;
+    transform: translateY(0.8vw);
+  }
+
+  .president-card__section-title {
+    font-size: 5.5vw;
+    margin-bottom: 4vw;
+    text-align: center;
+  }
+
+  .president-card__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .president-card__card {
+    width: 78.86vw;
+    height: 42vw;
+    border-radius: 2.5vw;
+  }
+
+  .president-card__locked-overlay {
+    border-radius: 2.5vw;
+  }
+
+  .president-card__lock-icon {
+    width: 16vw;
+    height: 16vw;
+  }
+
+  .president-card__card-label {
+    margin-top: 3vw;
+    font-size: 4.2vw;
+    font-weight: 700;
+    color: #ffffff;
+    max-width: 87.86vw;
   }
 }
 </style>

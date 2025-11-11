@@ -181,7 +181,7 @@ export default {
             ],
           },
           {
-  field_id: 999999,
+  field_id: 598151,
   field_name: "Карты лояльности",
   field_type: "text",
   values: [{

@@ -18,7 +18,6 @@
           prevEl: '.reviews__button--prev',
         }"
         @swiper="onSwiper"
-        @slideChange="updateCounter"
         @click="handleUserInteraction"
         @touchStart="handleUserInteraction"
       >
@@ -48,30 +47,21 @@
         </swiper-slide>
       </swiper>
 
-      <!-- Кнопки навигации вне слайдера -->
-      <button class="reviews__button reviews__button--prev"></button>
-      <button class="reviews__button reviews__button--next rotate"></button>
-
-      <!-- Панель управления для десктопа -->
-      <div class="reviews__controls">
-        <span class="reviews__counter">{{ counterText }}</span>
-        <div class="reviews__buttons">
-          <button
-            class="reviews__button reviews__button--prev"
-            @click="slidePrev"
-          ></button>
-          <button
-            class="reviews__button reviews__button--next rotate"
-            @click="slideNext"
-          ></button>
-        </div>
-      </div>
+      <!-- Кнопки по бокам — всегда видны -->
+      <button
+        class="reviews__button reviews__button--prev"
+        @click="slidePrev"
+      ></button>
+      <button
+        class="reviews__button reviews__button--next rotate"
+        @click="slideNext"
+      ></button>
     </div>
   </section>
 </template>
 
 <script>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -82,209 +72,170 @@ export default {
   setup() {
     const reviews = [
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Большая сильная команда!",
+        text: "Россия богата талантливыми детьми! Это очень радует! Классные танцы, крутые хореографы! Это большой опыт для всех, даже в организации своих проектов. Вам желаем дальнейшего процветания, успехов и благополучия!",
+        author: "Ильшат Хатимович",
+        city: "Республика Башкортостан",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Все на высшем уровне!",
+        text: "Программа конкурса,гостиница, завтраки, ужины все очень сытно, вкусно, чисто аккуратно интересная, впечатляющая экскурсия, трансферы комфортные, удобные, во время приезжали, выезжали все очень понравилось.",
+        author: "Мария Попова",
+        city: "Республика Саха Якутия",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Слаженная команда!",
+        text: "Видно, что работа проделана колоссальная в проведении данного мероприятия! У вас слаженная команда ,все четко, ясно, по факту! Родители и участники остались довольны, все под впечатлением,спасибо за эмоции, за компетентное жюри.",
+        author: "~ Юлия",
+        city: "г. Кострома",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Несравнимо!",
+        text: "Мы приехали почти коллектив из 100 человек, ездим уже около 12 лет, где только не были, как на территории РФ,так и за пределами.Выезжаем всегда большой командой, нам есть с чем сравнить. Все было на должном уровне, как при подготовке так и во время конкурса.",
+        author: "Лариса Садыкова",
+        city: "г. Нижнекамск",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Организация на высшем уровне! ",
+        text: "Огромная благодарность организаторам! За терпение и понимание, за душевную щедрость и теплоту! За оперативность и компетентность! Так же благодарим за возможность получить Корректную, конструктивную критику по каждому номеру от жюри! Уезжаем с массой ярких впечатлений и положительных эмоций!",
+        author: "~ Наталья",
+        city: "Санкт-Петербург",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Не ошиблась в выборе!",
+        text: "В выборе я не ошиблась. Члены жюри были очень объективны, так как надо было выбирать коллективы на финал сильные, чтобы было интересно и драйвово . Конкуренция должна быть как добрая, но и сильная. Нам по другому не интересно. Надо учиться друг у друга. ",
+        author: "Марина",
+        city: "Россия",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Спасибо большое!",
+        text: "Мы с вами уже второй год и второй год получаем только положительные эмоции от вашего конкурса Спасибо большое! Всегда что-то новое, интересное. Самое главное, что вы не стоите на месте, стараетесь вводить интересные ни на кого не похожие новинки, всегда развиваетесь и стремитесь к лучшему!",
+        author: "~ Катя",
+        city: "Россия",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Незабываемые впечатления!",
+        text: "Студия LIAISAN благодарим, за полуфинал Организаторов конкурса Незабываемые эмоции и впечатления навсегда останутся в нашей памяти! Спасибо, что создаёте для детей атмосферу сплоченности и борьбы.Очень круто!",
+        author: "~ Светлана",
+        city: "Россия",
+        img: require("@/assets/images/profile.svg"),
       },
       {
-        heading: "Отличные конкурсы!",
-        text: "Выгодное в соотношении качества/цены, главное, что поддержка коллектива идет на каждом этапе конкурса, все понятно доносят, условия проживания комфортные, команада “Танцуй, Россия” очень отзычивая.",
-        author: "Андрей Курносов",
-        city: "Москва, Россия",
-        img: require("@/assets/images/Profile.png"),
+        heading: "Багаж эмоций!",
+        text: "Всё было продумано до мелочей — от общения с кураторами до атмосферы на площадке. Спасибо жюри за профессионализм, объективность и ценные рекомендации — они вдохновляют двигаться дальше и расти! Уезжаем с прекрасным настроением, багажом эмоций и желанием вернуться снова!",
+        author: "~ Елена",
+        city: "г. Самара",
+        img: require("@/assets/images/profile.svg"),
       },
     ];
+const spaceBetween = ref(Math.round(window.innerWidth * 0.02));
+  const swiperInstance = ref(null);
+  const isAutoplayRunning = ref(true); // ← флаг
+  let autoplayInterval = null;
 
-    const spaceBetween = ref(Math.round(window.innerWidth * 0.02));
-    const swiperInstance = ref(null);
-    const currentSlidesPerView = ref(3);
-    const isAutoplayRunning = ref(true);
+  const updateSpaceBetween = () => {
+    spaceBetween.value = Math.round(window.innerWidth * 0.02);
+  };
 
-    const updateSpaceBetween = () => {
-      spaceBetween.value = Math.round(window.innerWidth * 0.02);
-    };
+  onMounted(() => {
+    window.addEventListener("resize", updateSpaceBetween);
+    startAutoplay();
+  });
 
-    let autoplayInterval = null;
+  onBeforeUnmount(() => {
+    window.removeEventListener("resize", updateSpaceBetween);
+    stopAutoplay();
+  });
 
-    onMounted(() => {
-      window.addEventListener("resize", updateSpaceBetween);
-      startAutoplay();
-    });
+  const onSwiper = (swiper) => {
+    swiperInstance.value = swiper;
+    startAutoplay();
+  };
 
-    onBeforeUnmount(() => {
-      window.removeEventListener("resize", updateSpaceBetween);
+  // — ОСТАНОВКА АВТОПЛЕЯ ПРИ ЛЮБОМ ВЗАИМОДЕЙСТВИИ
+  const stopAutoplayOnInteraction = () => {
+    if (isAutoplayRunning.value) {
+      isAutoplayRunning.value = false;
       stopAutoplay();
-    });
+      console.log("Autoplay stopped by user");
+    }
+  };
 
-    const startAutoplay = () => {
+  const slideNext = () => {
+    if (!swiperInstance.value) return;
+    stopAutoplayOnInteraction(); // ← ВАЖНО!
+
+    const slidesPerView = swiperInstance.value.params.slidesPerView;
+    if (slidesPerView === 3) {
+      const newIndex = (swiperInstance.value.realIndex + 3) % reviews.length;
+      swiperInstance.value.slideToLoop(newIndex);
+    } else {
+      swiperInstance.value.slideNext();
+    }
+  };
+
+  const slidePrev = () => {
+    if (!swiperInstance.value) return;
+    stopAutoplayOnInteraction(); // ← ВАЖНО!
+
+    const slidesPerView = swiperInstance.value.params.slidesPerView;
+    if (slidesPerView === 3) {
+      const newIndex = (swiperInstance.value.realIndex - 3 + reviews.length) % reviews.length;
+      swiperInstance.value.slideToLoop(newIndex);
+    } else {
+      swiperInstance.value.slidePrev();
+    }
+  };
+
+  const startAutoplay = () => {
+    if (!isAutoplayRunning.value || !swiperInstance.value) return;
+    stopAutoplay();
+
+    autoplayInterval = setInterval(() => {
       if (isAutoplayRunning.value && swiperInstance.value) {
-        stopAutoplay(); // Очищаем предыдущий интервал, если он существует
-        autoplayInterval = setInterval(() => {
-          if (isAutoplayRunning.value) {
-            const slidesPerView = swiperInstance.value.params.slidesPerView;
-            const realIndex = swiperInstance.value.realIndex;
-            console.log("Autoplay tick:", { realIndex, slidesPerView });
-            if (slidesPerView === 3) {
-              const newIndex = (realIndex + 3) % reviews.length;
-              swiperInstance.value.slideToLoop(newIndex);
-            } else {
-              swiperInstance.value.slideNext();
-            }
-            updateCounter();
-          }
-        }, 10000);
-      }
-    };
-
-    const stopAutoplay = () => {
-      if (autoplayInterval) {
-        clearInterval(autoplayInterval);
-        autoplayInterval = null;
-      }
-    };
-
-    const onSwiper = (swiper) => {
-      swiperInstance.value = swiper;
-      currentSlidesPerView.value = swiper.params.slidesPerView;
-      console.log("Swiper initialized:", {
-        slidesPerView: swiper.params.slidesPerView,
-        realIndex: swiper.realIndex,
-      });
-      startAutoplay();
-    };
-
-    const updateCounter = () => {
-      if (swiperInstance.value) {
-        currentSlidesPerView.value = swiperInstance.value.params.slidesPerView;
-        console.log("updateCounter called:", {
-          realIndex: swiperInstance.value.realIndex,
-          slidesPerView: swiperInstance.value.params.slidesPerView,
-          currentSlidesPerView: currentSlidesPerView.value,
-          counterText: counterText.value,
-        });
-      }
-    };
-
-    const counterText = computed(() => {
-      if (!swiperInstance.value) {
-        console.log("counterText: No swiper instance, defaulting to '1 из 9'");
-        return "1 из 9";
-      }
-      const realIndex = swiperInstance.value.realIndex;
-      const slidesPerView = swiperInstance.value.params.slidesPerView;
-      const current = Math.min(realIndex + slidesPerView, reviews.length);
-      console.log("counterText calculated:", {
-        realIndex,
-        slidesPerView,
-        current,
-        total: reviews.length,
-      });
-      return `${current} из ${reviews.length}`;
-    });
-
-    const slideNext = () => {
-      if (swiperInstance.value) {
         const slidesPerView = swiperInstance.value.params.slidesPerView;
-        const realIndex = swiperInstance.value.realIndex;
-        console.log("slideNext:", { realIndex, slidesPerView });
         if (slidesPerView === 3) {
-          const newIndex = (realIndex + 3) % reviews.length;
+          const newIndex = (swiperInstance.value.realIndex + 3) % reviews.length;
           swiperInstance.value.slideToLoop(newIndex);
         } else {
           swiperInstance.value.slideNext();
         }
-        updateCounter();
       }
-    };
+    }, 10000);
+  };
 
-    const slidePrev = () => {
-      if (swiperInstance.value) {
-        const slidesPerView = swiperInstance.value.params.slidesPerView;
-        const realIndex = swiperInstance.value.realIndex;
-        console.log("slidePrev:", { realIndex, slidesPerView });
-        if (slidesPerView === 3) {
-          const newIndex = (realIndex - 3 + reviews.length) % reviews.length;
-          swiperInstance.value.slideToLoop(newIndex);
-        } else {
-          swiperInstance.value.slidePrev();
-        }
-        updateCounter();
-      }
-    };
+  const stopAutoplay = () => {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+  };
 
-    const handleUserInteraction = () => {
-      if (isAutoplayRunning.value) {
-        isAutoplayRunning.value = false;
-        stopAutoplay();
-        console.log("Autoplay stopped due to user interaction");
-      }
-    };
+  // Останавливаем при свайпе / клике по слайду
+  const handleUserInteraction = () => {
+    stopAutoplayOnInteraction();
+  };
 
-    return {
-      reviews,
-      Navigation,
-      spaceBetween,
-      onSwiper,
-      slideNext,
-      slidePrev,
-      updateCounter,
-      counterText,
-      handleUserInteraction,
-    };
-  },
+  return {
+    reviews,
+    Navigation,
+    spaceBetween,
+    onSwiper,
+    slideNext,
+    slidePrev,
+    handleUserInteraction,
+  };
+},
 };
 </script>
+
 <style scoped>
-/* сюда добавь свои стили */
+
 </style>

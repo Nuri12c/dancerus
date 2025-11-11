@@ -1,48 +1,98 @@
 <template>
-  <section class="tab-content">
+  <section class="resident-card">
+    <h2 class="resident-card__title">Карта резидента</h2>
 
-    <h2 class="title">Карта резидента</h2>
-
-    <div class="btn-group">
-      <button class="btn">Вам сообщение! <span class="cursor"></span></button>
-      <button class="btn">Правила пользования картой<span class="cursor"></span></button>
+    <div class="resident-card__actions">
+      <button class="resident-card__action-btn">
+        Вам сообщение! <span class="resident-card__cursor"></span>
+      </button>
+      <button class="resident-card__action-btn">
+        Правила пользования картой <span class="resident-card__cursor"></span>
+      </button>
     </div>
 
-    <h3 class="section-title">Этапы участия в программе:</h3>
+    <h3 class="resident-card__section-title">Этапы участия в программе:</h3>
 
-    <div class="cards-flex">
-      <div
-        v-for="n in 6"
-        :key="n"
-        class="card"
-        :class="{ locked: n > residentLevel }"
-      >
-        <p class="card-desc">
-          {{ n <= residentLevel
-            ? 'Баллы, скидки, бонусы.'
-            : 'Заблокировано. Достигни следующего уровня!' }}
+    <div class="resident-card__cards">
+      <div v-for="n in 6" :key="n" class="resident-card__card-wrapper">
+        <div
+          class="resident-card__card"
+          :class="{ 'resident-card__card--locked': n > residentLevel }"
+          :style="{
+            background: cardBackgrounds[n - 1],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }"
+        >
+          <!-- Тёмный оверлей для заблокированных -->
+          <div
+            v-if="n > residentLevel"
+            class="resident-card__locked-overlay"
+          ></div>
+
+          <!-- Замок по центру для заблокированных -->
+          <div
+            v-if="n > residentLevel"
+            class="resident-card__lock-wrapper"
+          >
+            <img
+              src="@/assets/images/cabinet/lock.svg"
+              alt="Заблокировано"
+              class="resident-card__lock-icon"
+            />
+          </div>
+        </div>
+
+        <p class="resident-card__card-label">
+          {{ cardLabels[n - 1] }}
         </p>
-        <button class="card-btn" :disabled="n > residentLevel">
-          {{ n <= residentLevel ? 'Подробнее' : '🔒' }}
-        </button>
       </div>
     </div>
-
   </section>
 </template>
 
 <script>
 export default {
-  name: "PresidentcardTab",
+  name: "ResidentcardTab",
   props: {
     amocrmData: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
+  },
+  data() {
+    return {
+      cardLabels: [
+        "Этап первый — Карта",
+        "Этап второй — Увеличены бонусы",
+        "Этап третий — Персональные предложения",
+        "Этап четвёртый — Приоритетная поддержка",
+        "Этап пятый — VIP-мероприятия",
+        "Этап шестой — Эксклюзивные привилегии",
+      ],
+       cardBackgrounds: [
+         'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
+         'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+         'linear-gradient(135deg, #ffd89b 0%, #19547b 100%)',
+         'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+         'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+       ],
+     /*  cardBackgrounds: [
+        'url("@/assets/images/card-1.jpg")',
+        'url("@/assets/images/card-2.jpg")',
+        'url("@/assets/images/card-3.jpg")',
+        'url("@/assets/images/card-4.jpg")',
+        'url("@/assets/images/card-5.jpg")',
+        'url("@/assets/images/card-6.jpg")',
+      ], */
+    };
   },
   computed: {
     residentLevel() {
-      const field = this.amocrmData?.custom_fields_values?.find(f => f.field_id === 999999);
+      const field = this.amocrmData?.custom_fields_values?.find(
+        (f) => f.field_id === 598151
+      );
       if (!field) return 0;
       try {
         const data = JSON.parse(field.values[0].value);
@@ -50,102 +100,214 @@ export default {
       } catch {
         return 0;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-
 <style scoped>
-.tab-content {
-  margin: 0;
+/* === БЛОК: resident-card === */
+.resident-card {
   max-width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
-.card.locked {
-  opacity: 0.5;
-  filter: grayscale(100%);
-  pointer-events: none;
-}
-.card-btn:disabled {
-  background: #666;
-  cursor: not-allowed;
-}
-.cursor {
-  width: 2.24vw;
-  height: 2.24vw;
-  display: inline-block;
-  background: url('@/assets/images/cursor.svg');
-  background-size: contain;
-  transform: translateY(0.40vw);
-  margin-left: 0.5vw;
-}
-
 
 /* Заголовки */
-.title        { margin: 0 0 1rem; }
-.section-title{ margin: 0 0 1.5rem; }
+.resident-card__title {
+  margin: 0 0 1.65vw;
+  font-family: "Gothic", sans-serif;
+  font-size: 3.48vw;
+  text-align: left;
+  text-transform: none;
+  color: #222;
+}
 
-/* Кнопки */
-.btn-group {
+.resident-card__section-title {
+  margin: 0 0 1vw;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Кнопки действий */
+.resident-card__actions {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
-.btn {
-  font-family: 'Inter', sans-serif;
+
+.resident-card__action-btn {
   font-weight: 600;
   font-size: 1.67vw;
-  padding: 0.8rem 1.2rem;
-  border-radius: 0.63vw;
+  padding: 0 1.2rem 0.5rem;
   background: #f0f0f0;
   border: none;
-  cursor: pointer;
-}
-
-/* ==== КАРТОЧКИ: РОВНО 20.42vw ==== */
-.cards-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  padding: 0 2vw;
-}
-
-.card {
-  width: 20.42vw !important;
-  height: 11.20vw;
-  flex: 0 0 20.42vw;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
   border-radius: 0.63vw;
-  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  transition: background 0.2s;
+}
+
+.resident-card__action-btn:hover {
+  background: #e0e0e0;
+}
+
+.resident-card__cursor {
+  width: 2.24vw;
+  height: 2.24vw;
+  background: url("@/assets/images/cabinet/cursor.svg") no-repeat center/contain;
+  display: inline-block;
+  transform: translateY(0.4vw);
+}
+
+/* === КАРТОЧКИ === */
+.resident-card__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 19vw);
+  gap: 0 3vw;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.resident-card__card-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  background: white;
-  transition: transform 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-.card-desc {
-  flex-grow: 1;
-  font-size: 0.9rem;
+  align-items: center;
 }
 
-/* Адаптив: на мобиле — 100% */
+.resident-card__card {
+  width: 100%;
+  height: 10.5vw;
+  border: 1px solid #ddd;
+  border-radius: 0.83vw;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.resident-card__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Заблокированная карточка */
+.resident-card__card--locked {
+  pointer-events: none;
+}
+
+/* Тёмный оверлей */
+.resident-card__locked-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.445);
+  border-radius: 0.83vw;
+  z-index: 1;
+}
+
+/* Замок по центру */
+.resident-card__lock-wrapper {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.resident-card__lock-icon {
+  width: 4.5vw;
+  height: 4.5vw;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Подпись под карточкой */
+.resident-card__card-label {
+  margin-top: 0.5rem;
+  max-width: 19vw;
+  font-weight: 600;
+  font-size: 0.99vw;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* === АДАПТИВ (мобильная версия) === */
 @media (max-width: 768px) {
-  .card {
-    width: 90vw !important;
-    max-width: 90vw;
-    min-width: 90vw;
-    flex: 0 0 90vw;
+  .resident-card {
+    padding: 15vw 5vw;
   }
-  .btn-group {
+
+  .resident-card__title {
+    font-size: 6.8vw;
+    margin-bottom: 8.5vw;
+    text-align: center;
+  }
+
+  .resident-card__actions {
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+  }
+
+  .resident-card__action-btn {
+    font-size: 3.8vw;
+    padding: 1.2rem 1.5rem;
+    width: 80vw;
+    border-radius: 3vw;
+    justify-content: center;
+    gap: 1.5vw;
+  }
+
+  .resident-card__cursor {
+    width: 5.5vw;
+    height: 5.5vw;
+    transform: translateY(0.8vw);
+  }
+
+  .resident-card__section-title {
+    font-size: 5.5vw;
+    margin-bottom: 4vw;
+    text-align: center;
+  }
+
+  .resident-card__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .resident-card__card {
+    width: 82.86vw;
+    height: 48.06vw;
+    border-radius: 2.5vw;
+  }
+
+  .resident-card__locked-overlay {
+    border-radius: 2.5vw;
+  }
+
+  .resident-card__lock-icon {
+    width: 18vw;
+    height: 18vw;
+  }
+
+  .resident-card__card-label {
+    margin-top: 3vw;
+    font-size: 4.5vw;
+    font-weight: 700;
+    color: #ffffff;
+    max-width: 87.86vw;
   }
 }
 </style>

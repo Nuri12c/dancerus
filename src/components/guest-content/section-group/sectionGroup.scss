@@ -1,7 +1,7 @@
-@import "@/styles/mixins.scss";
+@use "@/styles/mixins.scss";
 
 .group {
-  background-color: $every;
+  background-color: #fcf5eb;
   padding: 1.041667vw 8.4375vw;
 }
 
@@ -68,7 +68,7 @@
 /* Медиа-запрос для мобильных устройств */
 @media (max-width: 768px) {
   .group {
-    background-color: $every;
+    background-color: #fcf5eb;
     padding: 4.98vw;
   }
 

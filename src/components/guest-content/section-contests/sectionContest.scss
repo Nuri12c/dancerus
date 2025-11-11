@@ -1,42 +1,40 @@
 .contest {
   padding: 5.93% 15.10%;
-  color: $grey;
-  background-color: $every;
+  color: #262626;
+  background-color: #fcf5eb;
 }
 
 .contest__title {
-  margin-bottom: 3.333333vw; /* 64px */
+  margin-bottom: 3.333333vw;
 }
 
 .contest__cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.666667vw; /* 32px */
+  gap: 1.666667vw;
   list-style: none;
   padding: 0;
 }
 
 .contest__card {
-  flex: 1 1 calc(25% - 0.729167vw); /* 14px */
+  flex: 1 1 calc(25% - 0.729167vw);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  transition: transform 0.3s ease; /* Плавный переход для зума */
+  transition: transform 0.3s ease;
 }
 
 .contest__card:hover {
-  transform: scale(1.02); /* Увеличение на 5% */
+  transform: scale(1.02);
 }
 
 .contest__img-element {
-  margin-top: 0;
   width: 100%;
+  height: 13.020833vw;
   object-fit: cover;
-  display: block;
-  margin-bottom: 1.25vw; /* 24px */
-  height: 13.020833vw; /* 250px */
-  border-radius: 0.833333vw; /* 16px */
+  margin-bottom: 1.25vw;
+  border-radius: 0.833333vw;
 }
 
 .contest__content {
@@ -49,87 +47,80 @@
 .contest__text {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.520833vw; /* 10px */
+  margin-bottom: 0.520833vw;
 }
 
 .contest__heading {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.25vw; /* 24px */
+  font-size: 1.25vw;
   text-transform: uppercase;
-  letter-spacing: 0;
   font-weight: bold;
-  margin-bottom: 0.260417vw; /* 5px */
+  margin-bottom: 0.260417vw;
 }
 
 .contest__date {
   font-family: 'Inter', sans-serif;
   white-space: nowrap;
-  font-size: 0.833333vw; /* 16px */
+  font-size: 0.833333vw;
   font-weight: 400;
 }
 
 .contest__button {
   display: flex;
   align-items: center;
-  gap: 0.520833vw; /* 10px */
-  cursor: pointer;
+  gap: 0.520833vw;
 }
 
 .contest__button-element {
   font-family: 'Inter', sans-serif;
   color: #252525;
   opacity: 0.4;
-  background-color: #ffffff00;
-  font-size: 1.041667vw; /* 20px */
+  background: transparent;
+  font-size: 1.041667vw;
   border: none;
   padding: 0;
 }
 
 .contest__button-icon {
-  background: url('@/assets/images/strelka.svg');
+  background: url('@/assets/images/strelka.svg') no-repeat;
   background-size: contain;
-  width: 1.354167vw; /* 26px */
-  height: 1.354167vw; /* 26px */
+  width: 1.354167vw;
+  height: 1.354167vw;
   opacity: 0.4;
 }
+
+/* Адаптив */
 @media (max-width: 768px) {
-  .contest__card {
-    flex: 1 1 100%; /* Карточки занимают всю ширину */
-    margin-bottom: 3vw;
+  .contest {
+    padding: 4.975vw;
   }
   .contest__title {
-    font-size: 5.97vw; /* 24px при ширине экрана 402px */
+    font-size: 5.97vw;
     margin-bottom: 7.96vw;
   }
+  .contest__card {
+    flex: 1 1 100%;
+    margin-bottom: 3vw;
+  }
   .contest__heading {
-    font-size: 4.975vw; /* 24px при ширине экрана 402px */
+    font-size: 4.975vw;
   }
   .contest__img-element {
-    width: 90.05vw; /* 362px при ширине экрана 402px */
-    height: 39.30vw; /* 158px при ширине экрана 402px */
+    width: 90.05vw;
+    height: 39.30vw;
     border-radius: 3.98vw;
   }
-  .contest {
-  padding: 4.975vw; /* 20px при ширине экрана 402px */
-}
-.contest__text {
-  display: flex;
-  flex-direction: column;
-}
-.contest__date {
-  font-size: 3.483vw;
-}
-.contest__button-element {
-
-  background-color: #ffffff00;
-  font-size: 4.975vw; /* 20px */
-
-}
-.contest__button-icon {
-  background-repeat: no-repeat;
-  margin-left: 2px;
-  width: 5.97vw; /* 26px */
-  height: 5.97vw; /* 26px */
-
-}
+  .contest__text {
+    flex-direction: column;
+  }
+  .contest__date {
+    font-size: 3.483vw;
+  }
+  .contest__button-element {
+    font-size: 4.975vw;
+  }
+  .contest__button-icon {
+    width: 5.97vw;
+    height: 5.97vw;
+  }
 }

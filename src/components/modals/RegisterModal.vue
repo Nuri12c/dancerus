@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/mixins.scss';
+@use '@/styles/mixins.scss';
 
 
 </style>

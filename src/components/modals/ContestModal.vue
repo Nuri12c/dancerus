@@ -1,20 +1,10 @@
 <template>
   <div class="modal-overlay" @click.self="$emit('close')">
     <div class="modal-window">
-      <div class="modal-content">
-        <img
-          v-if="currentImage"
-          :src="currentImage"
-          :alt="card.heading"
-          class="modal-img"
-          loading="lazy"
-          @error="handleImageError"
-        />
-        <div class="modal-text-container">
-          <h3 class="modal-title">{{ card.heading }}</h3>
-          <p class="modal-text" >{{ card.text }}</p>
-          <button class="modal-action-button button-1">Подать заявку</button>
-        </div>
+      <div class="modal-text-container">
+        <h3 class="modal-title">{{ card.heading }}</h3>
+        <p class="modal-text" v-html="formatText(card.text)"></p>
+        <button class="modal-action-button button-1">Подать заявку</button>
       </div>
       <button class="modal-close" @click="$emit('close')">✖</button>
     </div>
@@ -29,112 +19,111 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      currentIndex: 0,
-      intervalId: null,
-    };
-  },
-  computed: {
-    currentImage() {
-      return this.card.imagePaths[this.currentIndex] || require('@/assets/images/liveStream.png');
-    },
-  },
   methods: {
-    handleImageError(event) {
-      console.error('Image failed to load:', event.target.src);
-      event.target.src = require('@/assets/images/liveStream.png');
-    },
-  },
-  mounted() {
-    if (this.card.imagePaths && this.card.imagePaths.length > 1) {
-      this.intervalId = setInterval(() => {
-        this.currentIndex = (this.currentIndex + 1) % this.card.imagePaths.length;
-      }, 5000);
+    formatText(text) {
+      // Заменяем <br> на реальный перенос строки для v-html
+      return text.replace(/<br\s*\/?>/gi, '<br>');
     }
-  },
-  beforeUnmount() {
-    if (this.intervalId) clearInterval(this.intervalId);
-  },
+  }
 };
 </script>
-
 <style scoped lang="scss">
-@import '@/styles/mixins.scss';
+@use '@/styles/mixins.scss';
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .modal-window {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 1.67vw;
-  padding: 1.5rem;
+  padding: 2rem;
   width: 84.32vw;
-  position: relative;
-  animation: fadeIn 0.3s ease;
-  height: auto; /* Изменено с 70vh на auto для подстройки под контент */
-  max-height: 70vh; /* Ограничение высоты с возможностью скролла */
+  max-width: 1200px;
+  max-height: 80vh;
   overflow-y: auto;
+  position: relative;
   border: 2px solid white;
-  display: flex; /* Добавляем flex для вертикального расположения */
-  flex-direction: column; /* Вертикальное расположение */
-  gap: 1.5rem; /* Отступ между modal-content и modal-card */
-}
-.modal-content {
-  display: flex;
-  flex-direction: row;
-  gap: 1.5rem;
-  height: 100%;
-  width: 84.32vw;
-}
-
-.modal-img {
-  width: 30.16vw;
-  height: 29.64vw;
-  border-radius: 1.5rem;
-  object-fit: cover;
-  transition: opacity 0.5s ease-in-out;
-  flex-shrink: 0;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal-text-container {
-  display: flex;
   color: white;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  flex: 1;
-  overflow-y: auto;
-  max-height: 100%;
-  padding-right: 1rem;
+  gap: 1.5rem;
+}
+
+.modal-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.5vw;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .modal-text {
-  font-size: 0.83vw;
-  margin-bottom: 1rem;
+  font-size: 1.1vw;
+  line-height: 1.6;
+  margin: 0;
   white-space: pre-line;
 }
 
+.modal-action-button {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Адаптив */
 @media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+  .modal-window {
+    width: 90vw;
+    padding: 1.5rem;
+    border-radius: 3.98vw;
   }
 
-  .modal-img {
-    width: 80vw;
-    height: auto;
-    max-height: 50vh;
-  }
-
-  .modal-text-container {
-    width: 80vw;
-    align-items: center;
-    text-align: center;
-    overflow-y: auto;
-    max-height: 40vh;
+  .modal-title {
+    font-size: 6vw;
   }
 
   .modal-text {
     font-size: 4vw;
   }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 5vw;
+  }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
 </style>

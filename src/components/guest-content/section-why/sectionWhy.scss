@@ -1,9 +1,9 @@
 
-@import "@/styles/mixins.scss";
+@use "@/styles/mixins.scss";
 
 .why {
   padding: 2.08vw 8.4375vw;
-  background-color: $every;
+  background-color: #fcf5eb;
 }
 
 .why__title {
@@ -65,7 +65,7 @@
 
 .why__card-number {
   font-family: "Oswald", sans-serif;
-  color: $every;
+  color: #fcf5eb;
   font-size: 20.83vw;
   text-align: center;
   font-weight: 300;
