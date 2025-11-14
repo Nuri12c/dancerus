@@ -132,7 +132,7 @@ export default {
       // Моковые данные для тестов
       this.amocrmData = {
         id: 49109253,
-        name: "Нурислам Ганеев",
+        name: "Нурислам Ганеев4",
         first_name: "Нурислам",
         last_name: "Ганеев",
         responsible_user_id: 10064470,
@@ -155,14 +155,13 @@ export default {
             ],
           },
           {
-            field_id: 583299,
-            field_name: "Имя",
-            field_code: null,
-            field_type: "text",
-            values: [{ value: "Nurislam" }],
+            field_id: 598163,
+            field_name: "Имя заполнено",
+            field_type: "checkbox",
+            values: [{ value: false }], // ← галочка стоит
           },
           {
-            field_id: 595289,
+            field_id: 600001,
             field_name: "Результаты ПФ Прямой эфир",
             field_code: null,
             field_type: "text",
@@ -181,13 +180,16 @@ export default {
             ],
           },
           {
-  field_id: 598151,
-  field_name: "Карты лояльности",
-  field_type: "text",
-  values: [{
-    value: '{"cards":{"residentCard":{"value":"1"},"presidentCard":{"value":"2"}}}'
-  },]
-},
+            field_id: 598151,
+            field_name: "Карты лояльности",
+            field_type: "text",
+            values: [
+              {
+                value:
+                  '{"cards":{"residentCard":{"value":"1"},"presidentCard":{"value":"2"}}}',
+              },
+            ],
+          },
         ],
         account_id: 11782735,
         _links: {
@@ -284,7 +286,12 @@ export default {
       @logout="logout"
     />
     <GuestContent v-if="!showDashboard" />
-    <DashboardApp v-if="showDashboard" :amocrm-data="amocrmData" />
+      <DashboardApp
+        v-if="showDashboard"
+        :amocrm-data="amocrmData"
+        @update:amocrmData="amocrmData = $event"
+      />
+
     <RegisterModal
       v-if="showRegister"
       v-model:phone="registerPhone"

@@ -39,17 +39,15 @@
           <li clas2уs="event-card__date">
             10,11 марта  - Санкт-Петербург
           </li>
-          <li class="event-card__date"><strong>16 ноября</strong> — Москва</li>
+          <li class="event-card__date"><strong>4-5 апреля</strong> — Новосибирск</li>
           <li class="event-card__date">
-            <strong>22 ноября</strong> — Новосибирск
+            <strong>4,5 апреля</strong> — Казань
           </li>
           <li class="event-card__date">
-            <strong>30 ноября</strong> — Санкт-Петербург
+            <strong>11,12 апреля</strong> — Сочи
           </li>
-          <li class="event-card__date"><strong>6 декабря</strong> — Казань</li>
-          <li class="event-card__date">
-            <strong>14 декабря</strong> — Краснодар
-          </li>
+          <li class="event-card__date"><strong>18,19 апреля</strong> — Москва</li>
+         
         </ul>
         <button class="event-card__button">подать заявку</button>
       </div>

@@ -69,17 +69,17 @@ export default {
         "Личный онлайн мастер-класс для руководителя от одного из лучших хореографов РФ",
         "Закрытая онлайн конференция мотивационного тренинга",
         "Личные мастер класс по вашему направлению от одного из лучших хореографов РФ",
-        "Эксклюзивный доступ к закрытым репетициям топ-команд",
-        "Личная фотосессия с известным хореографом и публикация в соцсетях"
+        "Постановочный номер от одного из лучших хореографов РФ",
+        "Индивидуальная годовая программа с возможностью выбрать 3 бонуса из предыдущих этапов и распределить их в течении года по своему усмотрению"
       ],
        cardBackgrounds: [
-         'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
-         'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+         `url(${require('@/assets/images/president-card/stipendia.jpg')})`,
          'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-         'linear-gradient(135deg, #ffd89b 0%, #19547b 100%)',
-         'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-         'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-         'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+         `url(${require('@/assets/images/president-card/mkruk.jpg')})`,
+         `url(${require('@/assets/images/president-card/konf.jpg')})`,
+         `url(${require('@/assets/images/president-card/mk.png')})`,
+         `url(${require('@/assets/images/president-card/nomer.jpg')})`,
          'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
        ],
 

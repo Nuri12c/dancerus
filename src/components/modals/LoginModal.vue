@@ -18,7 +18,13 @@
             placeholder="Пароль"
           />
           <button class="button-2" @click="login">Войти</button>
-          <button v-if="showRestoreButton" class="button-2" @click="restorePassword">Восстановить пароль</button>
+          <button
+            v-if="showRestoreButton"
+            class="button-2"
+            @click="restorePassword"
+          >
+            Восстановить пароль
+          </button>
           <div v-if="notification" class="modal-toast">{{ notification }}</div>
         </div>
       </div>
@@ -28,18 +34,20 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth.js';
+import { useAuthStore } from "@/stores/auth.js";
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 export default {
   setup() {
     const authStore = useAuthStore();
-    return { authStore };
+    const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+    return { authStore, executeRecaptcha, recaptchaLoaded };
   },
   data() {
     return {
-      phone: '+7 ',
-      password: '',
-      notification: '',
+      phone: "+7 ",
+      password: "",
+      notification: "",
       notifyTimer: null,
       showRestoreButton: false,
     };
@@ -49,99 +57,103 @@ export default {
       this.notification = message;
       clearTimeout(this.notifyTimer);
       this.notifyTimer = setTimeout(() => {
-        this.notification = '';
+        this.notification = "";
       }, 3000);
     },
     formatPhone() {
-      let digits = this.phone.replace(/\D/g, '');
-      if (digits.startsWith('8')) {
-        digits = '7' + digits.slice(1);
-      } else if (digits.startsWith('77')) {
-        digits = '7' + digits.slice(2);
+      let digits = this.phone.replace(/\D/g, "");
+      if (digits.startsWith("8")) {
+        digits = "7" + digits.slice(1);
+      } else if (digits.startsWith("77")) {
+        digits = "7" + digits.slice(2);
       }
-      let formatted = '+7 ';
+      let formatted = "+7 ";
       if (digits.length > 1) formatted += digits.slice(1, 4);
-      if (digits.length >= 4) formatted += ' ' + digits.slice(4, 7);
-      if (digits.length >= 7) formatted += ' ' + digits.slice(7, 9);
-      if (digits.length >= 9) formatted += ' ' + digits.slice(9, 11);
+      if (digits.length >= 4) formatted += " " + digits.slice(4, 7);
+      if (digits.length >= 7) formatted += " " + digits.slice(7, 9);
+      if (digits.length >= 9) formatted += " " + digits.slice(9, 11);
       this.phone = formatted.trim();
     },
     login() {
-      const rawDigits = this.phone.replace(/\D/g, '');
+      const rawDigits = this.phone.replace(/\D/g, "");
       if (rawDigits.length !== 11 || !this.password) {
-        this.showToast('Введите корректный номер и пароль');
+        this.showToast("Введите корректный номер и пароль");
         this.showRestoreButton = false;
         return;
       }
-      const formattedPhone = '+' + rawDigits;
+      const formattedPhone = "+" + rawDigits;
 
       const formData = new FormData();
-      formData.append('phone', formattedPhone);
-      formData.append('password', this.password);
+      formData.append("phone", formattedPhone);
+      formData.append("password", this.password);
 
-      fetch('https://dancerus.ru/api/login.php', {
-        method: 'POST',
+      fetch("https://dancerus.ru/api/login.php", {
+        method: "POST",
         body: formData,
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success' && data.token) {
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success" && data.token) {
             this.authStore.setToken(data.token);
-            this.showToast('Вы успешно вошли!');
+            this.showToast("Вы успешно вошли!");
             this.showRestoreButton = false;
-            this.$emit('logged-in', data.token);
+            this.$emit("logged-in", data.token);
           } else {
-            this.showToast(data.message || 'Ошибка входа');
-            this.showRestoreButton = data.message === 'Неверный пароль';
+            this.showToast(data.message || "Ошибка входа");
+            this.showRestoreButton = data.message === "Неверный пароль";
           }
         })
         .catch(() => {
-          this.showToast('Ошибка сети');
+          this.showToast("Ошибка сети");
           this.showRestoreButton = false;
         });
     },
-    restorePassword() {
-      const rawDigits = this.phone.replace(/\D/g, '');
+    async restorePassword() {
+      const rawDigits = this.phone.replace(/\D/g, "");
       if (rawDigits.length !== 11) {
-        this.showToast('Введите корректный номер');
+        this.showToast("Введите корректный номер");
         this.showRestoreButton = false;
         return;
       }
-      const formattedPhone = '+' + rawDigits;
+      const formattedPhone = "+" + rawDigits;
+
+      // Ждём reCAPTCHA
+      await this.recaptchaLoaded();
+      const recaptchaToken = await this.executeRecaptcha("restore_password");
 
       const formData = new FormData();
-      formData.append('phone', formattedPhone);
+      formData.append("phone", formattedPhone);
+      formData.append("recaptcha_token", recaptchaToken); // ТОКЕН
 
-      fetch('https://dancerus.ru/api/restore_password.php', {
-        method: 'POST',
+      fetch("https://dancerus.ru/api/restore_password.php", {
+        method: "POST",
         body: formData,
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            this.showToast('Код отправлен в WhatsApp!');
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            this.showToast("Код отправлен в WhatsApp!");
             this.showRestoreButton = false;
-            this.$emit('restore-initiated', { phone: formattedPhone });
+            this.$emit("restore-initiated", { phone: formattedPhone });
           } else {
-            this.showToast(data.message || 'Ошибка восстановления');
+            this.showToast(data.message || "Ошибка восстановления");
             this.showRestoreButton = true;
           }
         })
         .catch(() => {
-          this.showToast('Ошибка сети');
+          this.showToast("Ошибка сети");
           this.showRestoreButton = true;
         });
     },
     close() {
       this.showRestoreButton = false;
-      this.notification = '';
-      this.$emit('close');
+      this.notification = "";
+      this.$emit("close");
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-@use '@/styles/mixins.scss';
-
+@use "@/styles/mixins.scss";
 </style>

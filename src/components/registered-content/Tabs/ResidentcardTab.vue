@@ -63,20 +63,20 @@ export default {
   data() {
     return {
       cardLabels: [
-        "Этап первый — Карта",
-        "Этап второй — Увеличены бонусы",
-        "Этап третий — Персональные предложения",
-        "Этап четвёртый — Приоритетная поддержка",
-        "Этап пятый — VIP-мероприятия",
-        "Этап шестой — Эксклюзивные привилегии",
+        "Карта резидента",
+        "Ежемесячная стипендия в размере 200 рублей на каждого участника в проектах «Танцуй, Россия»",
+        "Видео-разбор номера от профессионального хореографа-постановщика",
+        "Личный мастер-класс по вашему направлению от одного из лучших хореографов РФ",
+        "Фирменная футболка и портфель             от нашей ассоциации каждому ребёнку",
+        "Постановочный номер от хореографа по направлению для группы",
       ],
        cardBackgrounds: [
-         'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
-         'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+          `url(${require('@/assets/images/resident-card/carta.png')})`,
+          `url(${require('@/assets/images/resident-card/stip.jpg')})`,
          'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-         'linear-gradient(135deg, #ffd89b 0%, #19547b 100%)',
-         'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-         'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+         `url(${require('@/assets/images/resident-card/rez4.png')})`,
+         `url(${require('@/assets/images/resident-card/rez5.png')})`,
+          `url(${require('@/assets/images/resident-card/rez6.jpg')})`
        ],
      /*  cardBackgrounds: [
         'url("@/assets/images/card-1.jpg")',
