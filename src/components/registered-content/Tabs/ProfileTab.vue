@@ -1,12 +1,16 @@
 <template>
   <section class="tab-content">
-    <div v-if="contact">
+    <!-- Пока данные грузятся -->
+    <div v-if="!amocrmData">Загрузка профиля...</div>
+
+    <div v-else>
       <div class="contact">
         <div class="profile-tab">
           <div class="profile-icon"></div>
           <div class="profile-info">
-            <!-- РЕДАКТИРУЕМОЕ ИМЯ -->
+            <!-- РЕДАКТИРОВАНИЕ ИМЕНИ -->
             <div class="name-editor">
+              <!-- Плейсхолдер -->
               <h3
                 v-if="!isNameConfirmed && !isEditingName"
                 class="editable-name placeholder"
@@ -15,6 +19,7 @@
                 Нажмите, чтобы указать ФИО
               </h3>
 
+              <!-- Поле ввода -->
               <div v-else-if="isEditingName" class="name-input-wrapper">
                 <input
                   v-model="editingName"
@@ -24,14 +29,16 @@
                   placeholder="Введите ваше ФИО"
                   class="name-input"
                   ref="nameInput"
+ HF
                   autofocus
                 />
-                <button @click="saveName" class="save-btn" title="Сохранить">Галочка</button>
-                <button @click="cancelEditingName" class="cancel-btn" title="Отмена">Крестик</button>
+                <button @click="saveName" class="save-btn" title="Сохранить">Checkmark</button>
+                <button @click="cancelEditingName" class="cancel-btn" title="Отмена">Cross</button>
               </div>
 
+              <!-- Подтверждённое имя -->
               <h3 v-else class="profile-info-name confirmed">
-                {{ contact.name || 'Без имени' }}
+                {{ amocrmData.name || 'Без имени' }}
               </h3>
             </div>
 
@@ -41,25 +48,27 @@
           </div>
         </div>
 
+        <!-- Бонусы -->
         <div class="bonuses-container">
           <div class="bonuses-section">
             <h3 class="bonus-header">Денежный грант</h3>
             <div class="bonuses-card white">
-              <h1>{{ bonusFieldValue || "0" }} ₽</h1>
+              <h1>{{ bonusGrant }} ₽</h1>
             </div>
           </div>
           <div class="bonuses-section">
             <h3 class="bonus-header">Стипендия коллектива</h3>
             <div class="bonuses-card white">
-              <h1>{{ directInclusionBonuses || "0" }} ₽</h1>
+              <h1>{{ directInclusionBonuses }} ₽</h1>
             </div>
           </div>
         </div>
 
+        <!-- История участия -->
         <details class="history-accordion" open>
           <summary class="history-header">
             <span>История участия</span>
-            <svg class="chevron" :class="{ rotated: isOpen }" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <svg class="chevron" :class="{ rotated: isOpen }" width="18" height="18">
               <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
@@ -85,153 +94,97 @@
         </details>
       </div>
     </div>
-    <p v-else>Нет данных контакта или запрос не выполнен.</p>
   </section>
 </template>
 
 <script>
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from '@/stores/auth'
 
 export default {
-  props: {
-    amocrmData: { type: Object, required: true }
-  },
-  emits: ["update:amocrmData"],
-
   setup() {
-    const authStore = useAuthStore();
-    return { authStore };
+    const authStore = useAuthStore()
+    return { authStore }
   },
-
   data() {
     return {
-      contact: {}, // локальная копия — сюда пишем
       isEditingName: false,
-      editingName: "",
-      isOpen: true
-    };
+      editingName: '',
+      isOpen: true,
+    }
   },
-
   computed: {
+    amocrmData() {
+      return this.authStore.amocrmData
+    },
     isNameConfirmed() {
-      const field = this.contact.custom_fields_values?.find(f => f.field_id === 598163);
-      return field?.values?.[0]?.value === true;
+      return this.authStore.isNameConfirmed
     },
-
+    bonusGrant() {
+      return this.authStore.bonusGrant
+    },
     historyData() {
-      const field = this.contact.custom_fields_values?.find(f => f.field_id === 597163);
+      if (!this.amocrmData?.custom_fields_values) return null
+      const field = this.amocrmData.custom_fields_values.find(f => f.field_id === 597163)
       if (field?.values?.[0]?.value) {
-        try { return JSON.parse(field.values[0].value); } catch { return null; }
+        try {
+          return JSON.parse(field.values[0].value)
+        } catch {
+          return null
+        }
       }
-      return null;
+      return null
     },
-
-    bonusFieldValue() {
-      const field = this.contact.custom_fields_values?.find(f => f.field_id === 596967);
-      return field?.values?.[0]?.value || "0";
-    },
-
     directInclusionBonuses() {
-      let total = 0;
+      let total = 0
       if (this.historyData?.["Прямое Включение"]) {
         Object.values(this.historyData["Прямое Включение"]).forEach(d => {
-          total += parseInt(d.bonuses) || 0;
-        });
+          total += parseInt(d.bonuses) || 0
+        })
       }
-      return total;
+      return total
     },
-
     firstParticipationDate() {
-      if (!this.historyData) return null;
-      const dates = [];
+      if (!this.historyData) return null
+      const dates = []
       Object.values(this.historyData).forEach(project => {
-        Object.values(project).forEach(d => d.date && dates.push(d.date));
-      });
-      return dates.sort((a, b) =>
-        new Date(a.split(".").reverse().join("-")) - new Date(b.split(".").reverse().join("-"))
-      )[0] || null;
-    }
+        Object.values(project).forEach(d => d.date && dates.push(d.date))
+      })
+      return dates.length
+        ? dates.sort((a, b) =>
+            new Date(a.split('.').reverse().join('-')) - new Date(b.split('.').reverse().join('-'))
+          )[0]
+        : null
+    },
   },
-
-  watch: {
-    amocrmData: {
-      handler(newVal) {
-        // Обновляем локальную копию при изменении пропса
-        this.contact = {
-          ...newVal,
-          custom_fields_values: newVal.custom_fields_values ? [...newVal.custom_fields_values] : []
-        };
-      },
-      deep: true,
-      immediate: true
-    }
-  },
-
   methods: {
     startEditingName() {
-      if (this.isNameConfirmed) return;
-      this.editingName = this.contact.name || "";
-      this.isEditingName = true;
-      this.$nextTick(() => this.$refs.nameInput?.focus());
+      if (this.isNameConfirmed) return
+      this.editingName = this.amocrmData.name || ''
+      this.isEditingName = true
+      this.$nextTick(() => {
+        this.$refs.nameInput?.focus()
+      })
     },
-
     cancelEditingName() {
-      this.isEditingName = false;
-      this.editingName = "";
+      this.isEditingName = false
+      this.editingName = ''
     },
-
     async saveName() {
-      const name = this.editingName.trim();
+      const name = this.editingName.trim()
       if (name.length < 2) {
-        alert("Введите корректное ФИО");
-        return;
+        alert('Введите корректное ФИО')
+        return
       }
 
-      try {
-        const response = await fetch("https://dancerus.ru/api/update_name.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Origin": "https://dancerus.ru"
-          },
-          body: JSON.stringify({
-            token: this.authStore.token,
-            name
-          })
-        });
-
-        const data = await response.json();
-
-        if (data.status === "success") {
-          // Обновляем локальную копию
-          this.contact.name = name;
-
-          let flagField = this.contact.custom_fields_values.find(f => f.field_id === 598163);
-          if (!flagField) {
-            this.contact.custom_fields_values.push({
-              field_id: 598163,
-              values: [{ value: true }]
-            });
-          } else {
-            flagField.values[0].value = true;
-          }
-
-          // Отправляем наверх (на всякий случай)
-          this.$emit("update:amocrmData", this.contact);
-
-          this.isEditingName = false;
-          this.editingName = "";
-          alert("ФИО успешно сохранено!");
-        } else {
-          alert("Ошибка: " + (data.message || "неизвестная ошибка"));
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Ошибка сети");
+      const success = await this.authStore.updateUserName(name)
+      if (success) {
+        this.isEditingName = false
+        this.editingName = ''
+        alert('ФИО успешно сохранено!')
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style scoped>

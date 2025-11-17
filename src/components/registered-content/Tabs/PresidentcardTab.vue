@@ -24,17 +24,12 @@
             backgroundPosition: 'center'
           }"
         >
-          <!-- Тёмный оверлей для заблокированных -->
+          <!-- Оверлей и замок для заблокированных -->
           <div
             v-if="n > presidentLevel"
             class="president-card__locked-overlay"
           ></div>
-
-          <!-- Замок по центру для заблокированных -->
-          <div
-            v-if="n > presidentLevel"
-            class="president-card__lock-wrapper"
-          >
+          <div v-if="n > presidentLevel" class="president-card__lock-wrapper">
             <img
               src="@/assets/images/cabinet/lock.svg"
               alt="Заблокировано"
@@ -52,12 +47,16 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth'
+
 export default {
-  name: "PresidentcardTab",
-  props: {
-    amocrmData: {
-      type: Object,
-      default: () => ({}),
+  setup() {
+    const authStore = useAuthStore()
+    return { authStore }
+  },
+  computed: {
+    presidentLevel() {
+      return this.authStore.presidentLevel
     },
   },
   data() {
@@ -72,45 +71,19 @@ export default {
         "Постановочный номер от одного из лучших хореографов РФ",
         "Индивидуальная годовая программа с возможностью выбрать 3 бонуса из предыдущих этапов и распределить их в течении года по своему усмотрению"
       ],
-       cardBackgrounds: [
-         `url(${require('@/assets/images/president-card/stipendia.jpg')})`,
-         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-         `url(${require('@/assets/images/president-card/mkruk.jpg')})`,
-         `url(${require('@/assets/images/president-card/konf.jpg')})`,
-         `url(${require('@/assets/images/president-card/mk.png')})`,
-         `url(${require('@/assets/images/president-card/nomer.jpg')})`,
-         'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-       ],
-
-   /*    // Вариант 2: Картинки (рекомендуется!)
       cardBackgrounds: [
-        'url("@/assets/images/president-card/mk.PNG")',
-        'url("@/assets/images/president-2.jpg")',
-        'url("@/assets/images/president-3.jpg")',
-        'url("@/assets/images/president-4.jpg")',
-        'url("@/assets/images/president-5.jpg")',
-        'url("@/assets/images/president-6.jpg")',
-        'url("@/assets/images/president-7.jpg")',
-        'url("@/assets/images/president-8.jpg")',
-      ], */
-    };
+        `url(${require('@/assets/images/president-card/stipendia.jpg')})`,
+        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+        `url(${require('@/assets/images/president-card/mkruk.jpg')})`,
+        `url(${require('@/assets/images/president-card/konf.jpg')})`,
+        `url(${require('@/assets/images/president-card/mk.png')})`,
+        `url(${require('@/assets/images/president-card/nomer.jpg')})`,
+        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+      ],
+    }
   },
-  computed: {
-    presidentLevel() {
-      const field = this.amocrmData?.custom_fields_values?.find(
-        (f) => f.field_id === 598151
-      );
-      if (!field) return 0;
-      try {
-        const data = JSON.parse(field.values[0].value);
-        return parseInt(data.cards.presidentCard?.value) || 0;
-      } catch {
-        return 0;
-      }
-    },
-  },
-};
+}
 </script>
 
 <style scoped>

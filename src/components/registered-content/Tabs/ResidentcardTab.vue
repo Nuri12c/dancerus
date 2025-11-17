@@ -24,17 +24,12 @@
             backgroundPosition: 'center'
           }"
         >
-          <!-- Тёмный оверлей для заблокированных -->
+          <!-- Оверлей и замок для заблокированных -->
           <div
             v-if="n > residentLevel"
             class="resident-card__locked-overlay"
           ></div>
-
-          <!-- Замок по центру для заблокированных -->
-          <div
-            v-if="n > residentLevel"
-            class="resident-card__lock-wrapper"
-          >
+          <div v-if="n > residentLevel" class="resident-card__lock-wrapper">
             <img
               src="@/assets/images/cabinet/lock.svg"
               alt="Заблокировано"
@@ -52,12 +47,16 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth'
+
 export default {
-  name: "ResidentcardTab",
-  props: {
-    amocrmData: {
-      type: Object,
-      default: () => ({}),
+  setup() {
+    const authStore = useAuthStore()
+    return { authStore }
+  },
+  computed: {
+    residentLevel() {
+      return this.authStore.residentLevel
     },
   },
   data() {
@@ -67,42 +66,20 @@ export default {
         "Ежемесячная стипендия в размере 200 рублей на каждого участника в проектах «Танцуй, Россия»",
         "Видео-разбор номера от профессионального хореографа-постановщика",
         "Личный мастер-класс по вашему направлению от одного из лучших хореографов РФ",
-        "Фирменная футболка и портфель             от нашей ассоциации каждому ребёнку",
+        "Фирменная футболка и портфель от нашей ассоциации каждому ребёнку",
         "Постановочный номер от хореографа по направлению для группы",
       ],
-       cardBackgrounds: [
-          `url(${require('@/assets/images/resident-card/carta.png')})`,
-          `url(${require('@/assets/images/resident-card/stip.jpg')})`,
-         'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-         `url(${require('@/assets/images/resident-card/rez4.png')})`,
-         `url(${require('@/assets/images/resident-card/rez5.png')})`,
-          `url(${require('@/assets/images/resident-card/rez6.jpg')})`
-       ],
-     /*  cardBackgrounds: [
-        'url("@/assets/images/card-1.jpg")',
-        'url("@/assets/images/card-2.jpg")',
-        'url("@/assets/images/card-3.jpg")',
-        'url("@/assets/images/card-4.jpg")',
-        'url("@/assets/images/card-5.jpg")',
-        'url("@/assets/images/card-6.jpg")',
-      ], */
-    };
+      cardBackgrounds: [
+        `url(${require('@/assets/images/resident-card/carta.png')})`,
+        `url(${require('@/assets/images/resident-card/stip.jpg')})`,
+        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+        `url(${require('@/assets/images/resident-card/rez4.png')})`,
+        `url(${require('@/assets/images/resident-card/rez5.png')})`,
+        `url(${require('@/assets/images/resident-card/rez6.jpg')})`,
+      ],
+    }
   },
-  computed: {
-    residentLevel() {
-      const field = this.amocrmData?.custom_fields_values?.find(
-        (f) => f.field_id === 598151
-      );
-      if (!field) return 0;
-      try {
-        const data = JSON.parse(field.values[0].value);
-        return parseInt(data.cards.residentCard?.value) || 0;
-      } catch {
-        return 0;
-      }
-    },
-  },
-};
+}
 </script>
 
 <style scoped>

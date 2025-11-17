@@ -2,42 +2,30 @@
   <div class="dashboard">
     <AppSidebar
       :tabs="tabs"
-      :activeTab="activeTab"
-      @update:activeTab="activeTab = $event"
+      :active-tab="activeTab"
+      @update:active-tab="activeTab = $event"
     />
 
-    <!-- Основной контент с динамическим фоном и рамками -->
+    <!-- Основной контент с динамическим фоном -->
     <div class="content" :class="contentClass">
-      <!-- Внутренний контент (теперь БЕЗ отдельного .inner-content) -->
-      <ProfileTab v-if="activeTab === 'profile'" :amocrmData="amocrmData" />
+      <ProfileTab v-if="activeTab === 'profile'" />
       <CalendarTab v-if="activeTab === 'calendar'" />
-      <ResidentcardTab
-        v-if="activeTab === 'resident-card'"
-        :amocrmData="amocrmData"
-      />
-
-      <PresidentcardTab
-        v-if="activeTab === 'president-card'"
-        :amocrmData="amocrmData"
-      />
+      <ResidentcardTab v-if="activeTab === 'resident-card'" />
+      <PresidentcardTab v-if="activeTab === 'president-card'" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import AppSidebar from "./AppSidebar.vue";
-import ProfileTab from "./Tabs/ProfileTab.vue";
-import CalendarTab from "./Tabs/CalendarTab.vue";
-import ResidentcardTab from "./Tabs/ResidentcardTab.vue";
-import PresidentcardTab from "./Tabs/PresidentcardTab.vue";
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from '@/stores/auth'
+
+import AppSidebar from './AppSidebar.vue'
+import ProfileTab from './Tabs/ProfileTab.vue'
+import CalendarTab from './Tabs/CalendarTab.vue'
+import ResidentcardTab from './Tabs/ResidentcardTab.vue'
+import PresidentcardTab from './Tabs/PresidentcardTab.vue'
 
 export default {
-  name: "DashboardModal",
-  props: {
-    amocrmData: { type: Object, default: null },
-  },
   components: {
     AppSidebar,
     ProfileTab,
@@ -45,57 +33,40 @@ export default {
     ResidentcardTab,
     PresidentcardTab,
   },
+
   setup() {
-    const authStore = useAuthStore();
-    const activeTab = ref("profile");
-    return { authStore, activeTab };
+    const authStore = useAuthStore()
+    return { authStore }
   },
+
   data() {
     return {
+      activeTab: 'profile',
       tabs: [
-        {
-          id: "profile",
-          name: "Профиль",
-          icon: require("@/assets/images/sidebar-icons/profile.svg"),
-        },
-        {
-          id: "calendar",
-          name: "Календарь событий",
-          icon: require("@/assets/images/sidebar-icons/calendar.svg"),
-        },
-        {
-          id: "resident-card",
-          name: "Карта резидента",
-          icon: require("@/assets/images/sidebar-icons/resident.svg"),
-        },
-        {
-          id: "president-card",
-          name: "Карта президента",
-          icon: require("@/assets/images/sidebar-icons/president.svg"),
-        },
+        { id: 'profile', name: 'Профиль', icon: require('@/assets/images/sidebar-icons/profile.svg') },
+        { id: 'calendar', name: 'Календарь событий', icon: require('@/assets/images/sidebar-icons/calendar.svg') },
+        { id: 'resident-card', name: 'Карта резидента', icon: require('@/assets/images/sidebar-icons/resident.svg') },
+        { id: 'president-card', name: 'Карта президента', icon: require('@/assets/images/sidebar-icons/president.svg') },
       ],
-    };
+    }
   },
-  computed: {
-    isPresidentTab() {
-      return this.activeTab === "president-card";
-    },
-    isResidentTab() {
-      return this.activeTab === "resident-card";
-    },
-    contentClass() {
-      if (this.isPresidentTab) return "president-mode";
-      if (this.isResidentTab) return "resident-bg";
-      return "";
-    },
-  },
-  mounted() {
-    console.log("mounted: amocrmData=", this.amocrmData);
-    console.log("mounted: token from authStore=", this.authStore.token);
-  },
-};
-</script>
 
+  computed: {
+    residentLevel() {
+      return this.authStore.residentLevel
+    },
+    presidentLevel() {
+      return this.authStore.presidentLevel
+    },
+
+    contentClass() {
+      if (this.activeTab === 'president-card') return 'president-mode'
+      if (this.activeTab === 'resident-card') return 'resident-bg'
+      return ''
+    },
+  },
+}
+</script>
 <style scoped>
 .dashboard {
   display: flex;
