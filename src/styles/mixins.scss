@@ -9,6 +9,13 @@ $violet: #8c66ad;
 }
 .grecaptcha-badge {
   z-index: 3 ;
+  @media (max-width: 768px) {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(100px) !important;
+    transition: all 0.4s ease;
+  }
 }
 // buttons
 .button-1 {

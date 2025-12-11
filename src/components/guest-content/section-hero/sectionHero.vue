@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      bgImage: require('@/assets/images/section-hero-img/HeroBG.png')
+      bgImage: require('@/assets/images/section-hero-img/HeroBG.jpg')
     };
   }
 };

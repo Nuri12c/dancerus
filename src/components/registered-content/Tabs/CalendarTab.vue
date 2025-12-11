@@ -11,7 +11,6 @@
       >
         <h1 class="event-card__heading white">2025</h1>
         <ul class="event-card__dates">
-          <li class="event-card__date">8,9 ноября - Астана</li>
           <li class="event-card__date">16 ноября — Москва</li>
           <li class="event-card__date">
             22 ноября — Новосибирск
@@ -40,6 +39,7 @@
             10,11 марта  - Санкт-Петербург
           </li>
           <li class="event-card__date"><strong>4-5 апреля</strong> — Новосибирск</li>
+
           <li class="event-card__date">
             <strong>4,5 апреля</strong> — Казань
           </li>
@@ -47,7 +47,8 @@
             <strong>11,12 апреля</strong> — Сочи
           </li>
           <li class="event-card__date"><strong>18,19 апреля</strong> — Москва</li>
-         
+          <li class="event-card__date"><strong>25,26 апреля </strong> - Астана</li>
+
         </ul>
         <button class="event-card__button">подать заявку</button>
       </div>

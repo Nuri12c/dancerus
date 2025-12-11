@@ -26,14 +26,14 @@
         :class="{ open: isMenuOpen }"
         @click="closeMenuOnItemClick"
       >
-        <button class="button-3" @click="$router?.push('/')">Главная</button>
-        <button class="button-3" @click="$router?.push('/contests')">
+        <button class="button-3">Главная</button>
+        <button class="button-3">
           Все конкурсы
         </button>
-        <button class="button-3" @click="$router?.push('/application')">
+        <button class="button-3">
           Подать заявку
         </button>
-        <button class="button-3" @click="$router?.push('/news')">
+        <button class="button-3">
           Новости
         </button>
 

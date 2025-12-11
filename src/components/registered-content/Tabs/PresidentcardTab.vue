@@ -72,14 +72,14 @@ export default {
         "Индивидуальная годовая программа с возможностью выбрать 3 бонуса из предыдущих этапов и распределить их в течении года по своему усмотрению"
       ],
       cardBackgrounds: [
-        `url(${require('@/assets/images/president-card/stipendia.jpg')})`,
-        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-        `url(${require('@/assets/images/president-card/mkruk.jpg')})`,
-        `url(${require('@/assets/images/president-card/konf.jpg')})`,
-        `url(${require('@/assets/images/president-card/mk.png')})`,
-        `url(${require('@/assets/images/president-card/nomer.jpg')})`,
-        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+        `url(${require('@/assets/images/p-resident-card/pres-1.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-2.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/p-res-2-3.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-4.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-5.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-6.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-7.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/pres-8.jpg')})`
       ],
     }
   },

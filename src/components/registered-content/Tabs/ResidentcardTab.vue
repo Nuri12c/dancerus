@@ -70,12 +70,12 @@ export default {
         "Постановочный номер от хореографа по направлению для группы",
       ],
       cardBackgrounds: [
-        `url(${require('@/assets/images/resident-card/carta.png')})`,
-        `url(${require('@/assets/images/resident-card/stip.jpg')})`,
-        'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-        `url(${require('@/assets/images/resident-card/rez4.png')})`,
-        `url(${require('@/assets/images/resident-card/rez5.png')})`,
-        `url(${require('@/assets/images/resident-card/rez6.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/res-1.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/res-2.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/p-res-2-3.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/res-4.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/res-5.jpg')})`,
+        `url(${require('@/assets/images/p-resident-card/res-6.jpg')})`,
       ],
     }
   },

@@ -19,7 +19,7 @@
                 Нажмите, чтобы указать ФИО
               </h3>
 
-              <!-- Поле ввода -->
+              <!-- Поле ввода + кнопки с иконками -->
               <div v-else-if="isEditingName" class="name-input-wrapper">
                 <input
                   v-model="editingName"
@@ -29,16 +29,31 @@
                   placeholder="Введите ваше ФИО"
                   class="name-input"
                   ref="nameInput"
- HF
                   autofocus
+                  :disabled="isSavingName"
                 />
-                <button @click="saveName" class="save-btn" title="Сохранить">Checkmark</button>
-                <button @click="cancelEditingName" class="cancel-btn" title="Отмена">Cross</button>
+                <button
+                  @click="saveName"
+                  class="save-btn"
+                  :class="{ loading: isSavingName }"
+                  :disabled="isSavingName"
+                  title="Сохранить"
+                >
+                  <span v-if="!isSavingName">✓</span>
+                </button>
+                <button
+                  @click="cancelEditingName"
+                  class="cancel-btn"
+                  :disabled="isSavingName"
+                  title="Отмена"
+                >
+                  ✗
+                </button>
               </div>
 
               <!-- Подтверждённое имя -->
               <h3 v-else class="profile-info-name confirmed">
-                {{ amocrmData.name || 'Без имени' }}
+                {{ amocrmData.name || "Без имени" }}
               </h3>
             </div>
 
@@ -59,7 +74,7 @@
           <div class="bonuses-section">
             <h3 class="bonus-header">Стипендия коллектива</h3>
             <div class="bonuses-card white">
-              <h1>{{ directInclusionBonuses }} ₽</h1>
+              <h1>{{ authStore.bonusStipendia }} ₽</h1>
             </div>
           </div>
         </div>
@@ -68,27 +83,43 @@
         <details class="history-accordion" open>
           <summary class="history-header">
             <span>История участия</span>
-            <svg class="chevron" :class="{ rotated: isOpen }" width="18" height="18">
-              <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+              class="chevron"
+              :class="{ rotated: isOpen }"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </summary>
+
           <div class="history-panel">
-            <div v-if="historyData">
-              <div v-for="(project, projectName) in historyData" :key="projectName" class="project-item">
-                <h5 class="project-title">{{ projectName }}</h5>
+            <!-- Если есть история -->
+            <div
+              v-if="
+                authStore.participationHistory &&
+                authStore.participationHistory.length > 0
+              "
+            >
+              <div
+                v-for="item in authStore.participationHistory"
+                :key="item.name"
+                class="project-item"
+              >
+                <h5 class="project-title">{{ item.name }}</h5>
                 <div class="numbers-line">
-                  <span v-for="(details, numberName) in project" :key="numberName" class="number-entry">
-                    <strong>{{ numberName }}</strong>:
-                    <span v-if="projectName !== 'Прямое Включение'">
-                      {{ details.city || "Не указано" }},
-                    </span>
-                    {{ details.date || "Не указано" }}
-                    <span v-if="details.place">, {{ details.place }}</span>
-                    <span v-if="details.bonuses">, Бонусы: {{ details.bonuses }}</span>
-                  </span>
+                  <span class="number-entry">{{ item.date }}</span>
                 </div>
               </div>
             </div>
+
+            <!-- Если истории нет -->
             <p v-else class="no-history">История участия не найдена.</p>
           </div>
         </details>
@@ -98,93 +129,108 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   setup() {
-    const authStore = useAuthStore()
-    return { authStore }
+    const authStore = useAuthStore();
+    return { authStore };
   },
   data() {
     return {
       isEditingName: false,
-      editingName: '',
+      editingName: "",
       isOpen: true,
-    }
+      isSavingName: false, // ← новый флаг загрузки
+    };
   },
   computed: {
     amocrmData() {
-      return this.authStore.amocrmData
+      return this.authStore.amocrmData;
     },
     isNameConfirmed() {
-      return this.authStore.isNameConfirmed
+      return this.authStore.isNameConfirmed;
     },
     bonusGrant() {
-      return this.authStore.bonusGrant
+      return this.authStore.bonusGrant;
     },
-    historyData() {
-      if (!this.amocrmData?.custom_fields_values) return null
-      const field = this.amocrmData.custom_fields_values.find(f => f.field_id === 597163)
-      if (field?.values?.[0]?.value) {
-        try {
-          return JSON.parse(field.values[0].value)
-        } catch {
-          return null
-        }
-      }
-      return null
-    },
-    directInclusionBonuses() {
-      let total = 0
-      if (this.historyData?.["Прямое Включение"]) {
-        Object.values(this.historyData["Прямое Включение"]).forEach(d => {
-          total += parseInt(d.bonuses) || 0
-        })
-      }
-      return total
-    },
+
     firstParticipationDate() {
-      if (!this.historyData) return null
-      const dates = []
-      Object.values(this.historyData).forEach(project => {
-        Object.values(project).forEach(d => d.date && dates.push(d.date))
-      })
+      if (!this.historyData) return null;
+      const dates = [];
+      Object.values(this.historyData).forEach((project) => {
+        Object.values(project).forEach((d) => d.date && dates.push(d.date));
+      });
       return dates.length
-        ? dates.sort((a, b) =>
-            new Date(a.split('.').reverse().join('-')) - new Date(b.split('.').reverse().join('-'))
+        ? dates.sort(
+            (a, b) =>
+              new Date(a.split(".").reverse().join("-")) -
+              new Date(b.split(".").reverse().join("-"))
           )[0]
-        : null
+        : null;
     },
   },
   methods: {
     startEditingName() {
-      if (this.isNameConfirmed) return
-      this.editingName = this.amocrmData.name || ''
-      this.isEditingName = true
+      if (this.isNameConfirmed || this.isSavingName) return;
+      this.editingName = ""; // всегда пустое поле, если имя ещё не подтверждено
+      this.isEditingName = true;
       this.$nextTick(() => {
-        this.$refs.nameInput?.focus()
-      })
+        this.$refs.nameInput?.focus();
+        this.$refs.nameInput?.select?.();
+      });
     },
     cancelEditingName() {
-      this.isEditingName = false
-      this.editingName = ''
+      this.isEditingName = false;
+      this.editingName = "";
     },
     async saveName() {
-      const name = this.editingName.trim()
+      if (this.isSavingName) return;
+      const name = this.editingName.trim();
       if (name.length < 2) {
-        alert('Введите корректное ФИО')
-        return
+        alert("Введите корректное ФИО");
+        return;
       }
 
-      const success = await this.authStore.updateUserName(name)
-      if (success) {
-        this.isEditingName = false
-        this.editingName = ''
-        alert('ФИО успешно сохранено!')
+      this.isSavingName = true;
+
+      try {
+        const success = await this.authStore.updateUserName(name);
+        if (success) {
+          this.isEditingName = false;
+          this.editingName = "";
+          this.showToast("ФИО успешно сохранено!");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Ошибка сохранения");
+      } finally {
+        this.isSavingName = false;
       }
     },
+
+    // Красивый тост (по желанию можно вынести в миксин)
+    showToast(message) {
+      const toast = document.createElement("div");
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        z-index: 10000;
+        animation: fadeInOut 3s forwards;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -214,7 +260,8 @@ export default {
   width: 260px;
 }
 
-.save-btn, .cancel-btn {
+.save-btn,
+.cancel-btn {
   background: none;
   border: none;
   font-size: 1.4em;
@@ -225,14 +272,18 @@ export default {
 }
 
 .save-btn {
-  color: #4CAF50;
+  color: #4caf50;
 }
-.save-btn:hover { background: rgba(76, 175, 80, 0.1); }
+.save-btn:hover {
+  background: rgba(76, 175, 80, 0.1);
+}
 
 .cancel-btn {
   color: #f44336;
 }
-.cancel-btn:hover { background: rgba(244, 67, 54, 0.1); }
+.cancel-btn:hover {
+  background: rgba(244, 67, 54, 0.1);
+}
 
 .confirmed {
   color: #2e7d32;
@@ -440,29 +491,122 @@ h2 {
   margin: 0 8px;
   font-weight: bold;
 }
-@media (max-width: 768px) {
-  /* 1. Шрифты — фиксированные, а не vw (чтобы не мельчили) */
-  h1 { font-size: 32px !important; }
-  h3 { font-size: 18px !important; }
-  .profile-info { font-size: 16px !important; }
-  .profile-info-name { font-size: 20px !important; line-height: 1.2; }
-  .profile-info-participation { font-size: 14px !important; }
+.save-btn,
+.cancel-btn {
+  background: none;
+  border: none;
+  font-size: 1.6em;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* 2. Профиль */
+.save-btn {
+  color: #4caf50;
+}
+.save-btn:hover {
+  background: rgba(76, 175, 80, 0.15);
+}
+.save-btn.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.save-btn.loading::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: #4caf50;
+  border-radius: 50%;
+  animation: button-spin 0.8s linear infinite;
+}
+
+.cancel-btn {
+  color: #f44336;
+}
+.cancel-btn:hover {
+  background: rgba(244, 67, 54, 0.15);
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 768px) {
+  /* === ТОЛЬКО профиль: аватар сверху, имя снизу по центру === */
   .profile-tab {
+    flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 20px; /* расстояние между аватаром и именем */
   }
+
   .profile-icon {
     width: 35.92vw;
     height: 35.92vw;
-  }
-  .profile-info {
-    align-items: center;
-    margin-bottom: 16px;
+    max-width: 160px;
+    max-height: 160px;
+    margin-right: 0 !important;
+    margin-bottom: 0;
   }
 
-  /* 3. Бонусы — вертикально */
+  .profile-info {
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  /* === Редактирование имени — инпут + кнопки на одной строке === */
+  .name-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .name-input {
+    flex: 1;
+    min-width: 0;
+    font-size: 17px !important; /* важно для iOS */
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 1.8em;
+  }
+
+  /* === Всё остальное — оставляем как у тебя было === */
+  h1 {
+    font-size: 32px !important;
+  }
+  h3 {
+    font-size: 18px !important;
+  }
+  .profile-info-name {
+    font-size: 20px !important;
+    line-height: 1.2;
+  }
+  .profile-info-participation {
+    font-size: 14px !important;
+  }
+
   .bonuses-container {
     flex-direction: column;
     gap: 12px;
@@ -470,22 +614,25 @@ h2 {
   .bonuses-card {
     width: auto;
     height: 26.042vw;
-    border-radius: 3.50vw;
+    border-radius: 3.5vw;
   }
   .bonuses-card h1 {
-    font-size: 16.30vw !important;
+    font-size: 16.3vw !important;
   }
 
-  /* 4. Аккордеон */
   .history-header {
     padding: 12px 14px;
     font-size: 16px;
-    border-radius: 3.50vw;
+    border-radius: 3.5vw;
   }
-  .chevron { width: 16px; height: 16px; }
+  .chevron {
+    width: 16px;
+    height: 16px;
+  }
 
-  /* 5. История участия */
-  .project-title { font-size: 15px; }
+  .project-title {
+    font-size: 15px;
+  }
   .numbers-line {
     flex-direction: column;
     gap: 8px;
@@ -498,12 +645,22 @@ h2 {
     content: "" !important;
   }
 
-  /* 6. Отступы и паддинги */
-  .tab-content { padding: 0; }
-  .history-panel { padding: 12px 14px !important; }
-  .history-accordion[open] .history-panel { max-height: 2000px; }
+  .tab-content {
+    padding: 0;
+  }
+  .history-panel {
+    padding: 12px 14px !important;
+  }
+  .history-accordion[open] .history-panel {
+    max-height: 2000px;
+  }
+  .bonuses-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 
-  /* 7. Убираем лишние тени/бордеры на маленьком экране */
-  .bonuses-card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  /* Плейсхолдер "Нажмите, чтобы указать ФИО" */
+  .placeholder {
+    font-size: 18px;
+  }
 }
 </style>
