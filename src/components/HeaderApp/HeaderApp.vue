@@ -43,6 +43,16 @@
           @click.stop="openWhatsApp"
           title="Написать в WhatsApp"
         ></button>
+        <button
+          class="tg-button"
+          @click.stop="openTG"
+          title="Написать в Telegram"
+        ></button>
+        <button
+          class="max-button"
+          @click.stop="openMax"
+          title="Написать в Max"
+        ></button>
 
         <button
           class="button-2"
@@ -66,6 +76,16 @@
           class="watsapp-button dashboard"
           title="Написать в WhatsApp"
           @click="openWhatsApp"
+        ></button>
+         <button
+          class="tg-button dashboard"
+          title="Написать в Telegram"
+          @click="openTG"
+        ></button>
+         <button
+          class="max-button dashboard"
+          title="Написать в Max"
+          @click="openMax"
         ></button>
       </div>
     </div>
@@ -117,6 +137,20 @@ export default {
     },
 
     openWhatsApp() {
+      this.closeMenuOnItemClick() // тоже закрываем
+      window.open(
+        'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',
+        '_blank'
+      )
+    },
+    openTG() {
+      this.closeMenuOnItemClick() // тоже закрываем
+      window.open(
+        'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',
+        '_blank'
+      )
+    },
+    openMax() {
       this.closeMenuOnItemClick() // тоже закрываем
       window.open(
         'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',

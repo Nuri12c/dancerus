@@ -20,27 +20,26 @@ $violet: #8c66ad;
 // buttons
 .button-1 {
   padding: 0.9375vw 1.25vw; /* 18px и 24px при 1920px */
-  height: 4.06vw;
   background-color: #ffffff00;
   border: 0.15vw solid white; /* 2px при 1920px */
   color: white;
   border-radius: 0.52vw; /* 10px при 1920px */
   font-family: "Oswald", sans-serif;
   font-weight: 200;
-  font-size: 1.67vw; /* 32px при 1920px */
+  font-size: 1.25vw; /* 32px при 1920px */
   text-transform: uppercase;
 }
 
 .button-2 {
   padding: 0.94vw 1.25vw; /* 18px и 24px при 1920px */
-  height: 4.06vw;
+  height: 3.06vw;
   background-color: #ffffff00;
   border: 0.15vw solid white; /* 2px при 1920px */
   color: white;
   border-radius: 0.26vw; /* 5px при 1920px */
   font-family: "Inter", sans-serif;
   font-weight: 200;
-  font-size: 1.25vw; /* 24px при 1920px */
+  font-size: 1vw; /* 24px при 1920px */
   white-space: nowrap;
 }
 
@@ -51,7 +50,7 @@ $violet: #8c66ad;
   color: white;
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-size: 1.25vw; /* 24px при 1920px */
+  font-size: 1vw; /* 24px при 1920px */
 }
 
 @media (max-width: 768px) {

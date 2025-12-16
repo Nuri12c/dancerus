@@ -32,8 +32,8 @@
 }
 
 .icon {
-  width: 4.01vw;
-  height: 4.01vw;
+  width: 3.01vw;
+  height: 3.01vw;
   background-image: url("@/assets/Logo.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -43,18 +43,34 @@
   display: flex;
   width: 55.91vw;
   align-items: center;
+  justify-content: space-between;
   gap: 2vw;
 }
 
 .watsapp-button {
-  background: url("@/assets/images/Vector.svg");
-  width: 3.92vw;
-  height: 3.92vw;
+  background: url("@/assets/images/whatsapp.svg");
+  width: 2.92vw;
+  height: 2.92vw;
   background-size: contain;
   border: none;
   background-repeat: no-repeat;
 }
-
+.tg-button {
+  background: url("@/assets/images/telegram.svg");
+  width: 2.92vw;
+  height: 2.92vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
+.max-button {
+  background: url("@/assets/images/max.svg");
+  width: 2.92vw;
+  height: 2.92vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
 .burger {
   display: none;
   flex-direction: column;
@@ -199,7 +215,20 @@
     font-size: 3.97vw; /* 24px при 402px */
   }
   .watsapp-button {
-  background: url("@/assets/images/Vector.svg");
+  width: 8.92vw;
+  height: 8.92vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
+.tg-button {
+  width: 8.92vw;
+  height: 8.92vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
+.max-button {
   width: 8.92vw;
   height: 8.92vw;
   background-size: contain;
