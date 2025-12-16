@@ -26,10 +26,10 @@
         :class="{ open: isMenuOpen }"
         @click="closeMenuOnItemClick"
       >
-        <button class="button-3">Главная</button>
-        <button class="button-3">
+        <a href="#hero" class="button-3">Главная</a>
+        <a href="#contests" class="button-3">
           Все конкурсы
-        </button>
+        </a>
         <button class="button-3">
           Подать заявку
         </button>
@@ -38,7 +38,23 @@
         </button>
 
         <!-- WhatsApp и Личный кабинет — .stop, чтобы не срабатывало закрытие дважды -->
+        <!-- <button
+          class="watsapp-button"
+          @click.stop="openWhatsApp"
+          title="Написать в WhatsApp"
+        ></button>
         <button
+          class="tg-button"
+          @click.stop="openTG"
+          title="Написать в Telegram"
+        ></button>
+        <button
+          class="max-button"
+          @click.stop="openMax"
+          title="Написать в Max"
+        ></button> -->
+        <div class="button-links">
+          <button
           class="watsapp-button"
           @click.stop="openWhatsApp"
           title="Написать в WhatsApp"
@@ -53,7 +69,8 @@
           @click.stop="openMax"
           title="Написать в Max"
         ></button>
-
+        </div>
+        <a href="tel:+79161234567" class="">+79161234567</a>
         <button
           class="button-2"
           @click.stop="handleCabinetClick"
@@ -72,21 +89,7 @@
         <button class="back-to-site" @click="$emit('switch-to-site')">
           ← На сайт
         </button>
-        <button
-          class="watsapp-button dashboard"
-          title="Написать в WhatsApp"
-          @click="openWhatsApp"
-        ></button>
-         <button
-          class="tg-button dashboard"
-          title="Написать в Telegram"
-          @click="openTG"
-        ></button>
-         <button
-          class="max-button dashboard"
-          title="Написать в Max"
-          @click="openMax"
-        ></button>
+
       </div>
     </div>
   </header>

@@ -57,7 +57,7 @@ $violet: #8c66ad;
   .button-1 {
     margin-top: 1rem !important;
     padding: 2.985vw 5.97vw !important; /* 12px сверху/снизу, 24px слева/справа при 402px */
-    font-size: 3.98vw !important; /* 16px при 402px */
+    font-size: 3.98vw ; /* 16px при 402px */
     line-height: normal !important;
     height: max-content;
     border-radius: 10px;
@@ -70,7 +70,6 @@ $violet: #8c66ad;
   .button-2 {
     padding: 3.48vw 2.48vw; /* 18px при 402px */
     height: 11.94vw; /* 48px при 402px */
-    width: 36.32vw; /* 146px при 402px */
     background-color: #ffffff00;
     border: 0.5vw solid white; /* 2px при 402px */
     color: white;

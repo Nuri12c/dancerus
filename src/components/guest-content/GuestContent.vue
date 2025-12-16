@@ -2,7 +2,8 @@
 <template>
   <body>
     <sectionHero/>
-    <sectionContest/>
+   <sectionContest/>
+
     <sectionRevievs/>
     <sectionWhy/>
     <sectionGroup/>
@@ -15,6 +16,7 @@ import sectionContest from "./section-contests/sectionContest.vue";
 import sectionRevievs from "./section-reviews/sectionReviews.vue";
 import sectionWhy from "./section-why/sectionWhy.vue";
 import sectionGroup from "./section-group/sectionGroup.vue";
+
 export default {
   components: {
     sectionHero,

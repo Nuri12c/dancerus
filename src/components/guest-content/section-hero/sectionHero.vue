@@ -1,5 +1,5 @@
 <template>
-  <section class="hero" :style="{ backgroundImage: `url(${bgImage})` }">
+  <section id="hero" class="hero" :style="{ backgroundImage: `url(${bgImage})` }">
     <div class="hero__container">
       <h1 class="hero__heading">
         Международное хореографическое <br />движение «Танцуй, Россия»
@@ -14,7 +14,7 @@
             уверенность, педагоги — поддержку, а коллективы — возможности для
             роста, признания и новых горизонтов.</p>
         </div>
-        <button class="button-1">Подать заявку</button>
+        <button class="button-1 button-hero">Подать заявку</button>
       </div>
     </div>
   </section>
