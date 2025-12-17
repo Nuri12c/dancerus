@@ -31,9 +31,6 @@
           Все конкурсы
         </a>
         <button class="button-3">
-          Подать заявку
-        </button>
-        <button class="button-3">
           Новости
         </button>
 

@@ -41,6 +41,10 @@
       @open-login="showLogin = true; showAuthModal = false"
       @open-register="showRegister = true; showAuthModal = false"
     />
+    <PhoneModal
+      v-if="authStore.isPhoneModalOpen"
+      @close="authStore.closePhoneModal"
+    />
   </div>
 </template>
 
@@ -53,6 +57,7 @@ import CodeInputModal from './components/modals/CodeInputModal.vue'
 import LoginModal from './components/modals/LoginModal.vue'
 import DashboardApp from './components/registered-content/DashboardApp.vue'
 import AuthModal from './components/modals/AuthModal.vue'
+import PhoneModal from './components/modals/PhoneModal.vue'
 
 export default {
   components: {
@@ -63,6 +68,7 @@ export default {
     LoginModal,
     DashboardApp,
     AuthModal,
+    PhoneModal,
   },
 
   setup() {
@@ -139,4 +145,4 @@ export default {
     }
   },
 }
-</script> 
+</script>

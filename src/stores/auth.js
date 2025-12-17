@@ -5,6 +5,7 @@ export const useAuthStore = defineStore("auth", {
     token: localStorage.getItem("token") || null,
     amocrmData: null, // сюда кладём весь объект контакта из amoCRM
     isLoading: false, // для прелоадеров (по желанию)
+    isPhoneModalOpen: false, // единственный флаг
   }),
 
   getters: {
@@ -166,7 +167,13 @@ export const useAuthStore = defineStore("auth", {
       this.amocrmData = null;
       localStorage.removeItem("token");
     },
+openPhoneModal() {
+    this.isPhoneModalOpen = true;
+  },
 
+  closePhoneModal() {
+    this.isPhoneModalOpen = false;
+  },
     // Обновление имени (чтобы не дублировать код в ProfileTab)
     async updateUserName(name) {
       try {
@@ -227,7 +234,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: "fake-jwt-token-for-local-dev", // имитируем, что залогинены
     isLoading: false,
-
+    isPhoneModalOpen: false, // единственный флаг
     // Полные моковые данные контакта из amoCRM
     amocrmData: {
       id: 12345678,
@@ -317,29 +324,29 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     participationHistory: (state) => {
-    if (!state.amocrmData?.custom_fields_values) return null;
+      if (!state.amocrmData?.custom_fields_values) return null;
 
-    const field = state.amocrmData.custom_fields_values.find(
-      f => f.field_id === 597163
-    );
+      const field = state.amocrmData.custom_fields_values.find(
+        (f) => f.field_id === 597163
+      );
 
-    if (!field?.values?.[0]?.value) return null;
+      if (!field?.values?.[0]?.value) return null;
 
-    try {
-      const parsed = JSON.parse(field.values[0].value);
+      try {
+        const parsed = JSON.parse(field.values[0].value);
 
-      // Возвращаем сразу удобный формат: массив объектов
-      // [{ name: "Прямое Включение", date: "19.09.2025" }, ...]
-      // или оставляем объект — как тебе удобнее
-      return Object.entries(parsed).map(([name, date]) => ({
-        name,
-        date,
-      }));
-    } catch (e) {
-      console.error("Ошибка парсинга истории участия", e);
-      return null;
-    }
-  },
+        // Возвращаем сразу удобный формат: массив объектов
+        // [{ name: "Прямое Включение", date: "19.09.2025" }, ...]
+        // или оставляем объект — как тебе удобнее
+        return Object.entries(parsed).map(([name, date]) => ({
+          name,
+          date,
+        }));
+      } catch (e) {
+        console.error("Ошибка парсинга истории участия", e);
+        return null;
+      }
+    },
     bonusGrant: (state) => {
       if (!state.amocrmData?.custom_fields_values) return "0";
       const field = state.amocrmData.custom_fields_values.find(
@@ -379,6 +386,13 @@ export const useAuthStore = defineStore("auth", {
     },
     async updateUserName() {
       return true; // имитируем успешное сохранение
+    },
+    openPhoneModal() {
+      this.isPhoneModalOpen = true;
+    },
+
+    closePhoneModal() {
+      this.isPhoneModalOpen = false;
     },
   },
 });

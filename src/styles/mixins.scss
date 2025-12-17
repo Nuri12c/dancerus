@@ -32,7 +32,6 @@ $violet: #8c66ad;
 
 .button-2 {
   padding: 0.94vw 1.25vw; /* 18px и 24px при 1920px */
-  height: 3.06vw;
   background-color: #ffffff00;
   border: 0.15vw solid white; /* 2px при 1920px */
   color: white;
@@ -69,7 +68,7 @@ $violet: #8c66ad;
   }
   .button-2 {
     padding: 3.48vw 2.48vw; /* 18px при 402px */
-    height: 11.94vw; /* 48px при 402px */
+
     background-color: #ffffff00;
     border: 0.5vw solid white; /* 2px при 402px */
     color: white;
@@ -80,4 +79,5 @@ $violet: #8c66ad;
     white-space: nowrap;
     order: -1; /* Личный кабинет в начало */
   }
+  
 }

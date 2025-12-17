@@ -6,7 +6,7 @@
         class="contest__card"
         v-for="(card, i) in contests"
         :key="i"
-        @click="openModal(card)"
+        @click="openPhoneModal"
       >
         <img
           :src="card.img"
@@ -16,72 +16,60 @@
         <div class="contest__content">
           <div class="contest__text">
             <div class="contest__heading">{{ card.heading }}</div>
-            <div class="contest__date">{{ card.date }}</div>
           </div>
           <div class="contest__button">
-            <button class="button-2 dark">ПОДАТЬ ЗАЯВКУ</button>
+            <button  class="button-2 dark">ПОДАТЬ ЗАЯВКУ</button>
           </div>
         </div>
       </li>
     </ul>
-
-    <ContestModal
-      v-if="activeCard"
-      :card="activeCard"
-      @close="closeModal"
-    />
   </section>
 </template>
 
 <script>
-import ContestModal from '@/components/modals/ContestModal.vue';
-
+import { useAuthStore } from '@/stores/auth'
 export default {
-  components: { ContestModal },
   data() {
     return {
       activeCard: null,
       contests: [
         {
           heading: "ПРЯМОЕ ВКЛЮЧЕНИЕ В ПРЯМОМ ЭФИРЕ",
-          date: "12-13 сентября",
-          img: require('@/assets/images/section-contest/PV-online.png')
+          img: require('@/assets/images/section-contest/PV-online.jpg')
         },
         {
           heading: "ПРЯМОЕ ВКЛЮЧЕНИЕ ПОЛУФИНАЛ",
-          date: "10 марта - 26 апреля 2026",
           img: require('@/assets/images/section-contest/PV-polufinal.png')
         },
         {
           heading: "ПРЯМОЕ ВКЛЮЧЕНИЕ ФИНАЛ",
-          date: "осень 2026",
           img: require('@/assets/images/section-contest/PV-final.png')
         },
         {
           heading: "4FEST",
-          date: "май 2026",
           img: require('@/assets/images/section-contest/4-fest.png')
         },
         {
           heading: "КОНКУРЕНТ",
-          date: "апрель 2026",
           img: require('@/assets/images/section-contest/konkurent.png')
         },
         {
           heading: "КУЛЬТУРНОЕ НАСЛЕДИЕ",
-          date: "декабрь 2026",
-          img: require('@/assets/images/calendar-tab/nasledie-bg.png')
+          img: require('@/assets/images/section-contest/nasledie.png')
         },
       ],
     };
   },
-  methods: {
-    openModal(card) {
-      this.activeCard = { ...card };
-    },
-    closeModal() {
-      this.activeCard = null;
-    }
+  setup() {
+    // Важно: получаем store в setup и возвращаем в компонент
+    const authStore = useAuthStore()
+    return { authStore }
   },
+
+  methods: {
+    openPhoneModal() {
+      this.authStore.openPhoneModal()
+    },
+   }
 };
 </script>

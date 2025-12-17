@@ -25,9 +25,7 @@
   transition: transform 0.3s ease;
 }
 
-.contest__card:hover {
-  transform: scale(1.02);
-}
+
 
 .contest__img-element {
   width: 100%;
@@ -76,7 +74,9 @@
   color: #262626;
   font-weight: 600;
 }
-
+.contest__card:hover {
+  transform: scale(1.02);
+}
 
 /* Адаптив */
 @media (max-width: 768px) {

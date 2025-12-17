@@ -36,10 +36,11 @@ h1 {
 h2 {
   margin: 0;
   font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
-  font-weight: 400; /* Укажите нужный вес */
+  font-weight: 700;
   font-size: 2vw;
     text-align: center;
   text-transform: uppercase;
+  margin-bottom: 2vw;
 }
 h3 {
   font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
@@ -51,4 +52,13 @@ p {
   font-family: 'Inter', sans-serif; /* Добавлен запасной шрифт */
   font-weight: 200; /* Укажите нужный вес */
 font-size: 1vw;  /* 24px / 1920px ≈ 1.25% - 0.521% = 0.729vw */
+}
+
+
+@media (max-width: 768px) {
+
+  h2 {
+    font-size: 7vw;
+    margin-bottom: 3vw;
+  }
 }
