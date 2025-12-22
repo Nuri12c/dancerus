@@ -1,7 +1,7 @@
 
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  publicPath: process.env.NODE_ENV === 'production' ?  /* '/' */   '/dancerus/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ?  '/'   /*  '/dancerus/' */ : '/',
   transpileDependencies: true,
   // ← Добавь это ↓
   chainWebpack: config => {

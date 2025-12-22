@@ -1,5 +1,5 @@
 <template>
-  <section class="team">
+  <section id="team" class="team">
     <h2 class="team__title">Наша команда</h2>
 
     <div class="team__layout">
@@ -56,13 +56,13 @@ export default {
       },
       teamMembers: [
         { bg: photo2, name: "Анна Александровна", role: "Исполнительный директор" },
-        { bg: photo9, name: "Артур Шамилевич", role: "Отдел продаж" },
-        { bg: photo4, name: "Адиля Ильнуровна", role: "Бронирование" },
-        { bg: photo5, name: "Диана Вадимовна", role: "Снабжение" },
+        { bg: photo9, name: "Артур Шамилевич", role: "Руководитель отдела продаж" },
+        { bg: photo4, name: "Адиля Ильнуровна", role: "Руководитель отдела бронирования" },
+        { bg: photo5, name: "Диана Вадимовна", role: "Руководитель отдела снабжения" },
         { bg: photo7, name: "Дарья Александровна", role: "HR-директор" },
-        { bg: photo8, name: "Игорь Андреевич", role: "Финансы" },
-        { bg: photo6, name: "Дмитрий Сергеевич", role: "Маркетинг" },
-        { bg: photo3, name: "Нурислам Булатович", role: "IT-директор" },
+        { bg: photo8, name: "Игорь Андреевич", role: "Руководитель отдела финансов" },
+        { bg: photo6, name: "Дмитрий Сергеевич", role: "Руководитель отдела маркетинга" },
+        { bg: photo3, name: "Нурислам Булатович", role: "Глава IT-направления" },
       ],
     };
   },

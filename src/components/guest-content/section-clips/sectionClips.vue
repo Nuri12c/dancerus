@@ -1,9 +1,9 @@
 <template>
   <section class="clips">
     <div class="clips__grid">
-    <!--   <div class="clips__card">
+   <div class="clips__card">
         <iframe
-          src="https://vk.com/video_ext.php?oid=-160233006&id=456241249"
+          src="https://vkvideo.ru/video_ext.php?oid=-160233006&id=456241269&hash=3fda45a288029b8a"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           frameborder="0"
           allowfullscreen
@@ -13,7 +13,7 @@
 
       <div class="clips__card">
         <iframe
-          src="https://vk.com/video_ext.php?oid=-160233006&id=456241266"
+          src="https://vkvideo.ru/video_ext.php?oid=-160233006&id=456241268&hash=35ff1242a9299bc5"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           frameborder="0"
           allowfullscreen
@@ -23,14 +23,14 @@
 
       <div class="clips__card">
         <iframe
-          src="https://vk.com/video_ext.php?oid=-160233006&id=456241258"
+          src="https://vkvideo.ru/video_ext.php?oid=-160233006&id=456241270&hash=78b14771f7c58d06"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           frameborder="0"
           allowfullscreen
           loading="lazy"
         ></iframe>
-      </div> -->
-    </div>
+      </div>
+    </div> 
   </section>
 </template>
 

@@ -2,18 +2,15 @@
 <template>
   <div>
     <HeaderApp
-      :show-dashboard="showDashboard"
       @open-register="showRegister = true"
       @open-login="showLogin = true"
       @open-auth-modal="showAuthModal = true"
-      @open-dashboard="showDashboard = true"
-      @switch-to-site="switchToSite"
       @logout="authStore.clearUserData"
     />
 
-    <GuestContent v-if="!showDashboard" />
+    <GuestContent @open-auth-modal="showAuthModal = true" v-if="!authStore.isOpenCabinet" />
 
-    <DashboardApp v-if="showDashboard" />
+    <DashboardApp v-if="authStore.isOpenCabinet" />
 
     <RegisterModal
       v-if="showRegister"
@@ -73,7 +70,9 @@ export default {
 
   setup() {
     const authStore = useAuthStore()
+
     return { authStore }
+
   },
 
   data() {
@@ -82,7 +81,6 @@ export default {
       showCodeInput: false,
       showLogin: false,
       showAuthModal: false,
-      showDashboard: false,
       registerPhone: '',
       tempPassword: '',
       isRestore: false,
@@ -119,7 +117,7 @@ export default {
       this.authStore.setToken(token)
       await this.authStore.fetchAmocrmData()
       this.showCodeInput = false
-      this.showDashboard = true
+      this.authStore.openCabinet()
     },
 
     async handleLoggedIn(token) {
@@ -127,22 +125,17 @@ export default {
       await this.authStore.fetchAmocrmData()
       this.showLogin = false
       this.showAuthModal = false
-      this.showDashboard = true
+      this.authStore.openCabinet()
     },
 
     switchToSite() {
-      this.showDashboard = false
+      this.authStore.closeCabinet()
     },
   },
 
   mounted() {
-    if (this.authStore.token) {
-      this.authStore.checkTokenAndLoad().then(success => {
-        if (success) {
-          this.showDashboard = true
-        }
-      })
-    }
+    this.authStore.closeCabinet(),
+    this.authStore.checkTokenAndLoad()
   },
 }
 </script>

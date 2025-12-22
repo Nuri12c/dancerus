@@ -6,6 +6,7 @@ export const useAuthStore = defineStore("auth", {
     amocrmData: null, // сюда кладём весь объект контакта из amoCRM
     isLoading: false, // для прелоадеров (по желанию)
     isPhoneModalOpen: false, // единственный флаг
+    isOpenCabinet: false,
   }),
 
   getters: {
@@ -170,7 +171,13 @@ export const useAuthStore = defineStore("auth", {
 openPhoneModal() {
     this.isPhoneModalOpen = true;
   },
+  openCabinet() {
+    this.isOpenCabinet = true;
+  },
 
+  closeCabinet() {
+    this.isOpenCabinet = false;
+  },
   closePhoneModal() {
     this.isPhoneModalOpen = false;
   },
@@ -232,9 +239,10 @@ import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    token: "fake-jwt-token-for-local-dev", // имитируем, что залогинены
+    token: "457г46г", // имитируем, что залогинены
     isLoading: false,
     isPhoneModalOpen: false, // единственный флаг
+    isOpenCabinet: false,
     // Полные моковые данные контакта из amoCRM
     amocrmData: {
       id: 12345678,
@@ -394,5 +402,11 @@ export const useAuthStore = defineStore("auth", {
     closePhoneModal() {
       this.isPhoneModalOpen = false;
     },
+    openCabinet() {
+      this.isOpenCabinet = true;
+    },
+    closeCabinet() {
+      this.isOpenCabinet = false;
+    }
   },
 });

@@ -7,6 +7,9 @@ $violet: #8c66ad;
 .white {
   color: white;
 }
+.dark {
+  color: #262626;
+}
 .grecaptcha-badge {
   z-index: 3 ;
   @media (max-width: 768px) {
@@ -28,6 +31,7 @@ $violet: #8c66ad;
   font-weight: 200;
   font-size: 1.25vw; /* 32px при 1920px */
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .button-2 {
@@ -40,6 +44,7 @@ $violet: #8c66ad;
   font-weight: 200;
   font-size: 1vw; /* 24px при 1920px */
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .button-3 {
@@ -50,6 +55,7 @@ $violet: #8c66ad;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 1vw; /* 24px при 1920px */
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -62,9 +68,11 @@ $violet: #8c66ad;
     border-radius: 10px;
     border: 2px solid white;
     box-sizing: border-box !important;
+
   }
   .button-3 {
     font-size: 4.98vw;
+
   }
   .button-2 {
     padding: 3.48vw 2.48vw; /* 18px при 402px */
@@ -79,5 +87,5 @@ $violet: #8c66ad;
     white-space: nowrap;
     order: -1; /* Личный кабинет в начало */
   }
-  
+
 }

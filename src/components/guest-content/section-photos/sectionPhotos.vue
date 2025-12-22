@@ -1,5 +1,5 @@
 <template>
-  <section class="photos">
+  <section id="photos" class="photos">
     <h2 class="photos__title">Фотографии</h2>
 
     <div class="photos__layout">
@@ -91,7 +91,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.dark {
+  color: #262626 !important;
+  border: #262626 2px solid !important;
+  font-weight: 500;
+}
 /* ОБЩИЕ СТИЛИ */
 .photos {
   background-color: #fcf5eb;

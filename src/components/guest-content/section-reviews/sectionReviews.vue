@@ -1,5 +1,5 @@
 <template>
-  <section class="reviews">
+  <section id="reviews" class="reviews">
     <h2 class="reviews__title">ОТЗЫВЫ</h2>
 
     <div class="reviews__slider-wrapper">

@@ -1,13 +1,13 @@
 <template>
   <header class="header" :class="{ fixed: isFixed }">
     <!-- Гость: полный хедер -->
-    <div v-if="!showDashboard" class="logo" @click="$emit('switch-to-site')">
+    <div v-if="!authStore.isOpenCabinet" class="logo">
       <div class="icon"></div>
-      <h3 class="logo__text">Танцуй, Россия</h3>
+      <a href="#hero" class="logo__text">Танцуй, Россия</a>
     </div>
 
     <!-- Гость: меню -->
-    <template v-if="!showDashboard">
+    <template v-if="!authStore.isOpenCabinet">
       <!-- Бургер-кнопка -->
       <button
         class="burger"
@@ -26,81 +26,59 @@
         :class="{ open: isMenuOpen }"
         @click="closeMenuOnItemClick"
       >
-        <a href="#hero" class="button-3">Главная</a>
-        <a href="#contests" class="button-3">
-          Все конкурсы
-        </a>
-        <button class="button-3">
-          Новости
-        </button>
-
-        <!-- WhatsApp и Личный кабинет — .stop, чтобы не срабатывало закрытие дважды -->
-        <!-- <button
-          class="watsapp-button"
-          @click.stop="openWhatsApp"
-          title="Написать в WhatsApp"
-        ></button>
-        <button
-          class="tg-button"
-          @click.stop="openTG"
-          title="Написать в Telegram"
-        ></button>
-        <button
-          class="max-button"
-          @click.stop="openMax"
-          title="Написать в Max"
-        ></button> -->
+        <a href="#contests" class="button-3">Наши конкурсы </a>
+        <a href="#reviews" class="button-3">Отзывы </a>
+        <a href="#stats" class="button-3">Наши сообщества</a>
+        <a href="#jury" class="button-3">Жюри </a>
+        <a href="#resident" class="button-3">Карта резидента </a>
+        <a href="#sponsor" class="button-3">Наш спонсор </a>
+        <a href="#photos" class="button-3">О нас </a>
         <div class="button-links">
-          <button
-          class="watsapp-button"
-          @click.stop="openWhatsApp"
-          title="Написать в WhatsApp"
-        ></button>
-        <button
-          class="tg-button"
-          @click.stop="openTG"
-          title="Написать в Telegram"
-        ></button>
-        <button
-          class="max-button"
-          @click.stop="openMax"
-          title="Написать в Max"
-        ></button>
+          <div class="social-icons">
+            <button
+              class="watsapp-button"
+              @click.stop="openWhatsApp"
+              title="Написать в WhatsApp"
+            ></button>
+            <button
+              class="tg-button"
+              @click.stop="openTG"
+              title="Написать в Telegram"
+            ></button>
+            <button
+              class="max-button"
+              @click.stop="openMax"
+              title="Написать в Max"
+            ></button>
+          </div>
+          <a href="tel:+79161234567" class="phone-number">+79161234567</a>
         </div>
-        <a href="tel:+79161234567" class="">+79161234567</a>
-        <button
-          class="button-2"
-          @click.stop="handleCabinetClick"
-        >
+        <button class="button-2" @click.stop="handleCabinetClick">
           Личный кабинет
         </button>
       </div>
     </template>
 
     <!-- Личный кабинет: упрощённый хедер -->
-    <div v-if="showDashboard" class="dashboard-header">
-      <div class="logo-icon" @click="$emit('switch-to-site')">
+    <div v-if="authStore.isOpenCabinet" class="dashboard-header">
+      <div class="logo-icon">
         <div class="icon"></div>
       </div>
       <div class="dashboard-container">
-        <button class="back-to-site" @click="$emit('switch-to-site')">
+        <button class="back-to-site" @click.stop="handleCabinetClick">
           ← На сайт
         </button>
-
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapStores } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
+import { mapStores } from "pinia";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
-  props: {
-    showDashboard: Boolean,
-  },
-  emits: ['open-auth-modal', 'open-dashboard', 'switch-to-site'],
+  emits: ["open-auth-modal"],
 
   computed: {
     ...mapStores(useAuthStore),
@@ -110,69 +88,326 @@ export default {
     return {
       isFixed: false,
       isMenuOpen: false,
-    }
+    };
   },
 
   methods: {
     toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
-      document.body.style.overflow = this.isMenuOpen ? 'hidden' : ''
+      this.isMenuOpen = !this.isMenuOpen;
+      document.body.style.overflow = this.isMenuOpen ? "hidden" : "";
     },
 
     // Закрывает меню при клике на любой пункт (кроме WhatsApp и ЛК)
     closeMenuOnItemClick() {
       if (this.isMenuOpen) {
-        this.isMenuOpen = false
-        document.body.style.overflow = ''
+        this.isMenuOpen = false;
+        document.body.style.overflow = "";
       }
     },
 
     handleCabinetClick() {
-      this.closeMenuOnItemClick() // закрываем меню
-      if (this.authStore.token) {
-        this.$emit('open-dashboard')
+      this.closeMenuOnItemClick(); // закрываем меню
+      if (this.authStore.token && this.authStore.isOpenCabinet === false) {
+        this.authStore.openCabinet();
+        console.log("open cabinet");
+      } else if (
+        this.authStore.token &&
+        this.authStore.isOpenCabinet === true
+      ) {
+        this.authStore.closeCabinet();
+        console.log("close cabinet");
       } else {
-        this.$emit('open-auth-modal')
+        this.$emit("open-auth-modal");
       }
     },
 
     openWhatsApp() {
-      this.closeMenuOnItemClick() // тоже закрываем
+      this.closeMenuOnItemClick(); // тоже закрываем
       window.open(
-        'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',
-        '_blank'
-      )
+        "https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83",
+        "_blank"
+      );
     },
     openTG() {
-      this.closeMenuOnItemClick() // тоже закрываем
-      window.open(
-        'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',
-        '_blank'
-      )
+      this.closeMenuOnItemClick(); // тоже закрываем
+      window.open("https://t.me/tantsuytantsuy", "_blank");
     },
     openMax() {
-      this.closeMenuOnItemClick() // тоже закрываем
+      this.closeMenuOnItemClick(); // тоже закрываем
       window.open(
-        'https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83',
-        '_blank'
-      )
+        "https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83",
+        "_blank"
+      );
     },
 
     handleScroll() {
-      this.isFixed = window.scrollY > 40
+      this.isFixed = window.scrollY > 40;
     },
   },
 
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener("scroll", this.handleScroll);
   },
 
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-    document.body.style.overflow = ''
+    window.removeEventListener("scroll", this.handleScroll);
+    document.body.style.overflow = "";
   },
-}
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use "@/styles/mixins.scss";
+
+.header {
+  position: fixed;
+  top: 1.6vw;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff00;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 2.45vw;
+  box-sizing: border-box;
+  height: 4.06vw;
+  transition: top 0.3s ease;
+  z-index: 10;
+}
+
+.header.fixed {
+  top: 0;
+  height: 4.69vw;
+  background-color: #262626cc;
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 10px 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.52vw;
+}
+.logo__text {
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  font-size: 1.6vw;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.icon {
+  width: 3.01vw;
+  height: 3.01vw;
+  background-image: url("@/assets/Logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+}
+.button-links {
+  display: flex;
+  flex-direction: column; /* вертикально */
+  align-items: center;
+  gap: 0.5vw; /* расстояние между соцсетями и телефоном */
+}
+.social-icons {
+  display: flex;
+  gap: 1vw; /* расстояние между иконками */
+}
+.watsapp-button {
+  background: url("@/assets/images/whatsapp.svg");
+}
+.tg-button {
+  background: url("@/assets/images/telegram.svg");
+}
+.max-button {
+  background: url("@/assets/images/max.svg");
+}
+.watsapp-button,
+.tg-button,
+.max-button {
+  width: 2vw;  /* уменьшили размер */
+  height: 2vw;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+}
+
+.phone-number {
+  font-size: 1.2vw;
+  color: #fcf5eb;
+  text-decoration: none;
+}
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 7.46vw;
+  height: 5.97vw;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2; /* Выше меню */
+}
+
+.burger span {
+  width: 100%;
+  height: 1.49vw;
+  background-color: #fcf5eb;
+  border-radius: 2px; /* Мягкие края */
+  transition: all 0.3s ease;
+}
+
+.burger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(3vw, 0);
+}
+
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(3vw, 0);
+}
+
+/* -------------------------------------------------
+   1. Кнопка «На сайт» (замена кнопки «Выйти»)
+   ------------------------------------------------- */
+.dashboard-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center; /* ← ЭТА СТРОКА ЦЕНТРИРУЕТ ВСЁ ПО ВЫСОТЕ */
+  height: 60px;
+  padding: 0 3vw;
+}
+
+.dashboard-container {
+  margin-left: auto; /* ← прижимает к правому краю */
+  display: flex;
+  align-items: center; /* ← центрирует кнопки внутри по высоте */
+  gap: 2.5vw; /* ← расстояние между WhatsApp и кнопкой */
+  height: 100%; /* ← можно убрать, не нужно */
+}
+.back-to-site {
+  padding: 0.7vw 1.4vw; /* немного больше для баланса */
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 0.1vw solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.5vw;
+  color: #ffffff;
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  font-size: 1.4vw;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-right: 3vw;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0.3vw 0.8vw rgba(0, 0, 0, 0.4),
+    inset 0 0 0 0.1vw rgba(255, 255, 255, 0.1);
+}
+
+.back-to-site:hover {
+  background: linear-gradient(135deg, #111111 0%, #2b2b2b 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.5),
+    inset 0 0 0.4vw rgba(255, 255, 255, 0.15);
+  transform: translateY(-0.1vw);
+}
+
+.back-to-site:active {
+  transform: translateY(0);
+  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.6),
+    inset 0 0 0.3vw rgba(255, 255, 255, 0.1);
+}
+
+/* -------------------------------------------------
+   2. Адаптив для кнопки «На сайт» (моб.)
+   ------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .header {
+    top: 5.95vw;
+    padding: 3.22vw 5.22vw;
+    height: 2.22vw;
+    flex-wrap: nowrap;
+  }
+
+  .header.fixed {
+    height: 6.39vw;
+    padding: 6.22vw 5.22vw;
+  }
+
+  .icon {
+    width: 10.97vw;
+    height: 10.97vw;
+  }
+
+  .logo__text {
+    font-size: 4.98vw;
+
+  }
+
+  .buttons {
+    display: none;
+  }
+
+  .buttons.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4.98vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Полный экран */
+    background-color: #262626f5; /* Полупрозрачный фон */
+    backdrop-filter: blur(10px); /* Размытие всегда */
+    padding: 24.88vw 4.98vw;
+    box-sizing: border-box;
+    z-index: 1; /* Ниже бургера */
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .back-to-site {
+    padding: 1.48vw 2.48vw; /* 18px при 402px */
+    color: #ffffff;
+    height: auto;
+    font-size: 3.97vw; /* 24px при 402px */
+  }
+  .watsapp-button {
+    width: 8.92vw;
+    height: 8.92vw;
+    background-size: contain;
+    border: none;
+    background-repeat: no-repeat;
+  }
+  .tg-button {
+    width: 8.92vw;
+    height: 8.92vw;
+    background-size: contain;
+    border: none;
+    background-repeat: no-repeat;
+  }
+  .max-button {
+    width: 8.92vw;
+    height: 8.92vw;
+    background-size: contain;
+    border: none;
+    background-repeat: no-repeat;
+  }
+}
 </style>
