@@ -87,7 +87,7 @@ export default {
 
 .hero__heading {
   color: #ffffff;
-  font-size: 4.3vw;
+  font-size: 4vw;
 }
 
 .hero__content {
@@ -108,6 +108,7 @@ export default {
 }
 .button-hero {
   font-size: 2.21vw;
+  margin-right: 4vw;
 }
 /* ===== Мобильная версия ===== */
 

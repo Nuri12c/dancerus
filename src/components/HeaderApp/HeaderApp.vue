@@ -28,18 +28,13 @@
       >
         <a href="#contests" class="button-3">Наши конкурсы </a>
         <a href="#reviews" class="button-3">Отзывы </a>
-        <a href="#stats" class="button-3">Наши сообщества</a>
         <a href="#jury" class="button-3">Жюри </a>
         <a href="#resident" class="button-3">Карта резидента </a>
         <a href="#sponsor" class="button-3">Наш спонсор </a>
-        <a href="#photos" class="button-3">О нас </a>
-        <div class="button-links">
+        <a class="button-3" @click="openPhoneModal">Подать заявку</a>
+
+
           <div class="social-icons">
-            <button
-              class="watsapp-button"
-              @click.stop="openWhatsApp"
-              title="Написать в WhatsApp"
-            ></button>
             <button
               class="tg-button"
               @click.stop="openTG"
@@ -52,7 +47,7 @@
             ></button>
           </div>
           <a href="tel:+79161234567" class="phone-number">+79161234567</a>
-        </div>
+
         <button class="button-2" @click.stop="handleCabinetClick">
           Личный кабинет
         </button>
@@ -92,6 +87,9 @@ export default {
   },
 
   methods: {
+    openPhoneModal() {
+      this.authStore.openPhoneModal()
+    },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
       document.body.style.overflow = this.isMenuOpen ? "hidden" : "";
@@ -120,14 +118,6 @@ export default {
         this.$emit("open-auth-modal");
       }
     },
-
-    openWhatsApp() {
-      this.closeMenuOnItemClick(); // тоже закрываем
-      window.open(
-        "https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83",
-        "_blank"
-      );
-    },
     openTG() {
       this.closeMenuOnItemClick(); // тоже закрываем
       window.open("https://t.me/tantsuytantsuy", "_blank");
@@ -135,7 +125,7 @@ export default {
     openMax() {
       this.closeMenuOnItemClick(); // тоже закрываем
       window.open(
-        "https://wa.me/79678723170?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%B7%D0%B0%D1%8F%D0%B2%D0%BA%D1%83",
+        "https://max.ru/u/f9LHodD0cOIg_g7TqSfoB1__5xd40KnwFBQkmTdNxrGK4vj89PEh10BXkKk",
         "_blank"
       );
     },
@@ -211,19 +201,12 @@ export default {
   justify-content: space-between;
   gap: 2vw;
 }
-.button-links {
-  display: flex;
-  flex-direction: column; /* вертикально */
-  align-items: center;
-  gap: 0.5vw; /* расстояние между соцсетями и телефоном */
-}
+
 .social-icons {
   display: flex;
   gap: 1vw; /* расстояние между иконками */
 }
-.watsapp-button {
-  background: url("@/assets/images/whatsapp.svg");
-}
+
 .tg-button {
   background: url("@/assets/images/telegram.svg");
 }
@@ -241,9 +224,11 @@ export default {
 }
 
 .phone-number {
+  font-family: 'Oswald', sans-serif; /* Добавлен запасной шрифт */
   font-size: 1.2vw;
-  color: #fcf5eb;
+  color: #ffffff;
   text-decoration: none;
+  text-decoration: underline;
 }
 .burger {
   display: none;

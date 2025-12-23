@@ -4,10 +4,12 @@
     <div class="resident__content">
       <!-- ===== ЛЕВАЯ КОЛОНКА ===== -->
       <div class="resident__left">
-        <p class="resident__subtitle">
-          Мы дарим эксклюзивные подарки и возможности каждому коллективу,
-          который участвует в проектах от движения «Танцуй, Россия»!
-        </p>
+        <div class="resident__glass">
+          <p class="resident__subtitle">
+            Мы дарим эксклюзивные подарки и возможности каждому коллективу,
+            который участвует в проектах от движения «Танцуй, Россия»!
+          </p>
+        </div>
         <div class="resident__book">
           <img src="@/assets/images/p-resident-card/book-2.png" alt="Книга" />
           <img src="@/assets/images/p-resident-card/book.png" alt="Книга" />
@@ -17,7 +19,10 @@
           Карта резидента уже доступна в вашем личном кабинете!
         </p>
 
-        <button class="button-1 resident__button" @click.stop="handleCabinetClick">
+        <button
+          class="button-1 resident__button"
+          @click.stop="handleCabinetClick"
+        >
           Личный кабинет
         </button>
       </div>
@@ -131,7 +136,7 @@ export default {
 .resident {
   position: relative;
   background-color: #000;
-  padding: 4vw 10vw;
+  padding: 2vw 10vw;
   overflow: hidden;
 
   /* SVG фон */
@@ -168,9 +173,42 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1vw;
+  gap: 0;
+}
+.resident__glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.8vw;
+
+  padding: 0.2vw 2vw;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+
+  position: relative;
+  overflow: hidden;
 }
 
+/* стеклянный блик */
+.resident__glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.02)
+  );
+  pointer-events: none;
+}
+
+/* текст поверх стекла */
+.resident__glass > * {
+  position: relative;
+  z-index: 1;
+}
 .resident__title {
   color: #fff;
 }
@@ -197,15 +235,15 @@ export default {
 }
 
 .resident__book img:first-child {
-  transform: scale(2) translateX(5%); /* увеличили сами картинки */
+  transform: scale(1.8) translateX(15%); /* увеличили сами картинки */
 }
 .resident__book img:last-child {
-  transform: scale(1.4) translateY(-10%); /* увеличили сами картинки */
+  transform: scale(1.2) translateY(-8%); /* увеличили сами картинки */
 }
 .resident__text {
   color: #fff;
   font-size: 1.1vw;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 .resident__button {
   align-self: center;
@@ -221,7 +259,7 @@ export default {
 .resident__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2vw 4vw;
+  gap: 0.1vw 3vw;
   width: 100%;
 }
 
@@ -234,7 +272,7 @@ export default {
 
 .resident__card-image {
   width: 100%;
-  height: 9.25vw;
+  height: 8.25vw;
   aspect-ratio: 1 / 1;
   border-radius: 0.5vw;
 
@@ -246,6 +284,7 @@ export default {
 .resident__card-text {
   color: #fff;
   font-size: 1vw;
+  line-height: 1;
 }
 
 /* === ДЛИННЫЙ БЛОК === */
@@ -273,24 +312,24 @@ export default {
     grid-template-columns: 1fr;
     gap: 8vw;
   }
-
+.resident__glass {
+    border-radius: 4vw;
+    padding: 4vw;
+  }
   .resident__title {
     font-size: 7vw;
   }
 
   .resident__subtitle {
-  font-size: 4.2vw;
-  line-height: 1.2;
-
-}
+    font-size: 4.2vw;
+    line-height: 1.2;
+  }
 
   .resident__grid {
     gap: 4vw;
   }
   .resident__card-image {
-
     height: 22.65625vw;
-
   }
   .resident__card-text {
     font-size: 3.5vw;

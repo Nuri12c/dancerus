@@ -80,7 +80,7 @@ export default {
 
 .content {
   flex-grow: 1;
-  padding: 70px 40px 40px 40px;
+  padding: 2vw 40px 40px 40px;
   overflow-y: auto;
   background-color: #fcf5eb;
   position: relative;

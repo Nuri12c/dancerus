@@ -5,57 +5,30 @@
     <!-- Ряд 1: 55% + 45% -->
     <div class="calendar__row calendar__row--hero">
       <div
-        class="event-card event-card--width-55 event-card--otbor"
-        :style="{ backgroundImage: `url(${otbor})`,
-          backgroundPosition: 'right center' }"
-      >
-        <h1 class="event-card__heading white">2025</h1>
-        <ul class="event-card__dates">
-          <li class="event-card__date">16 ноября — Москва</li>
-          <li class="event-card__date">
-            22 ноября — Новосибирск
-          </li>
-          <li class="event-card__date">
-            30 ноября — Санкт-Петербург
-          </li>
-          <li class="event-card__date">6 декабря — Казань</li>
-          <li class="event-card__date">
-            14 декабря — Краснодар
-          </li>
-        </ul>
-        <button class="event-card__button">подать заявку</button>
-      </div>
-
-      <div
-        class="event-card event-card--width-45 event-card--polufinal"
+        class="event-card event-card--width-55 event-card--polufinal"
         :style="{
           backgroundImage: `url(${polufinal})`,
-          backgroundPosition: 'right center',
+          backgroundPosition: 'right bottom',
         }"
       >
-        <h1 class="event-card__heading white">2026</h1>
-        <ul class="event-card__dates white">
-          <li clas2уs="event-card__date">
-            10,11 марта  - Санкт-Петербург
-          </li>
-          <li class="event-card__date"><strong>4-5 апреля</strong> — Новосибирск</li>
-
+        <h1 class="event-card__heading">2026</h1>
+        <ul class="event-card__dates">
+          <li clas2уs="event-card__date">10,11 марта - Санкт-Петербург</li>
           <li class="event-card__date">
-            <strong>4,5 апреля</strong> — Казань
+            <strong>4-5 апреля</strong> — Новосибирск
+          </li>
+
+          <li class="event-card__date"><strong>4,5 апреля</strong> — Казань</li>
+          <li class="event-card__date"><strong>11,12 апреля</strong> — Сочи</li>
+          <li class="event-card__date">
+            <strong>18,19 апреля</strong> — Москва
           </li>
           <li class="event-card__date">
-            <strong>11,12 апреля</strong> — Сочи
+            <strong>25,26 апреля </strong> - Астана
           </li>
-          <li class="event-card__date"><strong>18,19 апреля</strong> — Москва</li>
-          <li class="event-card__date"><strong>25,26 апреля </strong> - Астана</li>
-
         </ul>
-        <button class="event-card__button">подать заявку</button>
+        <button class="button-1 event-card__button">подать заявку</button>
       </div>
-    </div>
-
-    <!-- Ряд 2: 45% + 55% -->
-    <div class="calendar__row calendar__row--second">
       <div
         class="event-card event-card--width-45 event-card--fourfest"
         :style="{
@@ -63,40 +36,39 @@
           backgroundPosition: 'right center',
         }"
       >
-        <h1 class="event-card__heading white">2026</h1>
-        <p class="event-card__mounth">Май </p>
-        <button class="event-card__button">подать заявку</button>
+        <h1 class="event-card__heading">2026</h1>
+        <p class="event-card__mounth">Май</p>
+        <button class="button-1 event-card__button">подать заявку</button>
       </div>
+    </div>
 
+    <!-- Ряд 2: 45% + 55% -->
+    <div class="calendar__row calendar__row--second">
       <div
-        class="event-card event-card--width-55 event-card--konkurent"
+        class="event-card event-card--width-45 event-card--konkurent"
         :style="{
           backgroundImage: `url(${konkurent})`,
           backgroundPosition: 'right center',
         }"
       >
-        <h1 class="event-card__heading white">2026</h1>
+        <h1 class="event-card__heading">2026</h1>
         <p class="event-card__mounth">Апрель</p>
-        <button class="event-card__button">подать заявку</button>
+        <button class="button-1 event-card__button">подать заявку</button>
       </div>
-    </div>
-
-    <!-- Ряд 3: 100% -->
-    <div class="calendar__row calendar__row--second">
       <div
-        class="event-card event-card--width-100 event-card--final"
+        class="event-card event-card--width-55 event-card--final"
         :style="{
           backgroundImage: `url(${final})`,
           backgroundPosition: 'right center',
         }"
       >
-        <h1 class="event-card__heading white">2026</h1>
+        <h1 class="event-card__heading">2026</h1>
         <p class="event-card__mounth">Осень</p>
-        <button class="event-card__button">подать заявку</button>
+        <button class="button-1 event-card__button">подать заявку</button>
       </div>
     </div>
 
-    <!-- Ряд 4: 100% -->
+    <!-- Ряд 3: 100% -->
     <div class="calendar__row calendar__row--second">
       <div
         class="event-card event-card--width-100 event-card--nasledie"
@@ -105,16 +77,15 @@
           backgroundPosition: 'right center',
         }"
       >
-        <h1 class="event-card__heading">2026</h1>
-        <p class="event-card__mounth">Декабрь</p>
-        <button class="event-card__button">подать заявку</button>
+        <h1 class="event-card__heading dark">2026</h1>
+        <p class="event-card__mounth dark">Декабрь</p>
+        <button class="button-1 event-card__button--dark">подать заявку</button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import otbor from "@/assets/images/calendar-tab/otbor-bg.png";
 import polufinal from "@/assets/images/calendar-tab/polufinal-bg.png";
 import fourfest from "@/assets/images/calendar-tab/fourfest-bg.png";
 import konkurent from "@/assets/images/calendar-tab/konkurent-bg.png";
@@ -124,7 +95,6 @@ import nasledie from "@/assets/images/calendar-tab/nasledie-bg.png";
 export default {
   data() {
     return {
-      otbor,
       polufinal,
       fourfest,
       konkurent,
@@ -144,7 +114,7 @@ export default {
   margin-bottom: 1.25vw;
   font-size: 3.49vw;
   color: #333;
-  font-family: 'Gothic'; /* Исправлено название */
+  font-family: "Gothic"; /* Исправлено название */
   text-transform: none;
   text-align: left;
 }
@@ -152,15 +122,15 @@ export default {
 /* === Ряды === */
 .calendar__row {
   display: flex;
-  gap: 1.04vw;
-  margin-bottom: 1.04vw;
+  gap: 1vw;
+  margin-bottom: 0.6vw;
 
   &--hero {
-    height: 22.03vw;
+    height: 18.03vw;
   }
 
   &--second {
-    height: 12.4vw;
+    height: 10.4vw;
   }
 }
 
@@ -172,7 +142,7 @@ export default {
   justify-content: space-between;
   padding: 1.04vw 2.083vw 1.04vw 2.08vw;
   font-weight: 500;
-  color: #444;
+  color: #ffffff;
   transition: all 0.2s ease;
   background-size: cover;
   background-repeat: no-repeat;
@@ -190,13 +160,13 @@ export default {
     width: 45%;
   }
   &--width-100 {
-    width: 90%;
+    width: 100%;
   }
 
   &__heading {
     font-family: "Inter", sans-serif;
-    margin: 0 0 0.83vw;
-    font-size: 2.50vw;
+    margin: 0;
+    font-size: 2.5vw;
     font-weight: medium;
   }
 
@@ -204,7 +174,8 @@ export default {
     font-family: "Inter", sans-serif;
     padding-left: 0.78vw;
     font-size: 0.94vw;
-
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   &__date {
@@ -215,32 +186,21 @@ export default {
       font-weight: 600;
     }
   }
-
-  &__button {
-
-    padding: 0.4vw 0.4vw;
-    display: flex;
-    max-width: fit-content;
-    align-items: center;
-    justify-content: center;
-    font-family: "Inter", sans-serif;
-    background: rgb(255, 255, 255);
-    border: 2px solid white;
-    color: #1B514B;
-    font-size: 1.56vw;
-    font-weight: 500;
-    border-radius: 0.417vw;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: rgb(88, 66, 66);
-      color: #000;
-    }
-  }
 }
-
+.event-card__mounth {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  font-size: 1.5vw;
+  font-weight: 200;
+}
+.event-card__button {
+  width: fit-content;
+}
+.event-card__button--dark {
+  border-color: #333;
+  color: #333;
+  width: fit-content;
+}
 /* === Адаптивность === */
 @media (max-width: 768px) {
   .calendar__row {
@@ -248,33 +208,33 @@ export default {
     gap: 0.833vw;
   }
   .calendar__title {
-    font-size: 6.80vw;
-    margin-bottom: 6.50vw;
+    font-size: 6.8vw;
+    margin-bottom: 6.5vw;
   }
 
   .event-card {
-    padding: 2.30vw 2.30vw 2.30vw 3.30vw;
+    padding: 2.3vw 2.3vw 2.3vw 3.3vw;
     height: 30.854vw;
   }
   .event-card {
     &__dates {
-    padding-left: 2.78vw;
-    font-size: 3.71vw;
+      padding-left: 2.78vw;
+      font-size: 3.71vw;
       margin: 0;
-  }
-  &__mounth {
-    font-size: 3.64vw;
-    line-height: 0;
-    margin: 0;
-  }
-  &__heading {
-    font-size: 6.78vw;
-  }
-  &__button {
-    font-size: 3.78vw;
-    padding: 1.2vw 1.2vw;
-    border-radius: 1.21vw;
-  }
+    }
+    &__mounth {
+      font-size: 3.64vw;
+      line-height: 0;
+      margin: 0;
+    }
+    &__heading {
+      font-size: 6.78vw;
+    }
+    &__button {
+      font-size: 3.78vw;
+      padding: 1.2vw 1.2vw;
+      border-radius: 1.21vw;
+    }
     &--width-55,
     &--width-45,
     &--width-100 {
@@ -292,7 +252,6 @@ export default {
     &--final,
     &--nasledie {
       height: 22.43vw;
-
     }
   }
 

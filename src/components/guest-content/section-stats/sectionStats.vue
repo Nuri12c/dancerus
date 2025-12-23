@@ -29,11 +29,15 @@
             class="stats__image"
             :style="{ backgroundImage: `url(${item.icon})` }"
           ></div>
+
           <div class="stats__content-text">
             <div class="stats__card-text">{{ item.title }}</div>
             <div class="stats__card-title">{{ item.text }}</div>
+
           </div>
+           <button class="button-1">Присоединиться</button>
         </a>
+
       </div>
     </div>
   </section>
@@ -59,12 +63,12 @@ export default {
           icon: require("@/assets/images/vk.svg"),
           url: "https://vk.com/russia.dancekonkurs", // сюда вставьте ссылку
         },
-        {
+       /*  {
           title: "инстаграм",
           text: "8 000",
           icon: require("@/assets/images/instagram.svg"),
           url: "https://www.instagram.com/russia.dancekonkurs",
-        },
+        }, */
         {
           title: "телеграм",
           text: "40 000",
@@ -112,6 +116,10 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4vw;
+
+  /* Важно: фиксированная высота контейнера (или min-height) */
+  height: 100%; /* или конкретное значение, например 60vh */
+  min-height: 70vh; /* если хочешь, чтобы не схлопывался при малом контенте */
 }
 
 .stats__column {
@@ -119,9 +127,10 @@ export default {
   flex-direction: column;
   gap: 2vw;
 
+  /* Колонка растягивается на всю высоту родителя */
+  height: 100%;
 }
 
-/* ───────── стеклянная карточка ───────── */
 .stats__card {
   position: relative;
   background: rgba(255, 255, 255, 0.08);
@@ -132,12 +141,14 @@ export default {
   border-radius: 0.8vw;
 
   padding: 1.8vw;
-  height: 8vw;
   overflow: hidden;
 
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-}
 
+  /* Самое главное — карточки растягиваются на всю доступную высоту колонки */
+  flex: 1; /* или flex-grow: 1; */
+  height: auto;
+}
 /* лёгкий блик стекла */
 .stats__card::after {
   content: "";
@@ -164,6 +175,7 @@ export default {
 .stats__card--with-image {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1.5vw;
 }
 

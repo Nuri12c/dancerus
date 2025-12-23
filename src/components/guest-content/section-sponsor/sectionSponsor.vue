@@ -4,6 +4,7 @@
       <!-- ЛЕВАЯ КОЛОНКА -->
       <div class="sponsor__left">
         <h1 class="sponsor__title">НАШ Спонсор</h1>
+        
         <h2 class="sponsor__subtitle">
           эксклюзивная программа поддержки от “Танцуй, россия”
         </h2>

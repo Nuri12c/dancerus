@@ -34,7 +34,7 @@ export default {
       activeCard: null,
       contests: [
         {
-          heading: "ПРЯМОЕ ВКЛЮЧЕНИЕ В ПРЯМОМ ЭФИРЕ",
+          heading: "ПРЯМОЕ ВКЛЮЧЕНИЕ\nВ ПРЯМОМ ЭФИРЕ",
           img: require('@/assets/images/section-contest/PV-online.jpg')
         },
         {
@@ -46,7 +46,7 @@ export default {
           img: require('@/assets/images/section-contest/PV-final.png')
         },
         {
-          heading: "4FEST ПРЕМИЯ ЛАУРЕАТОВ",
+          heading: "4FEST\nПРЕМИЯ ЛАУРЕАТОВ",
           img: require('@/assets/images/section-contest/4-fest.png')
         },
         {
@@ -130,6 +130,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
   margin-bottom: 0.260417vw;
+  white-space: pre-line;
 }
 
 .contest__date {
