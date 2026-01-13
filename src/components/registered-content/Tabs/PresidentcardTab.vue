@@ -3,10 +3,10 @@
     <h2 class="president-card__title">Карта президента</h2>
 
     <div class="president-card__actions">
-      <button class="president-card__action-btn">
+      <button @click="openMessageModal" class="president-card__action-btn">
         Вам сообщение! <span class="president-card__cursor"></span>
       </button>
-      <button class="president-card__action-btn">
+      <button @click="openRulesModal" class="president-card__action-btn">
         Правила пользования картой <span class="president-card__cursor"></span>
       </button>
     </div>
@@ -21,7 +21,7 @@
           :style="{
             background: cardBackgrounds[n - 1],
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
           }"
         >
           <!-- Оверлей и замок для заблокированных -->
@@ -47,16 +47,16 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   setup() {
-    const authStore = useAuthStore()
-    return { authStore }
+    const authStore = useAuthStore();
+    return { authStore };
   },
   computed: {
     presidentLevel() {
-      return this.authStore.presidentLevel
+      return this.authStore.presidentLevel;
     },
   },
   data() {
@@ -69,21 +69,30 @@ export default {
         "Закрытая онлайн конференция мотивационного тренинга",
         "Личные мастер класс по вашему направлению от одного из лучших хореографов РФ",
         "Постановочный номер от одного из лучших хореографов РФ",
-        "Индивидуальная годовая программа с возможностью выбрать 3 бонуса из предыдущих этапов и распределить их в течении года по своему усмотрению"
+        "Индивидуальная годовая программа с возможностью выбрать 3 бонуса из предыдущих этапов и распределить их в течении года по своему усмотрению",
       ],
       cardBackgrounds: [
-        `url(${require('@/assets/images/p-resident-card/pres-1.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-2.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/p-res-2-3.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-4.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-5.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-6.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-7.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/pres-8.jpg')})`
+        `url(${require("@/assets/images/p-resident-card/pres-1.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/p-res-2-3.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/pres-2.jpg")})`,
+
+        `url(${require("@/assets/images/p-resident-card/pres-4.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/pres-5.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/pres-6.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/pres-7.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/pres-8.jpg")})`,
       ],
-    }
+    };
   },
-}
+  methods: {
+    openMessageModal() {
+      this.authStore.openMessageModal();
+    },
+    openRulesModal() {
+      this.authStore.openRulesModal();
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -150,7 +159,7 @@ export default {
 /* === КАРТОЧКИ (8 штук) === */
 .president-card__cards {
   display: grid;
-  grid-template-columns: repeat(4, 14.5vw);   /* 4 в ряд = 8 карточек */
+  grid-template-columns: repeat(4, 14.5vw); /* 4 в ряд = 8 карточек */
   gap: 0 2vw;
   justify-content: flex-start;
   padding: 0;
@@ -164,7 +173,7 @@ export default {
 
 .president-card__card {
   width: 100%;
-  height: 8vw;                                 /* Уменьшена высота под 8 карточек */
+  height: 8vw; /* Уменьшена высота под 8 карточек */
   border: 1px solid #ddd;
   border-radius: 0.7vw;
   box-sizing: border-box;
@@ -187,7 +196,10 @@ export default {
 /* Тёмный оверлей */
 .president-card__locked-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.461);
   border-radius: 0.7vw;
   z-index: 1;
@@ -196,7 +208,10 @@ export default {
 /* Замок по центру */
 .president-card__lock-wrapper {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,7 +222,7 @@ export default {
 .president-card__lock-icon {
   width: 3.5vw;
   height: 3.5vw;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* Подпись под карточкой */
@@ -263,7 +278,7 @@ export default {
   .president-card__cards {
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
+    gap: 0;
     align-items: center;
   }
 

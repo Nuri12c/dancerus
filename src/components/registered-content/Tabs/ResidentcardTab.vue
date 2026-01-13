@@ -3,10 +3,10 @@
     <h2 class="resident-card__title">Карта резидента</h2>
 
     <div class="resident-card__actions">
-      <button class="resident-card__action-btn">
+      <button @click="openMessageModal" class="resident-card__action-btn">
         Вам сообщение! <span class="resident-card__cursor"></span>
       </button>
-      <button class="resident-card__action-btn">
+      <button @click="openRulesModal" class="resident-card__action-btn">
         Правила пользования картой <span class="resident-card__cursor"></span>
       </button>
     </div>
@@ -21,7 +21,7 @@
           :style="{
             background: cardBackgrounds[n - 1],
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
           }"
         >
           <!-- Оверлей и замок для заблокированных -->
@@ -47,16 +47,24 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   setup() {
-    const authStore = useAuthStore()
-    return { authStore }
+    const authStore = useAuthStore();
+    return { authStore };
   },
   computed: {
     residentLevel() {
-      return this.authStore.residentLevel
+      return this.authStore.residentLevel;
+    },
+  },
+  methods: {
+    openRulesModal() {
+      this.authStore.openRulesModal();
+    },
+    openMessageModal() {
+      this.authStore.openMessageModal();
     },
   },
   data() {
@@ -70,16 +78,16 @@ export default {
         "Постановочный номер от хореографа по направлению для группы",
       ],
       cardBackgrounds: [
-        `url(${require('@/assets/images/p-resident-card/res-1.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/res-2.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/p-res-2-3.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/res-4.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/res-5.jpg')})`,
-        `url(${require('@/assets/images/p-resident-card/res-6.jpg')})`,
+        `url(${require("@/assets/images/p-resident-card/res-1.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/res-2.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/p-res-2-3.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/res-4.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/res-5.jpg")})`,
+        `url(${require("@/assets/images/p-resident-card/res-6.jpg")})`,
       ],
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>
@@ -148,7 +156,7 @@ export default {
 .resident-card__cards {
   display: grid;
   grid-template-columns: repeat(3, 19vw);
-  gap: 0 3vw;
+  gap: 0vw 3vw;
   justify-content: flex-start;
   padding: 0;
 }
@@ -184,7 +192,10 @@ export default {
 /* Тёмный оверлей */
 .resident-card__locked-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.445);
   border-radius: 0.83vw;
   z-index: 1;
@@ -193,7 +204,10 @@ export default {
 /* Замок по центру */
 .resident-card__lock-wrapper {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,7 +218,7 @@ export default {
 .resident-card__lock-icon {
   width: 4.5vw;
   height: 4.5vw;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* Подпись под карточкой */
@@ -215,7 +229,7 @@ export default {
   font-size: 0.99vw;
   color: #ffffff;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 /* === АДАПТИВ (мобильная версия) === */
@@ -260,7 +274,7 @@ export default {
   .resident-card__cards {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 0;
     align-items: center;
   }
 

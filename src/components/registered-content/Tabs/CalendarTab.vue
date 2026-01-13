@@ -27,7 +27,9 @@
             <strong>25,26 апреля </strong> - Астана
           </li>
         </ul>
-        <button class="button-1 event-card__button">подать заявку</button>
+        <button @click="openPhoneModal" class="button-1 event-card__button">
+          подать заявку
+        </button>
       </div>
       <div
         class="event-card event-card--width-45 event-card--fourfest"
@@ -38,7 +40,9 @@
       >
         <h1 class="event-card__heading">2026</h1>
         <p class="event-card__mounth">Май</p>
-        <button class="button-1 event-card__button">подать заявку</button>
+        <button @click="openPhoneModal" class="button-1 event-card__button">
+          подать заявку
+        </button>
       </div>
     </div>
 
@@ -53,7 +57,9 @@
       >
         <h1 class="event-card__heading">2026</h1>
         <p class="event-card__mounth">Апрель</p>
-        <button class="button-1 event-card__button">подать заявку</button>
+        <button @click="openPhoneModal" class="button-1 event-card__button">
+          подать заявку
+        </button>
       </div>
       <div
         class="event-card event-card--width-55 event-card--final"
@@ -64,7 +70,9 @@
       >
         <h1 class="event-card__heading">2026</h1>
         <p class="event-card__mounth">Осень</p>
-        <button class="button-1 event-card__button">подать заявку</button>
+        <button @click="openPhoneModal" class="button-1 event-card__button">
+          подать заявку
+        </button>
       </div>
     </div>
 
@@ -78,8 +86,13 @@
         }"
       >
         <h1 class="event-card__heading dark">2026</h1>
-        <p class="event-card__mounth dark">Декабрь</p>
-        <button class="button-1 event-card__button--dark">подать заявку</button>
+        <p class="event-card__mounth dark">26-27 Ноября - Санкт-Петербург</p>
+        <button
+          @click="openPhoneModal"
+          class="button-1 event-card__button event-card__button--dark"
+        >
+          подать заявку
+        </button>
       </div>
     </div>
   </section>
@@ -91,7 +104,7 @@ import fourfest from "@/assets/images/calendar-tab/fourfest-bg.png";
 import konkurent from "@/assets/images/calendar-tab/konkurent-bg.png";
 import final from "@/assets/images/calendar-tab/final-bg.png";
 import nasledie from "@/assets/images/calendar-tab/nasledie-bg.png";
-
+import { useAuthStore } from "@/stores/auth";
 export default {
   data() {
     return {
@@ -101,6 +114,16 @@ export default {
       final,
       nasledie,
     };
+  },
+  setup() {
+    // Важно: получаем store в setup и возвращаем в компонент
+    const authStore = useAuthStore();
+    return { authStore };
+  },
+  methods: {
+    openPhoneModal() {
+      this.authStore.openPhoneModal();
+    },
   },
 };
 </script>
@@ -190,8 +213,9 @@ export default {
 .event-card__mounth {
   font-family: "Inter", sans-serif;
   margin: 0;
-  font-size: 1.5vw;
-  font-weight: 200;
+  font-size: 1vw;
+  font-weight: 400;
+
 }
 .event-card__button {
   width: fit-content;
@@ -199,7 +223,6 @@ export default {
 .event-card__button--dark {
   border-color: #333;
   color: #333;
-  width: fit-content;
 }
 /* === Адаптивность === */
 @media (max-width: 768px) {
@@ -214,7 +237,10 @@ export default {
 
   .event-card {
     padding: 2.3vw 2.3vw 2.3vw 3.3vw;
-    height: 30.854vw;
+    margin-bottom: 2vw;
+  }
+  .event-card__button {
+    padding: 0.1vw 1vw !important;
   }
   .event-card {
     &__dates {
@@ -224,8 +250,10 @@ export default {
     }
     &__mounth {
       font-size: 3.64vw;
-      line-height: 0;
+      line-height: 1;
       margin: 0;
+      max-width: 15ch;
+      display: inline-block;
     }
     &__heading {
       font-size: 6.78vw;
@@ -251,7 +279,7 @@ export default {
     &--konkurent,
     &--final,
     &--nasledie {
-      height: 22.43vw;
+      height: 28.43vw;
     }
   }
 

@@ -114,15 +114,15 @@ export default {
 
 @media (max-width: 768px) {
   .button-hero {
-  font-size: 10.21vw;
+  font-size: 5.21vw;
 
 }
   .hero {
-     min-height: 120vh;
+     min-height: 100vh;
 
   }
   .hero__container {
-    padding: 18.91% 4.98%;
+    padding: 18.91% 4.98% 8%;
     justify-content:space-between;
     align-items: center;
   }

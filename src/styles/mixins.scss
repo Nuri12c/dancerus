@@ -57,7 +57,64 @@ $violet: #8c66ad;
   font-size: 1vw; /* 24px при 1920px */
   cursor: pointer;
 }
+// ─── Кнопки с отблеском ───
+.button-1,
+.button-2 {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: transform 0.3s ease;
+}
 
+.button-1::before,
+.button-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  transition: all 0.7s ease;
+}
+
+.button-1:hover::before,
+.button-2:hover::before {
+  left: 125%; /* анимация движения отблеска справа */
+}
+
+.button-1:hover,
+.button-2:hover {
+  transform: translateY(-2px); /* лёгкий подъём */
+}
+
+// ─── Кнопка без рамок с подчеркиванием ───
+.button-3 {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.button-3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.button-3:hover::after {
+  width: 100%;
+}
 @media (max-width: 768px) {
   .button-1 {
     margin-top: 1rem !important;

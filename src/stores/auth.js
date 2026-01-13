@@ -7,6 +7,8 @@ export const useAuthStore = defineStore("auth", {
     isLoading: false, // для прелоадеров (по желанию)
     isPhoneModalOpen: false, // единственный флаг
     isOpenCabinet: false,
+    isMessageModalOpen: false,
+    isRulesModalOpen = false;
   }),
 
   getters: {
@@ -181,6 +183,12 @@ openPhoneModal() {
   closePhoneModal() {
     this.isPhoneModalOpen = false;
   },
+  closeMessageModal() {
+      this.isMessageModalOpen = false;
+    },
+  openMessageModal() {
+      this.isMessageModalOpen = true;
+    },
     // Обновление имени (чтобы не дублировать код в ProfileTab)
     async updateUserName(name) {
       try {
@@ -243,6 +251,8 @@ export const useAuthStore = defineStore("auth", {
     isLoading: false,
     isPhoneModalOpen: false, // единственный флаг
     isOpenCabinet: false,
+    isRulesModalOpen: false,
+    isMessageModalOpen: false,
     // Полные моковые данные контакта из amoCRM
     amocrmData: {
       id: 12345678,
@@ -398,9 +408,21 @@ export const useAuthStore = defineStore("auth", {
     openPhoneModal() {
       this.isPhoneModalOpen = true;
     },
+    openMessageModal() {
+      this.isMessageModalOpen = true;
+    },
+    openRulesModal() {
+      this.isRulesModalOpen = true;
+    },
+    closeRulesModal() {
+      this.isRulesModalOpen = false;
+    },
 
     closePhoneModal() {
       this.isPhoneModalOpen = false;
+    },
+    closeMessageModal() {
+      this.isMessageModalOpen = false;
     },
     openCabinet() {
       this.isOpenCabinet = true;

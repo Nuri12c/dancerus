@@ -58,7 +58,8 @@
             </div>
 
             <p class="profile-info-participation">
-              День рождения: {{ firstParticipationDate || "Не указано" }}
+              Первое участие:
+              <strong>{{ firstParticipationDate || "Не указано" }}</strong>
             </p>
           </div>
         </div>
@@ -77,26 +78,19 @@
               <h1>{{ authStore.bonusStipendia }} ₽</h1>
             </div>
           </div>
+          <div class="bonuses-warning">
+            <p class="bonuses-warning-note">
+              * Денежный грант может быть использован для оплаты не более 20% от
+              полной стоимости участия
+            </p>
+          </div>
         </div>
 
         <!-- История участия -->
         <details class="history-accordion" open>
           <summary class="history-header">
             <span>История участия</span>
-            <svg
-              class="chevron"
-              :class="{ rotated: isOpen }"
-              width="18"
-              height="18"
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <span class="arrow">▼</span>
           </summary>
 
           <div class="history-panel">
@@ -113,9 +107,7 @@
                 class="project-item"
               >
                 <h5 class="project-title">{{ item.name }}</h5>
-                <div class="numbers-line">
-                  <span class="number-entry">{{ item.date }}</span>
-                </div>
+                <span class="number-entry">{{ item.date }}</span>
               </div>
             </div>
 
@@ -140,7 +132,6 @@ export default {
     return {
       isEditingName: false,
       editingName: "",
-      isOpen: true,
       isSavingName: false, // ← новый флаг загрузки
     };
   },
@@ -154,20 +145,40 @@ export default {
     bonusGrant() {
       return this.authStore.bonusGrant;
     },
-
+    // ← Вот правильное вычисление самой ранней даты участия
     firstParticipationDate() {
-      if (!this.historyData) return null;
-      const dates = [];
-      Object.values(this.historyData).forEach((project) => {
-        Object.values(project).forEach((d) => d.date && dates.push(d.date));
-      });
-      return dates.length
-        ? dates.sort(
-            (a, b) =>
-              new Date(a.split(".").reverse().join("-")) -
-              new Date(b.split(".").reverse().join("-"))
-          )[0]
-        : null;
+      const history = this.authStore.participationHistory;
+
+      // Если истории нет или она пустая
+      if (!history || history.length === 0) {
+        return null;
+      }
+
+      // Собираем все валидные даты (на случай, если где-то date пустая)
+      const validDates = history
+        .map((item) => item.date)
+        .filter(
+          (date) => date && typeof date === "string" && date.trim() !== ""
+        )
+        .map((date) => {
+          // Предполагаем формат DD.MM.YYYY — самый распространённый в РФ
+          const parts = date.split(".");
+          if (parts.length === 3) {
+            return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`); // YYYY-MM-DD для корректного парсинга
+          }
+          return null;
+        })
+        .filter((date) => date !== null && !isNaN(date.getTime()));
+
+      if (validDates.length === 0) {
+        return null;
+      }
+
+      // Находим самую раннюю дату
+      const earliest = new Date(Math.min(...validDates));
+
+      // Возвращаем в формате DD.MM.YYYY
+      return earliest.toLocaleDateString("ru-RU");
     },
   },
   methods: {
@@ -341,6 +352,7 @@ h2 {
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+  align-items: stretch; /* 🔥 ВАЖНО */
 }
 
 .bonuses-card {
@@ -365,7 +377,19 @@ h2 {
 .bonuses-card li {
   margin-bottom: 8px;
 }
+.bonuses-warning {
+  display: flex;
+  flex-direction: column;
+  height: auto; /* или убери height вообще */
+  padding: 0;
+}
 
+.bonuses-warning-note {
+  margin-top: auto; /* ⬅️ теперь РЕАЛЬНО прижимает */
+  margin-bottom: 0;
+  padding: 1vw;
+  background: rgba(0, 0, 0, 0.1);
+}
 /* === АККОРДЕОН: История участия === */
 .history-accordion {
   margin-top: 20px;
@@ -419,23 +443,20 @@ h2 {
   padding: 16px;
 }
 
-/* Стрелка */
-.chevron {
-  width: 18px;
-  height: 18px;
+.arrow {
+  font-size: 20px;
   transition: transform 0.3s ease;
-  color: white;
 }
-
-.chevron.rotated {
+.history-accordion[open] .arrow {
   transform: rotate(180deg);
 }
-
 /* === Внутренние элементы === */
 .project-item {
   padding-bottom: 12px;
   margin-bottom: 16px;
-  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #515151;
 }
 
 .project-item:last-child {
@@ -450,7 +471,6 @@ h2 {
   color: #8c66ad;
   margin: 0 0 8px 0;
   padding-bottom: 4px;
-  border-bottom: 1px dashed #d0b8e0;
 }
 
 .participation-list {
@@ -471,14 +491,6 @@ h2 {
   font-style: italic;
   margin: 8px 0;
   text-align: center;
-}
-.numbers-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  font-size: 14px;
-  color: #444;
-  margin-top: 8px;
 }
 
 .number-entry {
@@ -661,6 +673,16 @@ h2 {
   /* Плейсхолдер "Нажмите, чтобы указать ФИО" */
   .placeholder {
     font-size: 18px;
+  }
+  .bonuses-warning {
+    display: flex;
+    flex-direction: column;
+    height: auto; /* или убери height вообще */
+    padding: 0;
+  }
+
+  .bonuses-warning-note {
+    font-size: 3vw;
   }
 }
 </style>

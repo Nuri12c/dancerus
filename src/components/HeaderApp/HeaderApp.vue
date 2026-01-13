@@ -283,37 +283,24 @@ export default {
   height: 100%; /* ← можно убрать, не нужно */
 }
 .back-to-site {
-  padding: 0.7vw 1.4vw; /* немного больше для баланса */
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-  border: 0.1vw solid rgba(255, 255, 255, 0.25);
-  border-radius: 0.5vw;
-  color: #ffffff;
+  padding: 0.9375vw 1.25vw; /* 18px и 24px при 1920px */
+  background-color: #27272797;
+  border: 0.15vw solid white; /* 2px при 1920px */
+  color: white;
+  border-radius: 0.52vw; /* 10px при 1920px */
   font-family: "Oswald", sans-serif;
-  font-weight: 300;
-  font-size: 1.4vw;
-  letter-spacing: 0.05em;
+  font-weight: 200;
+  font-size: 1.25vw; /* 32px при 1920px */
   text-transform: uppercase;
-  white-space: nowrap;
-  margin-right: 3vw;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 0.3vw 0.8vw rgba(0, 0, 0, 0.4),
-    inset 0 0 0 0.1vw rgba(255, 255, 255, 0.1);
+
 }
 
 .back-to-site:hover {
-  background: linear-gradient(135deg, #111111 0%, #2b2b2b 100%);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.5),
-    inset 0 0 0.4vw rgba(255, 255, 255, 0.15);
+
   transform: translateY(-0.1vw);
 }
 
-.back-to-site:active {
-  transform: translateY(0);
-  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.6),
-    inset 0 0 0.3vw rgba(255, 255, 255, 0.1);
-}
 
 /* -------------------------------------------------
    2. Адаптив для кнопки «На сайт» (моб.)
@@ -394,5 +381,8 @@ export default {
     border: none;
     background-repeat: no-repeat;
   }
+  .phone-number {
+  font-size: 3.98vw;
+}
 }
 </style>

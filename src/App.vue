@@ -8,9 +8,9 @@
       @logout="authStore.clearUserData"
     />
 
-    <GuestContent @open-auth-modal="showAuthModal = true" v-if="!authStore.isOpenCabinet" />
+    <GuestContent @open-auth-modal="showAuthModal = true" v-show="!authStore.isOpenCabinet" />
 
-    <DashboardApp v-if="authStore.isOpenCabinet" />
+    <DashboardApp v-show="authStore.isOpenCabinet" />
 
     <RegisterModal
       v-if="showRegister"
@@ -42,6 +42,14 @@
       v-if="authStore.isPhoneModalOpen"
       @close="authStore.closePhoneModal"
     />
+    <RulesModal
+      v-if="authStore.isRulesModalOpen"
+      @close="authStore.closeRulesModal"
+    />
+    <MessageModal
+      v-if="authStore.isMessageModalOpen"
+      @close="authStore.closeMessageModal"
+    />
   </div>
 </template>
 
@@ -55,6 +63,8 @@ import LoginModal from './components/modals/LoginModal.vue'
 import DashboardApp from './components/registered-content/DashboardApp.vue'
 import AuthModal from './components/modals/AuthModal.vue'
 import PhoneModal from './components/modals/PhoneModal.vue'
+import RulesModal from './components/modals/RulesModal.vue'
+import MessageModal from './components/modals/MessageModal.vue'
 
 export default {
   components: {
@@ -66,6 +76,8 @@ export default {
     DashboardApp,
     AuthModal,
     PhoneModal,
+    RulesModal,
+    MessageModal
   },
 
   setup() {

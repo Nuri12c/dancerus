@@ -132,7 +132,7 @@ export default {
   }
 
   .tab-name {
-    font-size: 1.563vw;
+    font-size: 2vw;
     line-height: 0;
     padding-bottom: 0.8vw;
   }

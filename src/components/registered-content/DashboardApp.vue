@@ -8,10 +8,10 @@
 
     <!-- Основной контент с динамическим фоном -->
     <div class="content" :class="contentClass">
-      <ProfileTab v-if="activeTab === 'profile'" />
-      <CalendarTab v-if="activeTab === 'calendar'" />
-      <ResidentcardTab v-if="activeTab === 'resident-card'" />
-      <PresidentcardTab v-if="activeTab === 'president-card'" />
+      <ProfileTab v-show="activeTab === 'profile'" />
+      <CalendarTab v-show="activeTab === 'calendar'" />
+      <ResidentcardTab v-show="activeTab === 'resident-card'" />
+      <PresidentcardTab v-show="activeTab === 'president-card'" />
     </div>
   </div>
 </template>
@@ -80,7 +80,7 @@ export default {
 
 .content {
   flex-grow: 1;
-  padding: 2vw 40px 40px 40px;
+  padding: 2vw 40px 0 40px;
   overflow-y: auto;
   background-color: #fcf5eb;
   position: relative;
@@ -100,7 +100,6 @@ export default {
 .content.president-mode {
   background-color: #000;
   color: white;
-  padding: 70px 40px 40px 40px; /* Padding остаётся */
 }
 
 /* РАМКА СВЕРХУ (как фон под контентом) */
